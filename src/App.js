@@ -1,0 +1,44 @@
+import React, { Component } from "react";
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import PrivateRoute from "./PrivateRoute";
+import PrivateDashboard from "./components/PrivateDashboard";
+import Auth from "./Auth";
+import Dashboard from "./AdminPanel/Admin";
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route
+              path="/logout"
+              render={() => {
+                Auth.signout();
+                return <Redirect to="/" />;
+              }}
+            />
+            <PrivateRoute
+              path="/private-dashboard"
+              component={PrivateDashboard}
+            />
+            <Route path="/dashboard" component={Dashboard} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
+}
+
+export default App;

@@ -7,7 +7,6 @@ class SideMenu extends Component {
   };
   componentDidMount() {
     this.setState({ cuurentComponent: this.props.callingComponent });
-    // console.log(this.props.callingComponent + "  asdjkahdjksa");
   }
   getActiveClassName = type => {
     console.log(type + "     " + this.state.cuurentComponent);

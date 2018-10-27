@@ -11,7 +11,22 @@ class App extends Component {
           <div style={{ textAlign: "center", marginTop: 15 }}>
             <p>Please Login To Continue</p>
             <button className="btn btn-primary">
-              <Link to="/login">Login</Link>
+              <Link style={{ color: "#fff" }} to="/login">
+                Login
+              </Link>
+            </button>
+            <button
+              className="btn btn-primary"
+              style={{ marginLeft: 20, color: "#fff" }}
+            >
+              <Link style={{ color: "#fff" }} to="/dashboard">
+                Dashboard
+              </Link>
+            </button>
+            <button className="btn btn-primary" style={{ marginLeft: 20 }}>
+              <Link style={{ color: "#fff" }} to="/create">
+                Create Table
+              </Link>
             </button>
             <img
               src={logo}

@@ -13,6 +13,9 @@ import PrivateRoute from "./PrivateRoute";
 import PrivateDashboard from "./components/PrivateDashboard";
 import Auth from "./Auth";
 import Dashboard from "./AdminPanel/Admin";
+import CreateTableUI from "./AdminPanel/CreateTableUI";
+
+import comp1 from "./AdminPanel/component/main";
 class App extends Component {
   render() {
     return (
@@ -34,6 +37,8 @@ class App extends Component {
               component={PrivateDashboard}
             />
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/test" component={comp1} />
+            <Route path="/create" component={CreateTableUI} />
           </Switch>
         </div>
       </Router>

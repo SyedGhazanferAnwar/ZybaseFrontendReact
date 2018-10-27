@@ -1,7 +1,25 @@
 import React, { Component } from "react";
+import { Link, withRouter, Redirect } from "react-router-dom";
 
 class SideMenu extends Component {
-  state = {};
+  state = {
+    cuurentComponent: ""
+  };
+  componentDidMount() {
+    this.setState({ cuurentComponent: this.props.callingComponent });
+    // console.log(this.props.callingComponent + "  asdjkahdjksa");
+  }
+  getActiveClassName = type => {
+    console.log(type + "     " + this.state.cuurentComponent);
+    if (type == this.state.cuurentComponent) {
+      return "active";
+    }
+    if (type == "desk" && this.state.cuurentComponent != "desk") {
+      console.log("asdasdsa");
+      return "collapsed collaspse collapse";
+    }
+    return "";
+  };
   render() {
     return (
       <React.Fragment>
@@ -10,44 +28,61 @@ class SideMenu extends Component {
             <nav>
               <ul className="nav">
                 <li>
-                  <a href="" className="active">
+                  <Link
+                    name="dashboard"
+                    className={this.getActiveClassName("dashboard")}
+                    to="/dashboard"
+                  >
                     <i className="lnr lnr-home" /> <span>Dashboard</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a
+                    name="desk"
                     href="#subPages"
                     data-toggle="collapse"
-                    className="collapsed"
+                    className={this.getActiveClassName("desk")}
+                    aria-expanded="false"
                   >
                     <i className="lnr lnr-file-empty" />
                     <span>Desk</span>{" "}
                     <i className="icon-submenu lnr lnr-chevron-left" />
                   </a>
-                  <div id="subPages" className="collapse ">
+                  <div
+                    id="subPages"
+                    className={this.getActiveClassName("desk")}
+                  >
                     <ul className="nav">
                       <li>
-                        <a href="page-profile.html" className="">
+                        <Link className="" to="/create">
                           Create Table
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href="page-login.html" className="">
+                        <Link to="/create" className="">
                           View Table
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
                 </li>
                 <li>
-                  <a href="charts.html" className="">
+                  <Link
+                    name="analytics"
+                    to="/dashboard"
+                    className={this.getActiveClassName("analytics")}
+                  >
                     <i className="lnr lnr-chart-bars" /> <span>Analytics</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="panels.html" className="">
+                  <Link
+                    name="settingpanel"
+                    to="/dashboard"
+                    className={this.getActiveClassName("settingpanel")}
+                  >
                     <i className="lnr lnr-cog" /> <span> Settings Panel</span>
-                  </a>
+                  </Link>
                 </li>
 
                 {/* Start of push Notificcation */}

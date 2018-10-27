@@ -4,7 +4,7 @@ import SideMenu from "./component/sideMenu.jsx";
 import Main from "./component/main.jsx";
 import CreateTable from "./component/sidebarComponents/createTable";
 
-class Admin extends Component {
+class CreateTableUI extends Component {
   constructor() {
     super();
     let ss = this.state.row;
@@ -21,11 +21,11 @@ class Admin extends Component {
           <NavBar />
           {/* end of navBar */}
           {/* <!-- LEFT SIDEBAR --> */}
-          <SideMenu callingComponent="dashboard" />
+          <SideMenu callingComponent="desk" />
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
           {/* <CreateTable /> */}
-          <Main />
+          <CreateTable />
           {/* <!-- END MAIN --> */}
           <div className="clearfix" />
           <footer>
@@ -47,4 +47,4 @@ class Admin extends Component {
   }
 }
 
-export default Admin;
+export default CreateTableUI;

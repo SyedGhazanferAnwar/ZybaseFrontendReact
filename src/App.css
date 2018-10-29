@@ -1,26 +1,58 @@
 .header {
-    background: #282c34;
-    color: white;
-  }
-  .addBtn {
-    margin-left: 4%;
-  }
-  .subBtn {
-    margin-top: 5%;
-    /* float: bottom; */
-    float: left;
-  }
-  table,
-  th,
-  td {
-    border: 2px solid black;
-  }
-  table {
-    margin-top: 5%;
-  }
-  .tableId {
-    padding-top: 10%;
-    width: auto;
-    display: block;
-    overflow-x: scroll;
-  }
+  background: #282c34;
+  color: white;
+}
+.cellInput {
+  background: transparent;
+  border: transparent;
+  color: aliceblue;
+  margin: 6px;
+  padding: 5px;
+  border-radius: 0px !important;
+}
+.cellInput:focus {
+  outline-color: #209e91 !important;
+  background: rgba(0, 0, 0, 0.233) !important;
+}
+
+.addBtn {
+  margin-left: 4%;
+}
+.subBtn {
+  margin-top: 5%;
+  /* float: bottom; */
+  float: left;
+}
+table,
+th,
+td {
+  text-align: center;
+  border: 2px solid black;
+}
+table {
+  margin-top: 5%;
+}
+.tableId {
+  padding-top: 10%;
+  width: auto;
+  display: block;
+  overflow-x: scroll;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  background-color: #209e91;
+  width: 20px;
+}
+body {
+  background: url("/images/blurbg.jpg");
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Columns from "./columns";
+
 class Rows extends Component {
   state = {};
   addColHandler = col => {
@@ -11,23 +11,33 @@ class Rows extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <table className="table"> */}
-        {/* <tbody> */}
         <tr key={this.props.id}>
-          {/* <th scope="row">{console.log(this.props.num)}</th> */}
-          <td>
-            <input key={this.props.id} id={this.props.id} />
-          </td>
+          {this.props.storeData[this.props.index].map((row, index) => {
+            return (
+              <td key={String(this.props.index) + String(index)}>
+                <input
+                  className="cellInput"
+                  name={this.props.index}
+                  // value={row.value}
+                  onChange={this.props.handleValueChange}
+                  key={String(this.props.index) + String(index)}
+                  id={index}
+                />
+              </td>
+            );
+          })}
 
-          <Columns
-            key={this.props.irow}
-            id={this.props.irow}
-            columns={this.props.columns}
-            onAddCol={this.props.onAddCol}
-          />
+          <td>
+            <button
+              id={this.props.index}
+              onClick={this.props.onDelete}
+              className="btn btn-danger"
+            >
+              Delete
+            </button>
+          </td>
+          <script />
         </tr>
-        {/* </tbody> */}
-        {/* </table> */}
       </React.Fragment>
     );
   }

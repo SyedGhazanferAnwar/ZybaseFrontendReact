@@ -1,0 +1,26 @@
+.header {
+    background: #282c34;
+    color: white;
+  }
+  .addBtn {
+    margin-left: 4%;
+  }
+  .subBtn {
+    margin-top: 5%;
+    /* float: bottom; */
+    float: left;
+  }
+  table,
+  th,
+  td {
+    border: 2px solid black;
+  }
+  table {
+    margin-top: 5%;
+  }
+  .tableId {
+    padding-top: 10%;
+    width: auto;
+    display: block;
+    overflow-x: scroll;
+  }

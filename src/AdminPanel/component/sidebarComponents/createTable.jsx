@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Rows from "./Rows.jsx";
 // import Columns from "./columns.jsx";
-import { AvForm, AvField } from "availity-reactstrap-validation";
+// import { AvForm, AvField } from "availity-reactstrap-validation";
 
 class CreateTable extends Component {
   constructor() {
@@ -9,47 +9,129 @@ class CreateTable extends Component {
   }
 
   state = {
-    irow: 1,
-    icol: 234,
+    irow: 2,
+    icol: 3,
     newHeader: "",
-    header: ["id", "value", "name"],
-    columns: [{ id: 1, value: 1, type: "" }],
-    row: [{ id: 1, value: 2, type: "" }]
+    newVal: "",
+    storeData: [
+      [
+        { id: "1", value: "2" },
+        { id: "1", value: "1" },
+        { id: "1", value: "1" }
+      ],
+      [
+        { id: "11", value: "2" },
+        { id: "12", value: "2" },
+        { id: "13", value: "2" }
+      ]
+    ],
+    header: ["Id", "Value", "Name", "Action"],
+    columns: [],
+    row: [{ id: 1, value: 2 }]
   };
+  loopPrint() {
+    console.log("yes");
+    for (let i = 0; i < this.state.storeData.length; i++) {
+      // console.log(this.state.storeData);
+      for (let j = 0; j <= this.state.storeData.length; j++) {
+        console.log(this.state.storeData[i][j]);
+      }
+    }
+  }
+  handleValueChange(evt) {
+    var item = {
+      id: evt.target.id,
+      name: evt.target.name,
+      value: evt.target.value,
+      rowIndex: evt.target.name
+    };
+    let a = item.name + 1;
+    // console.log(a);
+    let columns = [...this.state.storeData];
+    for (let i = 0; i < this.state.storeData.length; i++) {
+      // console.log(this.state.storeData);
+      for (let j = 0; j < this.state.storeData[i].length; j++) {
+        if (i === parseInt(item.name) && j == parseInt(item.id)) {
+          columns[i][j].value = item.value;
+        }
+      }
+    }
+
+    // console.log(item.id + "  " + item.rowIndex);
+  }
+  handleRowDelete(evt) {
+    const index = evt.target.id;
+    if (index === "0") {
+      return alert("cant delete first row");
+    }
+    let rows = [...this.state.storeData];
+    rows.splice(index, index);
+    this.setState({ storeData: rows });
+    let irow = this.state.irow;
+    irow--;
+    this.setState({ irow: irow });
+    console.log(rows);
+  }
   addHeaderHandler = value => {
-    const header = [...this.state.header];
-    // console.log(this.state.newHeader);
-    header.push(this.state.newHeader);
+    let header = [...this.state.header];
+    header[header.length] = header[header.length - 1];
+    header[header.length - 2] = this.state.newHeader;
     this.setState({ header: header });
     this.addColHandler();
-    console.log(header.map((header, index) => header));
     return;
     // <CreateTable />;
   };
+
   printHeader() {}
   addRowHandler = rows => {
+    let reArr = this.state.storeData;
+    let reNew = [{ id: "", value: "" }];
+    // console.log("asdsa" + reArr);
+    reArr.push(reNew);
+    this.setState({ storeData: reArr });
+    for (let k = 0; k < this.state.icol - 1; k++) {
+      reArr[this.state.irow].push(reArr);
+    }
     let irow = this.state.irow;
     irow++;
     this.setState({ irow: irow });
-    const rowData = [...this.state.row];
-    let newRow = [{ id: irow, value: 3 }];
-    console.log(newRow[0]);
-    rowData.push(newRow);
-    this.setState({ row: rowData });
+    this.setState({ storeData: reArr });
   };
-  addColHandler = col => {
-    let irow = this.state.irow;
-    // this.setState({ irow: irow });
-    const colData = [...this.state.columns];
-    let newRow = [{ id: irow, value: 302 }];
-    colData.push(newRow);
-    this.setState({ columns: colData });
+  addColHandler = newVal => {
+    console.log(newVal);
+    let reArr = this.state.storeData;
+    let reNew = { id: "", value: this.state.newVal };
+    for (let k = 0; k < this.state.irow; k++) {
+      reArr[k].push(reArr);
+    }
+    this.setState({ storeData: reArr });
+    let icol = this.state.icol;
+    icol++;
+    this.setState({ icol: icol });
+  };
+  onUpdateValue = evt => {
+    let val = evt.target.value;
+    console.log(val);
+    this.setState({ newVal: val });
   };
   onUpdateHeader = evt => {
     let val = evt.target.value;
-    // console.log(val);
     this.setState({ newHeader: val });
   };
+  print() {
+    // this.state.columns.map(columns => console.log(columns));
+    // this.state.storeData.map((set, index) => {
+    //   console.log(set);
+    // });
+
+    // let here = JSON.stringify(this.state.storeData);
+    console.log(JSON.stringify(this.state.storeData));
+  }
+  addSubmitHandler() {
+    // let sub = JSON.stringify(this.state.storeData);
+    console.log(JSON.stringify(this.state.storeData));
+    // console.log(state)
+  }
 
   render() {
     return (
@@ -73,9 +155,15 @@ class CreateTable extends Component {
                     data-toggle="modal"
                     data-target="#exampleModal"
                   >
-                    Add Col
+                    Add Column
                   </button>
-
+                  <button
+                    id="addBtn"
+                    className="btn btn-primary addBtn"
+                    onClick={() => this.addRowHandler(this.state.row)}
+                  >
+                    Add Row
+                  </button>
                   <div
                     className="modal fade"
                     id="exampleModal"
@@ -112,7 +200,8 @@ class CreateTable extends Component {
                           <input
                             placeholder="Value"
                             id="inpColValue"
-                            ref="value"
+                            name={this.state.newValue}
+                            onChange={this.onUpdateValue}
                           />
                         </div>
                         <div className="modal-footer">
@@ -140,38 +229,53 @@ class CreateTable extends Component {
 
                   <table id="tableId">
                     <tbody>
-                      <tr>
+                      <tr className="header">
                         {this.state.header.map((header, index) => (
                           <th key={index}>{header}</th>
                         ))}
                       </tr>
-                      {this.state.row.map(rows => (
-                        // key={this.state.irow},
+                      {this.state.storeData.map((yo, index) => (
                         <Rows
-                          id={Math.floor(Math.random() * 100 + 1)}
-                          irow={this.state.irow}
-                          key={Math.floor(Math.random() * 100 + 1)}
-                          num={this.state.row.length}
-                          onAdd={this.addRowHandler}
-                          columns={this.state.columns}
-                          onAddCol={this.addColHandler}
+                          key={String(index)}
+                          onDelete={this.handleRowDelete.bind(this)}
+                          index={index}
+                          id={String(index)}
+                          storeData={this.state.storeData}
+                          handleValueChange={this.handleValueChange.bind(this)}
                         />
                       ))}
+                      {/* {this.state.row.map((row, index) => {
+                        <Row />;
+                      })} */}
+                      {/* {this.state.row.map((row, index) => (
+                        
+                        // <Rows
+                        //   id={String(index)}
+                        //   row={row}
+                        //   key={String(index)}
+                        //   rowIndex={index}
+                        //   onAdd={this.addRowHandler}
+                        //   columns={this.state.columns}
+                        //   onAddCol={this.addColHandler}
+                        // />
+                      ))} */}
                     </tbody>
                   </table>
-                  <button
-                    id="addBtn"
-                    onClick={() => this.addRowHandler(this.state.row)}
-                  >
-                    ADD
-                  </button>
+
+                  <button onClick={this.print.bind(this)}>print</button>
                   <button
                     id="addBtn"
                     onClick={() => this.addColHandler(this.state.columns)}
                   >
                     ADDColumns
                   </button>
-
+                  <button
+                    className="btn btn-primary subBtn"
+                    id="subBtn"
+                    onClick={this.addSubmitHandler.bind(this)}
+                  >
+                    Submit
+                  </button>
                   {/* <table className="table">
                   <thead className="thead-dark">
                     <tr>

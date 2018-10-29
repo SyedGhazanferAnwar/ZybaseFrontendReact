@@ -99,7 +99,6 @@ footer {
 #wrapper #sidebar-nav,
 #wrapper .main {
   padding-top: 80px;
-  
 }
 
 @media screen and (max-width: 767px) {
@@ -831,6 +830,8 @@ fieldset[disabled] .btn {
 .panel .panel-body {
   padding-top: 10px;
   padding-bottom: 15px;
+  overflow: auto;
+  margin-right: 1%;
 }
 .panel .panel-note {
   font-size: 13px;

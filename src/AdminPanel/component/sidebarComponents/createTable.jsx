@@ -47,16 +47,13 @@ class CreateTable extends Component {
     };
     let a = item.name + 1;
     // console.log(a);
-    let columns = [...this.state.storeData];
-    for (let i = 0; i < this.state.storeData.length; i++) {
-      // console.log(this.state.storeData);
-      for (let j = 0; j < this.state.storeData[i].length; j++) {
-        if (i === parseInt(item.name) && j == parseInt(item.id)) {
-          columns[i][j].value = item.value;
-        }
-      }
-    }
+    let columns = this.state.storeData;
+    console.log(this.state.storeData);
 
+    columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
+    console.log(item.id + " item id");
+    console.log(columns);
+    this.setState({ storeData: columns });
     // console.log(item.id + "  " + item.rowIndex);
   }
   handleRowDelete(evt) {
@@ -84,25 +81,29 @@ class CreateTable extends Component {
 
   printHeader() {}
   addRowHandler = rows => {
+    //ADD ROW HANDLER
     let reArr = this.state.storeData;
-    let reNew = [{ id: "", value: "" }];
+    let reNew = [];
+
     // console.log("asdsa" + reArr);
+    for (let k = 0; k < this.state.icol; k++) {
+      let reN = { id: k + "", value: "ol" };
+
+      reNew.push(reN);
+    }
     reArr.push(reNew);
     this.setState({ storeData: reArr });
-    for (let k = 0; k < this.state.icol - 1; k++) {
-      reArr[this.state.irow].push(reArr);
-    }
+
     let irow = this.state.irow;
     irow++;
     this.setState({ irow: irow });
-    this.setState({ storeData: reArr });
   };
   addColHandler = newVal => {
     console.log(newVal);
     let reArr = this.state.storeData;
-    let reNew = { id: "", value: this.state.newVal };
     for (let k = 0; k < this.state.irow; k++) {
-      reArr[k].push(reArr);
+      let reNew = { id: k + "", value: this.state.newVal };
+      reArr[k].push(reNew);
     }
     this.setState({ storeData: reArr });
     let icol = this.state.icol;
@@ -125,7 +126,7 @@ class CreateTable extends Component {
     // });
 
     // let here = JSON.stringify(this.state.storeData);
-    console.log(JSON.stringify(this.state.storeData));
+    console.log(this.state.storeData);
   }
   addSubmitHandler() {
     // let sub = JSON.stringify(this.state.storeData);

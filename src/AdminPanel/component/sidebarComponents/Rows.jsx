@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 class Rows extends Component {
   state = {};
-  addColHandler = col => {
-    const ColData = [...this.state.columns];
-    let newCol = [{ id: 5, value: 3 }];
-    ColData.push(newCol);
-    this.setState({ columns: ColData });
-  };
+  // addColHandler = col => {
+  //   const ColData = [...this.state.columns];
+  //   let newCol = [{ id: 5, value: 3 }];
+  //   ColData.push(newCol);
+  //   this.setState({ columns: ColData });
+  // };
   render() {
     return (
       <React.Fragment>

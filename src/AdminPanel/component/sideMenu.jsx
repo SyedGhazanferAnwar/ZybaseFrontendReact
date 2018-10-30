@@ -51,14 +51,22 @@ class SideMenu extends Component {
                     id="subPages"
                     className={this.getActiveClassName("desk")}
                   >
-                    <ul className="nav">
+                    <ul className="nav" style={{ background: "none" }}>
                       <li>
-                        <Link className="" to="/create">
+                        <Link
+                          className=""
+                          style={{ background: "#ffffff0d" }}
+                          to="/create"
+                        >
                           Create Table
                         </Link>
                       </li>
                       <li>
-                        <Link to="/create" className="">
+                        <Link
+                          to="/create"
+                          className=""
+                          style={{ background: "#ffffff0d" }}
+                        >
                           View Table
                         </Link>
                       </li>

@@ -19,6 +19,17 @@ html {
   position: relative;
   min-height: 100%;
 }
+/*Changed by me*/
+span,
+i,
+p {
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: "#a9a9a9" !important;
+}
+/*Changed by me*/
 
 body {
   background-color: #f3f5f8;
@@ -78,7 +89,7 @@ footer {
   width: 260px;
   height: 100%;
   float: left;
-  background-color: #2b333e;
+  background-color: #00000063;
   position: fixed;
   left: 0;
 }
@@ -482,8 +493,8 @@ ul.notifications > li > .more:focus {
 }
 .sidebar .nav > li > a:focus,
 .sidebar .nav > li > a.active {
-  background-color: #252c35;
-  border-left-color: #00aaff;
+  background-color: #ffffff1c;
+  border-left-color: #209e91;
 }
 .sidebar .nav > li > a[data-toggle="collapse"] .icon-submenu {
   display: inline-block;
@@ -799,9 +810,9 @@ fieldset[disabled] .btn {
   -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  background-color: #fff;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.25);
   margin-bottom: 30px;
-  background: #00000059 !important;
+  background: #ffffff18 !important;
 }
 .panel .panel-heading,
 .panel .panel-body,
@@ -838,7 +849,7 @@ fieldset[disabled] .btn {
 .panel .panel-note {
   font-size: 13px;
   line-height: 2.6;
-  color: #777777;
+  color: #fff;
 }
 .panel .panel-note i {
   font-size: 16px;
@@ -860,7 +871,7 @@ fieldset[disabled] .btn {
 .panel.panel-headline .panel-heading .panel-subtitle {
   margin-bottom: 0;
   font-size: 14px;
-  color: #8d99a8;
+  color: #fff;
 }
 .panel.panel-scrolling .btn-bottom {
   margin-bottom: 30px;

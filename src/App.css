@@ -54,5 +54,6 @@ table {
   width: 20px;
 }
 body {
-  background: url("/images/blurbg.jpg");
+  background: url("/images/blur-bg.jpg") repeat fixed;
+  background-size: cover;
 }

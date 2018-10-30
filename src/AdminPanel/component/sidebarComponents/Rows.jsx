@@ -32,6 +32,7 @@ class Rows extends Component {
               id={this.props.index}
               onClick={this.props.onDelete}
               className="btn btn-danger"
+              style={{ margin: 5 }}
             >
               Delete
             </button>

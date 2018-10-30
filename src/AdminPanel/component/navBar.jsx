@@ -4,8 +4,11 @@ class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav className="navbar navbar-default navbar-fixed-top">
-          <div className="brand">
+        <nav
+          className="navbar navbar-default navbar-fixed-top"
+          style={{ background: "none" }}
+        >
+          <div className="brand" style={{ background: "none" }}>
             <a href="">
               <img
                 src="assets/img/logo-dark.png"
@@ -14,7 +17,7 @@ class NavBar extends Component {
               />
             </a>
           </div>
-          <div className="container-fluid">
+          <div className="container-fluid" style={{ background: "#00000080" }}>
             <div className="navbar-btn">
               <button type="button" className="btn-toggle-fullwidth">
                 <i className="lnr lnr-arrow-left-circle" />

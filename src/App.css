@@ -3,16 +3,24 @@
   color: white;
 }
 .cellInput {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.233) !important;;
   border: transparent;
   color: aliceblue;
   margin: 6px;
   padding: 5px;
-  border-radius: 0px !important;
+  border-radius:7px !important;
+  outline-color:transparent;
+  -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    transition: all .3s ease-out
+  
 }
 .cellInput:focus {
   outline-color: #209e91 !important;
-  background: rgba(0, 0, 0, 0.233) !important;
+  border-radius: 4px!important ;
+
 }
 
 .addBtn {
@@ -57,3 +65,9 @@ body {
   background: url("/images/blur-bg.jpg") repeat fixed;
   background-size: cover;
 }
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: rgb(147, 219, 129)!important;
+  }
+  .btn-primary{
+      background-color: rgb(138, 224, 104)!important;
+  }

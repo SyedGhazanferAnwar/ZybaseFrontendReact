@@ -6,24 +6,22 @@
   color: red;
 }
 .cellInput {
-  background: rgba(0, 0, 0, 0.233) !important;;
+  background: rgba(0, 0, 0, 0.233) !important;
   border: transparent;
   color: aliceblue;
   margin: 6px;
   padding: 5px;
-  border-radius:7px !important;
-  outline-color:transparent;
-  -webkit-transition: all .3s ease-out;
-    -moz-transition: all .3s ease-out;
-    -ms-transition: all .3s ease-out;
-    -o-transition: all .3s ease-out;
-    transition: all .3s ease-out
-  
+  border-radius: 7px !important;
+  outline-color: transparent;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
 }
 .cellInput:focus {
   outline-color: #209e91 !important;
-  border-radius: 4px!important ;
-
+  border-radius: 4px !important ;
 }
 
 .addBtn {
@@ -68,9 +66,53 @@ body {
   background: url("/images/blur-bg.jpg") repeat fixed;
   background-size: cover;
 }
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: rgba(0, 0, 0, 0.589)!important;
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: rgba(0, 0, 0, 0.589) !important;
+}
+.btn-primary {
+  background-color: #209e91 !important;
+  border-color: #209e91 !important;
+  outline: none !important;
+}
+.btn-success {
+  outline: none !important;
+}
+
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 1;
   }
-  .btn-primary{
-      background-color: rgb(138, 224, 104)!important;
+  20% {
+    transform: scale(25, 25);
+    opacity: 1;
   }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+.btn-ripple:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
+}

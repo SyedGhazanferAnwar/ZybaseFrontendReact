@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Rows from "./Rows.jsx";
+import SweetALert from "sweetalert-react";
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
@@ -9,6 +10,10 @@ class CreateTable extends Component {
   }
 
   state = {
+    inputisEditableIndex: 0,
+    inputisEditableFlag: "true",
+    editFlag: 0,
+    editRowIndex: -9,
     headerEditedValue: "",
     setIndex: 0,
     flag: 0,
@@ -19,20 +24,92 @@ class CreateTable extends Component {
     empty: [[{ id: "1", value: "2" }]],
     storeData: [
       [
-        { id: "1", value: "2" },
-        { id: "1", value: "1" },
-        { id: "1", value: "1" }
-      ],
-      [
-        { id: "11", value: "2" },
-        { id: "12", value: "2" },
-        { id: "13", value: "2" }
+        {
+          id: "1",
+          value: "2",
+          length: "",
+          autoInc: "",
+          type: "",
+          notNull: "",
+          unique: ""
+        },
+        {
+          id: "1",
+          value: "1",
+          length: "",
+          autoInc: "",
+          type: "",
+          notNull: "",
+          unique: ""
+        },
+        {
+          id: "1",
+          value: "1",
+          length: "",
+          autoInc: "",
+          type: "",
+          notNull: "",
+          unique: ""
+        }
       ]
     ],
     header: ["Id", "Value", "Name", "Action"],
     columns: [],
     row: [{ id: 1, value: 2 }]
   };
+  saveEditInputHandler(evt) {
+    let editFlag = this.state.editFlag;
+    editFlag = 0;
+    this.setState({ editFlag: editFlag });
+
+    let inputisEditableFlag = this.state.inputisEditableFlag;
+    inputisEditableFlag = "true";
+    this.setState({ inputisEditableFlag: inputisEditableFlag });
+  }
+  editRow(evt) {
+    console.log("evt " + evt.target.id);
+    let editFlag = this.state.editFlag;
+    editFlag = 1;
+    this.setState({ editFlag: editFlag });
+    let editRowIndex = this.state.editRowIndex;
+    editRowIndex = evt.target.id;
+    this.setState({ editRowIndex: editRowIndex });
+
+    let inputisEditableFlag = this.state.inputisEditableFlag;
+    inputisEditableFlag = "false";
+    this.setState({ inputisEditableFlag: inputisEditableFlag });
+
+    let inputisEditableIndex = this.state.inputisEditableIndex;
+    inputisEditableIndex = evt.target.id;
+    this.setState({ inputisEditableIndex: inputisEditableIndex });
+  }
+  addDltEdtBtn(index) {
+    console.log(this.state.editRowIndex);
+    let edit = this.state.editRowIndex;
+    if (this.state.editFlag === 1 && parseInt(edit) === parseInt(index)) {
+      return (
+        <button
+          id={this.index}
+          className="btn btn-success btn-ripple"
+          style={{ margin: 5 }}
+          onClick={this.saveEditInputHandler.bind(this)}
+        >
+          Save
+        </button>
+      );
+    } else {
+      return (
+        <button
+          id={index}
+          className="btn btn-primary btn-ripple"
+          style={{ margin: 5 }}
+          onClick={this.editRow.bind(this)}
+        >
+          Edit
+        </button>
+      );
+    }
+  }
   loopPrint() {
     console.log("yes");
     for (let i = 0; i < this.state.storeData.length; i++) {
@@ -49,22 +126,18 @@ class CreateTable extends Component {
       value: evt.target.value,
       rowIndex: evt.target.name
     };
-    const re = /^[0-9\b]+$/;
+    // const re = /^[0-9\b]+$/;
     let columns = this.state.storeData;
 
-    if (re.test(evt.target.value)) {
-      console.log("yes it is integer");
-      let a = item.name + 1;
-      // console.log(a);
-      console.log(this.state.storeData);
+    console.log("yes it is integer");
+    let a = item.name + 1;
+    // console.log(a);
+    console.log(this.state.storeData);
 
-      columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
-      console.log(item.id + " item id");
-      console.log(columns);
-      this.setState({ storeData: columns });
-    } else {
-      return (columns[parseInt(item.name)][parseInt(item.id)].value = "");
-    }
+    columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
+    console.log(item.id + " item id");
+    console.log(columns);
+    this.setState({ storeData: columns });
 
     // console.log(item.id + "  " + item.rowIndex);
   }
@@ -374,11 +447,14 @@ class CreateTable extends Component {
                       {this.state.storeData.map((yo, index) => (
                         <Rows
                           key={String(index)}
+                          addDltEdtBtn={this.addDltEdtBtn.bind(this)}
                           onDelete={this.handleRowDelete.bind(this)}
                           index={index}
                           id={String(index)}
+                          inputisEditableIndex={this.state.inputisEditableIndex}
                           storeData={this.state.storeData}
                           handleValueChange={this.handleValueChange.bind(this)}
+                          inputisEditableFlag={this.state.inputisEditableFlag}
                         />
                       ))}
                     </tbody>

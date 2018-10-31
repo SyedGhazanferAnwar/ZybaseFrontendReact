@@ -16,7 +16,7 @@ class Rows extends Component {
             return (
               <td key={String(this.props.index) + String(index)}>
                 <input
-                placeholder="(value)"
+                  placeholder="(value)"
                   className="cellInput"
                   name={this.props.index}
                   // value={row.value}

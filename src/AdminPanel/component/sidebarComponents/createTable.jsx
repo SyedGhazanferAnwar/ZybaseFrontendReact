@@ -49,15 +49,23 @@ class CreateTable extends Component {
       value: evt.target.value,
       rowIndex: evt.target.name
     };
-    let a = item.name + 1;
-    // console.log(a);
+    const re = /^[0-9\b]+$/;
     let columns = this.state.storeData;
-    console.log(this.state.storeData);
 
-    columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
-    console.log(item.id + " item id");
-    console.log(columns);
-    this.setState({ storeData: columns });
+    if (re.test(evt.target.value)) {
+      console.log("yes it is integer");
+      let a = item.name + 1;
+      // console.log(a);
+      console.log(this.state.storeData);
+
+      columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
+      console.log(item.id + " item id");
+      console.log(columns);
+      this.setState({ storeData: columns });
+    } else {
+      return (columns[parseInt(item.name)][parseInt(item.id)].value = "");
+    }
+
     // console.log(item.id + "  " + item.rowIndex);
   }
   handleRowDelete(evt) {

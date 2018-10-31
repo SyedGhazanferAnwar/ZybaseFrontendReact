@@ -69,7 +69,7 @@ body {
   background-size: cover;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: rgb(147, 219, 129)!important;
+    color: rgba(0, 0, 0, 0.589)!important;
   }
   .btn-primary{
       background-color: rgb(138, 224, 104)!important;

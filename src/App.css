@@ -2,6 +2,9 @@
   background: #282c34;
   color: white;
 }
+.crossBtn {
+  color: red;
+}
 .cellInput {
   background: transparent;
   border: transparent;

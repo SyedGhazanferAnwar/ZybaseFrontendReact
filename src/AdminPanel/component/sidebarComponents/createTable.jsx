@@ -9,10 +9,14 @@ class CreateTable extends Component {
   }
 
   state = {
+    headerEditedValue: "",
+    setIndex: 0,
+    flag: 0,
     irow: 2,
     icol: 3,
     newHeader: "",
     newVal: "",
+    empty: [[{ id: "1", value: "2" }]],
     storeData: [
       [
         { id: "1", value: "2" },
@@ -133,6 +137,116 @@ class CreateTable extends Component {
     console.log(JSON.stringify(this.state.storeData));
     // console.log(state)
   }
+  crossBtnClickHandler = index => {
+    console.log(index);
+    let l = 0;
+    let dupStoreData = [];
+    let array2 = this.state.storeData;
+
+    let dupHeader = [];
+    let header = this.state.header;
+    for (let k = 0; k < header.length; k++) {
+      if (k !== index) {
+        dupHeader[l] = header[k];
+        l++;
+      }
+    }
+    for (let i = 0; i < this.state.irow; i++) {
+      dupStoreData[i] = [];
+      for (let j = 0; j < this.state.icol; j++) {
+        if (j !== index) {
+          dupStoreData[i].push(array2[i][j]);
+        }
+      }
+    }
+    let icol = this.state.icol;
+    icol--;
+    this.setState({ icol: icol });
+    this.setState({ header: dupHeader });
+    this.setState({ storeData: dupStoreData });
+    console.log(dupStoreData);
+
+    // console.log(array);
+  };
+  // check(evt) {
+  //   console.log("herher");
+  //   return (evt.value = "");
+  // }
+  // ****************************{all header working here}*********************
+
+  crossBtnInHeader(header, index) {
+    if (index > 0 && index < this.state.header.length - 1) {
+      return (
+        <div>
+          <button
+            type="button"
+            onClick={() => this.crossBtnClickHandler(index)}
+            id={index}
+            key={index}
+            className="close crossBtn"
+          >
+            <i className="fa fa-close " />
+          </button>
+          <button
+            type="button"
+            onClick={() => this.makeInputFieldEditable(header, index)}
+            id={index + 100}
+            key={index + 100}
+            className="close crossBtn"
+          >
+            <i className="fa fa-edit " />
+          </button>
+        </div>
+      );
+    }
+  }
+  makeInputFieldEditable(header, index) {
+    let flage = 1;
+    this.state.flag = 1;
+    this.setState({ setIndex: index });
+    console.log(this.state.flag);
+  }
+  handleHeaderValueChange(evt) {
+    console.log("handleHeaderValueChange()" + " " + evt.target.value);
+    let headerEdited = evt.target.value;
+    this.setState({ headerEditedValue: headerEdited });
+  }
+  saveEditedHeader(evt) {
+    let header = this.state.header;
+    if (this.state.headerEditedValue === "") {
+      this.setState({ header: header });
+      this.state.flag = 0;
+    } else {
+      header[evt.target.id] = this.state.headerEditedValue;
+      this.setState({ header: header });
+      this.setState({ headerEditedValue: "" });
+      this.state.flag = 0;
+    }
+  }
+  inputField(index, header) {
+    if (this.state.flag === 1 && index === this.state.setIndex) {
+      return (
+        <div>
+          <input
+            id={index}
+            onChange={this.handleHeaderValueChange.bind(this)}
+            placeholder={header}
+            className="cellInput"
+          />
+          <button
+            className="btn btn-danger"
+            id={index}
+            onClick={this.saveEditedHeader.bind(this)}
+          >
+            save
+          </button>
+        </div>
+      );
+    } else {
+      return header;
+    }
+    // *******************************{End Header working} ********************
+  }
 
   render() {
     return (
@@ -199,11 +313,18 @@ class CreateTable extends Component {
                           <br />
                           <label>Enter Value</label>
                           <input
+                            list="hosting-plan2"
+                            type="text"
                             placeholder="Value"
                             id="inpColValue"
                             name={this.state.newValue}
                             onChange={this.onUpdateValue}
                           />
+                          <datalist id="hosting-plan2">
+                            <option value="STRING" />
+                            <option value="INT" />
+                            <option value="FLOAT" />
+                          </datalist>
                         </div>
                         <div className="modal-footer">
                           <button
@@ -230,11 +351,18 @@ class CreateTable extends Component {
 
                   <table id="tableId">
                     <tbody>
+                      {/*%%%%%%%%%%%%%%%%%%%% header DOM working %%%%%%%%%%%%%%*/}
                       <tr className="header">
                         {this.state.header.map((header, index) => (
-                          <th key={index}>{header}</th>
+                          <th key={index}>
+                            {this.crossBtnInHeader(header, index)}
+                            {this.inputField(index, header)}
+                          </th>
                         ))}
                       </tr>
+                      {/*%%%%%%%%%%%%%%%%%%%% End header DOM working %%%%%%%%%%%%%%*/}
+
+                      {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
                       {this.state.storeData.map((yo, index) => (
                         <Rows
                           key={String(index)}
@@ -245,21 +373,6 @@ class CreateTable extends Component {
                           handleValueChange={this.handleValueChange.bind(this)}
                         />
                       ))}
-                      {/* {this.state.row.map((row, index) => {
-                        <Row />;
-                      })} */}
-                      {/* {this.state.row.map((row, index) => (
-                        
-                        // <Rows
-                        //   id={String(index)}
-                        //   row={row}
-                        //   key={String(index)}
-                        //   rowIndex={index}
-                        //   onAdd={this.addRowHandler}
-                        //   columns={this.state.columns}
-                        //   onAddCol={this.addColHandler}
-                        // />
-                      ))} */}
                     </tbody>
                   </table>
 
@@ -277,36 +390,13 @@ class CreateTable extends Component {
                   >
                     Submit
                   </button>
-                  {/* <table className="table">
-                  <thead className="thead-dark">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>
-                        <input />
-                      </td>
-                      <td>
-                        <input />
-                      </td>
-                      <td>
-                        <input />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> */}
                 </div>
               </div>
             </div>
           </div>
           {/* <!-- END MAIN CONTENT --> */}
         </div>
+        {/*%%%%%%%%%%%%%%%%%%%% END Table Rows/columns DOM woring %%%%%%%%%%%%%%*/}
       </React.Fragment>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Rows from "./Rows.jsx";
-import SweetALert from "sweetalert-react";
+import ModalPopup from "./modalPopup.jsx";
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
@@ -10,6 +10,15 @@ class CreateTable extends Component {
   }
 
   state = {
+    newColumnAttr: {
+      id: "1",
+      value: "2",
+      length: "",
+      autoInc: "",
+      type: "",
+      notNull: "",
+      unique: ""
+    },
     inputisEditableIndex: 0,
     inputisEditableFlag: "true",
     editFlag: 0,
@@ -17,7 +26,7 @@ class CreateTable extends Component {
     headerEditedValue: "",
     setIndex: 0,
     flag: 0,
-    irow: 2,
+    irow: 1,
     icol: 3,
     newHeader: "",
     newVal: "",
@@ -57,6 +66,7 @@ class CreateTable extends Component {
     columns: [],
     row: [{ id: 1, value: 2 }]
   };
+
   saveEditInputHandler(evt) {
     let editFlag = this.state.editFlag;
     editFlag = 0;
@@ -130,9 +140,9 @@ class CreateTable extends Component {
     let columns = this.state.storeData;
 
     console.log("yes it is integer");
-    let a = item.name + 1;
+
     // console.log(a);
-    console.log(this.state.storeData);
+    // console.log(this.state.storeData);
 
     columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
     console.log(item.id + " item id");
@@ -154,15 +164,14 @@ class CreateTable extends Component {
     this.setState({ irow: irow });
     console.log(rows);
   }
-  addHeaderHandler = value => {
+  addHeaderHandler() {
     let header = [...this.state.header];
     header[header.length] = header[header.length - 1];
     header[header.length - 2] = this.state.newHeader;
     this.setState({ header: header });
-    this.addColHandler();
-    return;
-    // <CreateTable />;
-  };
+    let newVal = this.state.newVal;
+    this.addColHandler(newVal);
+  }
 
   printHeader() {}
   addRowHandler = rows => {
@@ -187,6 +196,7 @@ class CreateTable extends Component {
     console.log(newVal);
     let reArr = this.state.storeData;
     for (let k = 0; k < this.state.irow; k++) {
+      console.log("k " + k);
       let reNew = { id: k + "", value: this.state.newVal };
       reArr[k].push(reNew);
     }
@@ -205,13 +215,7 @@ class CreateTable extends Component {
     this.setState({ newHeader: val });
   };
   print() {
-    // this.state.columns.map(columns => console.log(columns));
-    // this.state.storeData.map((set, index) => {
-    //   console.log(set);
-    // });
-
-    // let here = JSON.stringify(this.state.storeData);
-    console.log(this.state.storeData);
+    // console.log(this.state.storeData);
   }
   addSubmitHandler() {
     // let sub = JSON.stringify(this.state.storeData);
@@ -282,13 +286,14 @@ class CreateTable extends Component {
     }
   }
   makeInputFieldEditable(header, index) {
-    let flage = 1;
-    this.state.flag = 1;
+    let flag = this.state.flag;
+    flag = 1;
+    this.setState({ flag: flag });
     this.setState({ setIndex: index });
     console.log(this.state.flag);
   }
   handleHeaderValueChange(evt) {
-    console.log("handleHeaderValueChange()" + " " + evt.target.value);
+    // console.log("handleHeaderValueChange()" + " " + evt.target.value);
     let headerEdited = evt.target.value;
     this.setState({ headerEditedValue: headerEdited });
   }
@@ -296,12 +301,16 @@ class CreateTable extends Component {
     let header = this.state.header;
     if (this.state.headerEditedValue === "") {
       this.setState({ header: header });
-      this.state.flag = 0;
+      let flag = this.state.flag;
+      flag = 0;
+      this.setState({ flag: flag });
     } else {
       header[evt.target.id] = this.state.headerEditedValue;
       this.setState({ header: header });
       this.setState({ headerEditedValue: "" });
-      this.state.flag = 0;
+      let flag = this.state.flag;
+      flag = 0;
+      this.setState({ flag: flag });
     }
   }
   inputField(index, header) {
@@ -360,74 +369,14 @@ class CreateTable extends Component {
                   >
                     Add Row
                   </button>
-                  <div
-                    className="modal fade"
-                    id="exampleModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">
-                            Modal title
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div className="modal-body">
-                          <label>Enter Column Name</label>
-                          <input
-                            placeholder="Column Name"
-                            id=""
-                            name={this.state.newHeader}
-                            onChange={this.onUpdateHeader}
-                          />
-                          <br />
-                          <label>Enter Value</label>
-                          <input
-                            list="hosting-plan2"
-                            type="text"
-                            placeholder="Value"
-                            id="inpColValue"
-                            name={this.state.newValue}
-                            onChange={this.onUpdateValue}
-                          />
-                          <datalist id="hosting-plan2">
-                            <option value="STRING" />
-                            <option value="INT" />
-                            <option value="FLOAT" />
-                          </datalist>
-                        </div>
-                        <div className="modal-footer">
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={() => this.addHeaderHandler()}
-                            data-dismiss="modal"
-                          >
-                            Savechanges
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                  <ModalPopup
+                    newHeader={this.state.newHeader}
+                    onUpdateHeader={this.onUpdateHeader.bind(this)}
+                    newValue={this.state.newVal}
+                    onUpdateValue={this.onUpdateValue.bind(this)}
+                    addHeaderHandler={this.addHeaderHandler.bind(this)}
+                    // addColHandler={this.addColHandler}
+                  />
                   {/* table body */}
 
                   <table id="tableId">

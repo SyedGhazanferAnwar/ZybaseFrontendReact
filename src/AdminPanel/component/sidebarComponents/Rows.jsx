@@ -16,9 +16,14 @@ class Rows extends Component {
         parseInt(this.props.inputisEditableIndex) &&
       index !== 0
     ) {
-      console.log(index + "  dara " + this.props.storeData[0][index].type);
+      // console.log(index + "  dara " + this.props.storeData[0][index].type);
       return (
         <input
+          maxlength={
+            this.props.storeData[0][index].type === "STRING"
+              ? this.props.storeData[0][index].size
+              : ""
+          }
           type={this.props.storeData[0][index].type}
           placeholder={this.props.storeData[0][index].value}
           className="cellInput"
@@ -33,7 +38,7 @@ class Rows extends Component {
       return (
         <input
           readOnly
-          type={this.props.storeData[0][index].type}
+          // type={this.props.storeData[0][index].type}
           placeholder={
             index === 0
               ? this.props.index

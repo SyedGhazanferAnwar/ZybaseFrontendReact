@@ -19,6 +19,10 @@
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
+.cellInput::placeholder {
+  color: silver !important;
+  opacity: 0.8;
+}
 .cellInput:focus {
   outline-color: #209e91 !important;
   border-radius: 4px !important ;
@@ -119,4 +123,7 @@ body {
 td,
 th {
   min-width: 200px;
+}
+.modal-content {
+  background-color: #282c34a6;
 }

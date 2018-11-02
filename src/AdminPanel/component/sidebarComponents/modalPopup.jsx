@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+
 class ModalPopup extends Component {
   state = {};
+
   call() {
     return this.props.addHeaderHandler;
   }
@@ -32,8 +34,10 @@ class ModalPopup extends Component {
             <form onSubmit={this.props.addHeaderHandler}>
               <div className="modal-body">
                 {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
-                <label>Enter Column Name</label>
+                <label style={{ color: "white" }}>Enter Column Name</label>
                 <input
+                  style={{ marginLeft: "2%" }}
+                  className="cellInput"
                   placeholder="Column Name"
                   id="ColumnName"
                   name={this.props.newHeader}
@@ -42,16 +46,21 @@ class ModalPopup extends Component {
                 />
                 <br />
                 {/* %%%%%%%%%%%%%%%%  Default Value %%%%%%%%%%%%%%%% */}
-                <label>Enter Default-Value</label>
+                <label style={{ color: "white" }}>Enter Default-Value</label>
                 <input
+                  type="text"
+                  style={{ marginLeft: "3%" }}
+                  className="cellInput"
                   placeholder="Optional.."
                   id="Default-Value"
                   onChange={this.props.onUpdateValue}
                 />
                 <br />
                 {/* %%%%%%%%%%%%%%%%  data type  %%%%%%%%%%%%%%%% */}
-                <label>Enter Data-type</label>
+                <label style={{ color: "white" }}>Enter Data-type</label>
                 <select
+                  style={{ marginLeft: "7.5%" }}
+                  className="cellInput"
                   id="Data-type"
                   defaultValue="STRING"
                   onChange={this.props.onUpdateValue}
@@ -71,10 +80,13 @@ class ModalPopup extends Component {
                 </select>
                 <br />
                 {/* %%%%%%%%%%%%%%%%  length  %%%%%%%%%%%%%%%% */}
-                <label>Enter length</label>
+                <label style={{ color: "white" }}>Enter length</label>
                 <input
+                  style={{ marginLeft: "12%" }}
+                  className="cellInput"
                   id="length"
                   type="number"
+                  min="0"
                   value={this.value}
                   placeholder="length"
                   onChange={this.props.onUpdateValue}
@@ -82,8 +94,9 @@ class ModalPopup extends Component {
                 />
                 <br />
                 {/* %%%%%%%%%%%%%%%%  pk  %%%%%%%%%%%%%%%% */}
-                <label>PK </label>
+                <label style={{ color: "white" }}>Primary Key</label>
                 <input
+                  className="cellInput"
                   id="pk"
                   style={{ marginLeft: "5px" }}
                   type="checkbox"
@@ -105,6 +118,15 @@ class ModalPopup extends Component {
               </div>
 
               <div className="modal-footer">
+                <button
+                  type="reset"
+                  className="btn btn-danger"
+                  style={{ marginRight: "48%" }}
+                  // onClick={this.props.addHeaderHandler}
+                  // data-dismiss="modal"
+                >
+                  Reset
+                </button>
                 <button
                   type="button"
                   className="btn btn-secondary"

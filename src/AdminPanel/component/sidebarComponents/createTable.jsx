@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Rows from "./Rows.jsx";
 import ModalPopup from "./modalPopup.jsx";
+import validator from "react-validation";
+import { validate, ValidationIn } from "simple-react-validator";
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
@@ -37,7 +39,7 @@ class CreateTable extends Component {
           id: "0",
           pk: "",
           value: "",
-          length: "",
+          size: "",
           autoInc: "",
           type: "",
           notNull: "",
@@ -47,7 +49,7 @@ class CreateTable extends Component {
           id: "1",
           pk: "",
           value: "",
-          length: "",
+          size: "",
           autoInc: "",
           type: "",
           notNull: "",
@@ -55,7 +57,7 @@ class CreateTable extends Component {
         }
       ]
     ],
-    header: ["Id", "Name", "Action"]
+    header: ["Id  (auto)", "Name", "Action"]
     // columns: [],
     // row: [{ id: 1, value: 2 }]
   };
@@ -70,7 +72,7 @@ class CreateTable extends Component {
     this.setState({ inputisEditableFlag: inputisEditableFlag });
   }
   editRow(evt) {
-    console.log("evt " + evt.target.id);
+    // console.log("evt " + evt.target.id);
     let editFlag = this.state.editFlag;
     editFlag = 1;
     this.setState({ editFlag: editFlag });
@@ -131,12 +133,7 @@ class CreateTable extends Component {
     };
     // const re = /^[0-9\b]+$/;
     let columns = this.state.storeData;
-    console.log("yes it is integer");
-    // console.log(a);
-    // console.log(this.state.storeData);
     columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
-    console.log(item.id + " item id");
-    console.log(columns);
     this.setState({ storeData: columns });
     // console.log(item.id + "  " + item.rowIndex);
   }
@@ -177,7 +174,7 @@ class CreateTable extends Component {
         id: k + "",
         pk: reArr[0][k].pk,
         value: reArr[0][k].value,
-        length: reArr[0][k].length,
+        size: reArr[0][k].size,
         autoInc: reArr[0][k].autoInc,
         type: reArr[0][k].type,
         notNull: reArr[0][k].notNull,
@@ -186,10 +183,9 @@ class CreateTable extends Component {
 
       reNew.push(reN);
     }
-    console.log("here =" + reArr[0][1].value);
+    // console.log("here =" + reArr[0][1].value);
     reArr.push(reNew);
     this.setState({ storeData: reArr });
-
     let irow = this.state.irow;
     irow++;
     this.setState({ irow: irow });
@@ -203,7 +199,7 @@ class CreateTable extends Component {
         id: k + "",
         pk: this.state.newColumnAttr.pk,
         value: this.state.newColumnAttr.defaultValue,
-        length: this.state.newColumnAttr.size,
+        size: this.state.newColumnAttr.size,
         autoInc: "",
         type: this.state.newColumnAttr.type,
         notNull: "",

@@ -12,11 +12,15 @@ class Rows extends Component {
   inputField(index) {
     if (
       this.props.inputisEditableFlag === "false" &&
-      parseInt(this.props.index) === parseInt(this.props.inputisEditableIndex)
+      parseInt(this.props.index) ===
+        parseInt(this.props.inputisEditableIndex) &&
+      index !== 0
     ) {
+      console.log(index + "  dara " + this.props.storeData[0][index].type);
       return (
         <input
-          placeholder="(value)"
+          type={this.props.storeData[0][index].type}
+          placeholder={this.props.storeData[0][index].value}
           className="cellInput"
           name={this.props.index}
           // value={row.value}
@@ -29,10 +33,15 @@ class Rows extends Component {
       return (
         <input
           readOnly
-          placeholder="(value)"
+          type={this.props.storeData[0][index].type}
+          placeholder={
+            index === 0
+              ? this.props.index
+              : this.props.storeData[0][index].value
+          }
           className="cellInput"
           name={this.props.index}
-          // value={row.value}
+          // value={index === 0 ? this.props.index : ""}
           onChange={this.props.handleValueChange}
           key={String(this.props.index) + String(index)}
           id={index}

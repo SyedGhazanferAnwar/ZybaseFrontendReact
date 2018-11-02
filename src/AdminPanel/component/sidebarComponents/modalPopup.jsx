@@ -59,8 +59,8 @@ class ModalPopup extends Component {
                   <option key="1" value="STRING">
                     STRING
                   </option>
-                  <option key="2" value="INT">
-                    INT
+                  <option key="2" value="number">
+                    NUMBER
                   </option>
                   <option key="3" value="FLOAT">
                     FLOAT

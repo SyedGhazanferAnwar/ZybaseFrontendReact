@@ -27,15 +27,16 @@ class CreateTable extends Component {
     setIndex: 0,
     flag: 0,
     irow: 1,
-    icol: 3,
+    icol: 2,
     newHeader: "",
     newVal: "",
-    empty: [[{ id: "1", value: "2" }]],
+    // empty: [[{ id: "1", value: "2" }]],
     storeData: [
       [
         {
-          id: "1",
-          value: "2",
+          id: "0",
+          pk: "",
+          value: "",
           length: "",
           autoInc: "",
           type: "",
@@ -44,16 +45,8 @@ class CreateTable extends Component {
         },
         {
           id: "1",
-          value: "1",
-          length: "",
-          autoInc: "",
-          type: "",
-          notNull: "",
-          unique: ""
-        },
-        {
-          id: "1",
-          value: "1",
+          pk: "",
+          value: "",
           length: "",
           autoInc: "",
           type: "",
@@ -62,9 +55,9 @@ class CreateTable extends Component {
         }
       ]
     ],
-    header: ["Id", "Value", "Name", "Action"],
-    columns: [],
-    row: [{ id: 1, value: 2 }]
+    header: ["Id", "Name", "Action"]
+    // columns: [],
+    // row: [{ id: 1, value: 2 }]
   };
 
   saveEditInputHandler(evt) {
@@ -138,17 +131,13 @@ class CreateTable extends Component {
     };
     // const re = /^[0-9\b]+$/;
     let columns = this.state.storeData;
-
     console.log("yes it is integer");
-
     // console.log(a);
     // console.log(this.state.storeData);
-
     columns[parseInt(item.name)][parseInt(item.id)].value = item.value;
     console.log(item.id + " item id");
     console.log(columns);
     this.setState({ storeData: columns });
-
     // console.log(item.id + "  " + item.rowIndex);
   }
   handleRowDelete(evt) {
@@ -184,10 +173,20 @@ class CreateTable extends Component {
 
     // console.log("asdsa" + reArr);
     for (let k = 0; k < this.state.icol; k++) {
-      let reN = { id: k + "", value: "ol" };
+      let reN = {
+        id: k + "",
+        pk: reArr[0][k].pk,
+        value: reArr[0][k].value,
+        length: reArr[0][k].length,
+        autoInc: reArr[0][k].autoInc,
+        type: reArr[0][k].type,
+        notNull: reArr[0][k].notNull,
+        unique: reArr[0][k].unique
+      };
 
       reNew.push(reN);
     }
+    console.log("here =" + reArr[0][1].value);
     reArr.push(reNew);
     this.setState({ storeData: reArr });
 
@@ -200,7 +199,16 @@ class CreateTable extends Component {
     let reArr = this.state.storeData;
     for (let k = 0; k < this.state.irow; k++) {
       console.log("k " + k);
-      let reNew = { id: k + "", value: this.state.newVal };
+      let reNew = {
+        id: k + "",
+        pk: this.state.newColumnAttr.pk,
+        value: this.state.newColumnAttr.defaultValue,
+        length: this.state.newColumnAttr.size,
+        autoInc: "",
+        type: this.state.newColumnAttr.type,
+        notNull: "",
+        unique: ""
+      };
       reArr[k].push(reNew);
     }
     this.setState({ storeData: reArr });
@@ -248,7 +256,7 @@ class CreateTable extends Component {
     // console.log(state)
   }
   crossBtnClickHandler = index => {
-    console.log(index);
+    // console.log(index);
     let l = 0;
     let dupStoreData = [];
     let array2 = this.state.storeData;
@@ -274,7 +282,7 @@ class CreateTable extends Component {
     this.setState({ icol: icol });
     this.setState({ header: dupHeader });
     this.setState({ storeData: dupStoreData });
-    console.log(dupStoreData);
+    // console.log(dupStoreData);
 
     // console.log(array);
   };

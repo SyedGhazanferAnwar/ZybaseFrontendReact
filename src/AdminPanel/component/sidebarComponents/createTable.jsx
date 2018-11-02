@@ -11,11 +11,11 @@ class CreateTable extends Component {
 
   state = {
     newColumnAttr: {
-      id: "1",
-      value: "2",
-      length: "",
+      id: "",
+      defaultValue: "",
+      size: 0,
       autoInc: "",
-      type: "",
+      type: "STRING",
       notNull: "",
       unique: ""
     },
@@ -164,12 +164,15 @@ class CreateTable extends Component {
     this.setState({ irow: irow });
     console.log(rows);
   }
-  addHeaderHandler() {
+  addHeaderHandler(evt) {
+    evt.preventDefault();
     let header = [...this.state.header];
     header[header.length] = header[header.length - 1];
     header[header.length - 2] = this.state.newHeader;
     this.setState({ header: header });
     let newVal = this.state.newVal;
+    console.log(this.state.newColumnAttr);
+
     this.addColHandler(newVal);
   }
 
@@ -206,9 +209,31 @@ class CreateTable extends Component {
     this.setState({ icol: icol });
   };
   onUpdateValue = evt => {
-    let val = evt.target.value;
-    console.log(val);
-    this.setState({ newVal: val });
+    let newColumnAttr = this.state.newColumnAttr;
+
+    if (evt.target.id === "pk") {
+      newColumnAttr.pk = evt.target.checked;
+      console.log("pk is here   " + newColumnAttr.pk);
+    }
+    if (evt.target.id === "length") {
+      newColumnAttr.size = evt.target.value;
+      console.log("length is here   " + newColumnAttr.size);
+    }
+    if (evt.target.id === "Default-Value") {
+      newColumnAttr.defaultValue = evt.target.value;
+      console.log("defaultValue is here   " + newColumnAttr.defaultValue);
+    }
+    if (evt.target.id === "Data-type") {
+      newColumnAttr.type = evt.target.value;
+      console.log("Data-type is here   " + newColumnAttr.type);
+    }
+    if (evt.target.id === "ColumnName") {
+      console.log("ColumnName is here   " + evt.target.value);
+      let val = evt.target.value;
+      this.setState({ newVal: val });
+      return;
+    }
+    this.setState({ newColumnAttr: newColumnAttr });
   };
   onUpdateHeader = evt => {
     let val = evt.target.value;
@@ -322,6 +347,7 @@ class CreateTable extends Component {
             onChange={this.handleHeaderValueChange.bind(this)}
             placeholder={header}
             className="cellInput"
+            autoFocus
           />
           <button
             className="btn btn-danger"

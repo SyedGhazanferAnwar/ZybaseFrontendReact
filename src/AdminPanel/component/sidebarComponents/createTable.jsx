@@ -39,6 +39,7 @@ class CreateTable extends Component {
         {
           id: "0",
           pk: "",
+          defaultValue: "",
           value: "",
           size: "",
           autoInc: "",
@@ -49,6 +50,7 @@ class CreateTable extends Component {
         {
           id: "1",
           pk: "",
+          defaultValue: "",
           value: "",
           size: "",
           autoInc: "",
@@ -174,7 +176,8 @@ class CreateTable extends Component {
       let reN = {
         id: k + "",
         pk: reArr[0][k].pk,
-        value: reArr[0][k].value,
+        defaultValue: reArr[0][k].value,
+        value: reArr[0][k].defaultValue,
         size: reArr[0][k].size,
         autoInc: reArr[0][k].autoInc,
         type: reArr[0][k].type,
@@ -199,6 +202,7 @@ class CreateTable extends Component {
       let reNew = {
         id: k + "",
         pk: this.state.newColumnAttr.pk,
+        defaultValue: this.state.newColumnAttr.defaultValue,
         value: this.state.newColumnAttr.defaultValue,
         size: this.state.newColumnAttr.size,
         autoInc: "",
@@ -392,7 +396,7 @@ class CreateTable extends Component {
                 <div className="panel-body">
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn btn-primary zoomBtn"
                     data-toggle="modal"
                     data-target="#exampleModal"
                   >
@@ -400,7 +404,7 @@ class CreateTable extends Component {
                   </button>
                   <button
                     id="addBtn"
-                    className="btn btn-primary addBtn"
+                    className="btn btn-primary addBtn zoomBtn"
                     onClick={() => this.addRowHandler(this.state.row)}
                   >
                     Add Row
@@ -456,7 +460,7 @@ class CreateTable extends Component {
                     ADDColumns
                   </button>
                   <button
-                    className="btn btn-primary subBtn"
+                    className="btn btn-primary subBtn zoomBtn"
                     id="subBtn"
                     onClick={this.addSubmitHandler.bind(this)}
                   >

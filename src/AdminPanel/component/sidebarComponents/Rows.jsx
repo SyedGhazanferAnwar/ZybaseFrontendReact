@@ -19,15 +19,22 @@ class Rows extends Component {
       // console.log(index + "  dara " + this.props.storeData[0][index].type);
       return (
         <input
-          maxlength={
+          maxLength={
             this.props.storeData[0][index].type === "STRING"
-              ? this.props.storeData[0][index].size
+              ? String(this.props.storeData[0][index].size)
               : ""
           }
           type={
             this.props.storeData[0][index].type !== "STRING" ? "number" : "text"
           }
-          placeholder={this.props.storeData[0][index].value}
+          // placeholder={this.props.storeData[0][index].value}
+          // value={index === 0 ? this.props.index : ""}
+          defaultValue={
+            index === 0
+              ? this.props.index
+              : this.props.storeData[0][index].defaultValue
+          }
+          onClick={this.props.defaultEditable}
           className="cellInput"
           name={this.props.index}
           // value={row.value}
@@ -40,12 +47,23 @@ class Rows extends Component {
       return (
         <input
           readOnly
-          // type={this.props.storeData[0][index].type}
-          placeholder={
+          maxLength={
+            this.props.storeData[0][index].type === "STRING"
+              ? String(this.props.storeData[0][index].size)
+              : ""
+          }
+          defaultValue={
             index === 0
               ? this.props.index
-              : this.props.storeData[0][index].value
+              : this.props.storeData[0][index].defaultValue
           }
+          // type={this.props.storeData[0][index].type}
+          // placeholder={
+          //   index === 0
+          //     ? this.props.index
+          //     : this.props.storeData[0][index].value
+          // }
+          // value={index === 0 ? this.props.index : ""}
           className="cellInput"
           name={this.props.index}
           // value={index === 0 ? this.props.index : ""}

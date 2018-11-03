@@ -127,3 +127,11 @@ th {
 .modal-content {
   background-color: #282c34a6;
 }
+.zoomBtn {
+  transition: transform 0.2s; /* Animation */
+}
+.zoomBtn:hover {
+  transform: scale(
+    1.2
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}

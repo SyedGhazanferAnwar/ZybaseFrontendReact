@@ -24,7 +24,9 @@ class Rows extends Component {
               ? this.props.storeData[0][index].size
               : ""
           }
-          type={this.props.storeData[0][index].type}
+          type={
+            this.props.storeData[0][index].type !== "STRING" ? "number" : "text"
+          }
           placeholder={this.props.storeData[0][index].value}
           className="cellInput"
           name={this.props.index}

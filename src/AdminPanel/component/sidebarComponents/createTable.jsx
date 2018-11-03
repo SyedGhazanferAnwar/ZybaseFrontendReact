@@ -21,6 +21,7 @@ class CreateTable extends Component {
       notNull: "",
       unique: ""
     },
+    lengthDisableStatus: 0,
     inputisEditableIndex: 0,
     inputisEditableFlag: "true",
     editFlag: 0,
@@ -212,7 +213,7 @@ class CreateTable extends Component {
     icol++;
     this.setState({ icol: icol });
   };
-  onUpdateValue = evt => {
+  onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
 
     if (evt.target.id === "pk") {
@@ -229,6 +230,11 @@ class CreateTable extends Component {
     }
     if (evt.target.id === "Data-type") {
       newColumnAttr.type = evt.target.value;
+      if (newColumnAttr.type !== "STRING") {
+        this.setState({ lengthDisableStatus: 1 });
+      } else {
+        this.setState({ lengthDisableStatus: 0 });
+      }
       console.log("Data-type is here   " + newColumnAttr.type);
     }
     if (evt.target.id === "ColumnName") {
@@ -403,8 +409,11 @@ class CreateTable extends Component {
                     newHeader={this.state.newHeader}
                     onUpdateHeader={this.onUpdateHeader.bind(this)}
                     newValue={this.state.newVal}
-                    onUpdateValue={this.onUpdateValue.bind(this)}
+                    onUpdateValueColumnAttr={this.onUpdateValueColumnAttr.bind(
+                      this
+                    )}
                     addHeaderHandler={this.addHeaderHandler.bind(this)}
+                    lengthDisableStatus={this.state.lengthDisableStatus}
                     // addColHandler={this.addColHandler}
                   />
                   {/* table body */}

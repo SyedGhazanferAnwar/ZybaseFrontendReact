@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 class ModalPopup extends Component {
-  state = {};
+  state = {
+    status: 1
+  };
 
   call() {
     return this.props.addHeaderHandler;
@@ -20,7 +22,7 @@ class ModalPopup extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Modal title
+                Add New Column
               </h5>
               <button
                 type="button"
@@ -53,7 +55,7 @@ class ModalPopup extends Component {
                   className="cellInput"
                   placeholder="Optional.."
                   id="Default-Value"
-                  onChange={this.props.onUpdateValue}
+                  onChange={this.props.onUpdateValueColumnAttr}
                 />
                 <br />
                 {/* %%%%%%%%%%%%%%%%  data type  %%%%%%%%%%%%%%%% */}
@@ -63,7 +65,7 @@ class ModalPopup extends Component {
                   className="cellInput"
                   id="Data-type"
                   defaultValue="STRING"
-                  onChange={this.props.onUpdateValue}
+                  onChange={this.props.onUpdateValueColumnAttr}
                 >
                   <option key="1" value="STRING">
                     STRING
@@ -89,8 +91,9 @@ class ModalPopup extends Component {
                   min="0"
                   value={this.value}
                   placeholder="length"
-                  onChange={this.props.onUpdateValue}
+                  onChange={this.props.onUpdateValueColumnAttr}
                   required
+                  disabled={this.props.lengthDisableStatus}
                 />
                 <br />
                 {/* %%%%%%%%%%%%%%%%  pk  %%%%%%%%%%%%%%%% */}
@@ -100,7 +103,7 @@ class ModalPopup extends Component {
                   id="pk"
                   style={{ marginLeft: "5px" }}
                   type="checkbox"
-                  onChange={this.props.onUpdateValue}
+                  onChange={this.props.onUpdateValueColumnAttr}
                 />
                 {/* <input
                 list="hosting-plan2"
@@ -120,16 +123,17 @@ class ModalPopup extends Component {
               <div className="modal-footer">
                 <button
                   type="reset"
-                  className="btn btn-danger"
-                  style={{ marginRight: "48%" }}
+                  className="btn btn-danger zoomBtn"
+                  style={{ marginRight: "45%" }}
                   // onClick={this.props.addHeaderHandler}
                   // data-dismiss="modal"
                 >
                   Reset
                 </button>
                 <button
+                  style={{ marginRight: "8px" }}
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-default zoomBtn"
                   data-dismiss="modal"
                 >
                   Close
@@ -137,7 +141,7 @@ class ModalPopup extends Component {
 
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-primary zoomBtn"
                   // onClick={this.props.addHeaderHandler}
                   // data-dismiss="modal"
                 >

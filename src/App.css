@@ -138,3 +138,35 @@ th {
     1.1
   ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
+.terminal {
+  clear: both;
+  position: absolute;
+  font-size: 0.85em;
+  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
+  width: 100%;
+  max-height: 300px;
+  background-color: rgb(68, 58, 58);
+  overflow-y: auto;
+}
+.messages {
+  margin-left: 6px;
+}
+.prompt {
+  clear: both;
+  position: relative;
+  overflow: auto;
+  color: green;
+}
+.prompt input {
+  margin-left: 6px;
+  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
+  position: relative;
+  caret-color: green;
+  background-color: rgb(68, 58, 58);
+  border: none;
+  outline: none;
+  color: green;
+}
+.messages {
+  color: green;
+}

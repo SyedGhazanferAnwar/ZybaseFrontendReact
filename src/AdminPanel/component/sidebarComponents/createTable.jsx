@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import Rows from "./Rows.jsx";
 import ModalPopup from "./modalPopup.jsx";
+import Auth from "../../../Auth.js";
+// import { connect } from "r";
 import validator from "react-validation";
 import { validate, ValidationIn } from "simple-react-validator";
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
 class CreateTable extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    // this.crossBtnClickHandler = this.crossBtnClickHandler.bind(this);
   }
 
   state = {
@@ -21,18 +24,20 @@ class CreateTable extends Component {
       notNull: "",
       unique: ""
     },
+    datatarget: "",
     lengthDisableStatus: 0,
     inputisEditableIndex: 0,
     inputisEditableFlag: "true",
     editFlag: 0,
     editRowIndex: -9,
     headerEditedValue: "",
-    setIndex: 0,
+    setIndex: 1,
     flag: 0,
     irow: 1,
     icol: 2,
     newHeader: "",
     newVal: "",
+    checkBhund: 0,
     // empty: [[{ id: "1", value: "2" }]],
     storeData: [
       [
@@ -201,7 +206,7 @@ class CreateTable extends Component {
       console.log("k " + k);
       let reNew = {
         id: k + "",
-        pk: this.state.newColumnAttr.pk,
+        pk: this.state.newColumnAttr.pk + "",
         defaultValue: this.state.newColumnAttr.defaultValue,
         value: this.state.newColumnAttr.defaultValue,
         size: this.state.newColumnAttr.size,
@@ -262,7 +267,9 @@ class CreateTable extends Component {
     // console.log(state)
   }
   crossBtnClickHandler = index => {
-    // console.log(index);
+    console.log(index);
+    let flag = 0;
+    this.setState({ flag: flag });
     let l = 0;
     let dupStoreData = [];
     let array2 = this.state.storeData;
@@ -292,13 +299,19 @@ class CreateTable extends Component {
 
     // console.log(array);
   };
+  myfunc(evt) {
+    console.log("yuhooo" + evt);
+    // let flag = this.state.flag;
+    // flag = 1;
+    this.setState({ setIndex: evt });
+  }
   // check(evt) {
   //   console.log("herher");
   //   return (evt.value = "");
   // }
   // ****************************{all header working here}*********************
 
-  crossBtnInHeader(header, index) {
+  crossEditBtnInHeader(header, index) {
     if (index > 0 && index < this.state.header.length - 1) {
       return (
         <div>
@@ -313,10 +326,14 @@ class CreateTable extends Component {
           </button>
           <button
             type="button"
-            onClick={() => this.makeInputFieldEditable(header, index)}
-            id={index + 100}
+            id="btn"
             key={index + 100}
-            className="close crossBtn"
+            name={index}
+            className="close crossBtn editBtn"
+            // onClick={this.editColumnOpen.bind(this)}
+            onClick={() => this.myfunc(index)}
+            data-toggle="modal"
+            data-target="#modifyColumnModal"
           >
             <i className="fa fa-edit " />
           </button>
@@ -324,57 +341,77 @@ class CreateTable extends Component {
       );
     }
   }
-  makeInputFieldEditable(header, index) {
+  editColumnOpen() {
+    console.log("herer er");
     let flag = this.state.flag;
     flag = 1;
     this.setState({ flag: flag });
-    this.setState({ setIndex: index });
-    console.log(this.state.flag);
   }
-  handleHeaderValueChange(evt) {
-    // console.log("handleHeaderValueChange()" + " " + evt.target.value);
-    let headerEdited = evt.target.value;
-    this.setState({ headerEditedValue: headerEdited });
+  makeInputFieldEditable(evt) {
+    // this.crossEditBtnInHeader();
+    // let datatarget = this.state.datatarget;
+    // datatarget = "#modifyColumnModal";
+    // this.setState({ datatarget: datatarget });
+    // console.log("yes" + evt.target.id);
+    // Auth.onEditBtnClick();
+    // let flag = this.state.flag;
+    // flag = 1;
+    // this.setState({ flag: flag });
+    // return "#modifyColumnModal";
+    // let checkBhund = this.state.checkBhund;
+    // checkBhund = evt;
+    // console.log("sd " + evt.id)
+    // this.setState({ checkBhund: checkBhund });
+    // return "#modifyColumnModal";
+    // Auth.onEditBtnClick();
+    // console.log(this.state.storeData[0][1].value);
+    // console.log(this.state.flag);
   }
-  saveEditedHeader(evt) {
-    let header = this.state.header;
-    if (this.state.headerEditedValue === "") {
-      this.setState({ header: header });
-      let flag = this.state.flag;
-      flag = 0;
-      this.setState({ flag: flag });
-    } else {
-      header[evt.target.id] = this.state.headerEditedValue;
-      this.setState({ header: header });
-      this.setState({ headerEditedValue: "" });
-      let flag = this.state.flag;
-      flag = 0;
-      this.setState({ flag: flag });
-    }
-  }
+  // handleHeaderValueChange(evt) {
+  //   // console.log("handleHeaderValueChange()" + " " + evt.target.value);
+  //   let headerEdited = evt.target.value;
+  //   this.setState({ headerEditedValue: headerEdited });
+  // }
+  // saveEditedHeader(evt) {
+  //   let header = this.state.header;
+  //   if (this.state.headerEditedValue === "") {
+  //     this.setState({ header: header });
+  //     let flag = this.state.flag;
+  //     flag = 0;
+  //     this.setState({ flag: flag });
+  //   } else {
+  //     header[evt.target.id] = this.state.headerEditedValue;
+  //     this.setState({ header: header });
+  //     this.setState({ headerEditedValue: "" });
+  //     let flag = this.state.flag;
+  //     flag = 0;
+  //     this.setState({ flag: flag });
+  //   }
+  // }
+
   inputField(index, header) {
-    if (this.state.flag === 1 && index === this.state.setIndex) {
-      return (
-        <div>
-          <input
-            id={index}
-            onChange={this.handleHeaderValueChange.bind(this)}
-            placeholder={header}
-            className="cellInput"
-            autoFocus
-          />
-          <button
-            className="btn btn-danger"
-            id={index}
-            onClick={this.saveEditedHeader.bind(this)}
-          >
-            save
-          </button>
-        </div>
-      );
-    } else {
-      return header;
-    }
+    // if (this.state.flag === 1 && index === this.state.setIndex) {
+    //   return (
+    //     <div>
+    //       <input
+    //         id={index}
+    //         onChange={this.handleHeaderValueChange.bind(this)}
+    //         placeholder={header}
+    //         className="cellInput"
+    //         autoFocus
+    //       />
+    //       <button
+    //         className="btn btn-danger"
+    //         id={index}
+    //         onClick={this.saveEditedHeader.bind(this)}
+    //       >
+    //         save
+    //       </button>
+    //     </div>
+    //   );
+    // } else {
+    return header;
+    // }
     // *******************************{End Header working} ********************
   }
 
@@ -410,6 +447,10 @@ class CreateTable extends Component {
                     Add Row
                   </button>
                   <ModalPopup
+                    setIndex={this.state.setIndex}
+                    storeData={this.state.storeData}
+                    flag={this.state.flag}
+                    header={this.state.header}
                     newHeader={this.state.newHeader}
                     onUpdateHeader={this.onUpdateHeader.bind(this)}
                     newValue={this.state.newVal}
@@ -420,6 +461,8 @@ class CreateTable extends Component {
                     lengthDisableStatus={this.state.lengthDisableStatus}
                     // addColHandler={this.addColHandler}
                   />
+
+                  {this.state.flag === 1 ? <ModalPopup /> : ""}
                   {/* table body */}
 
                   <table id="tableId">
@@ -428,8 +471,10 @@ class CreateTable extends Component {
                       <tr className="header">
                         {this.state.header.map((header, index) => (
                           <th key={index}>
-                            {this.crossBtnInHeader(header, index)}
+                            {/* {this.setState({ setIndex: index })} */}
+                            {this.crossEditBtnInHeader(header, index)}
                             {this.inputField(index, header)}
+                            {/* {this.setIndexHandler(index)} */}
                           </th>
                         ))}
                       </tr>

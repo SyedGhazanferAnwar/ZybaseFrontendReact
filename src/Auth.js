@@ -1,6 +1,22 @@
+import ModalPopup from "./AdminPanel/component/sidebarComponents/modalPopup";
+
 export default {
   isAuthenticated: false,
   isLoaded: false,
+  onEditBtnClick() {
+    var btn = document.getElementById("btn");
+    var modal = document.getElementById("exampleModal");
+    btn.onclick = function(event) {
+      // "exampleModal".modal("show");
+
+      // var Modal = ReactBootstrap.Modal;
+
+      // btn.toggle-data
+      console.log();
+    };
+    // modal.style.display = "block";
+    // modal.style.boxShadow = "";
+  },
   authenticate(cb) {
     fetch("http://localhost:5000/checkauthenticated", {
       method: "GET",
@@ -11,7 +27,7 @@ export default {
       })
       .then(response => {
         console.log(response);
-        if (response.authenticate == "true") {
+        if (response.authenticate === "true") {
           this.isAuthenticated = true;
           this.isLoaded = true;
         } else if (response.authenticate === "false") {
@@ -39,7 +55,7 @@ export default {
       })
       .then(response => {
         console.log(response);
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
           this.isAuthenticated = false;
         } else {
           console.log("Serious Error");

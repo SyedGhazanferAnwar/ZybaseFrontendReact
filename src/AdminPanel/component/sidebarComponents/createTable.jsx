@@ -43,6 +43,7 @@ class CreateTable extends Component {
       [
         {
           id: "0",
+          colName: "",
           pk: "",
           defaultValue: "",
           value: "",
@@ -54,6 +55,7 @@ class CreateTable extends Component {
         },
         {
           id: "1",
+          colName: "Name",
           pk: "",
           defaultValue: "",
           value: "",
@@ -165,8 +167,7 @@ class CreateTable extends Component {
     header[header.length - 2] = this.state.newHeader;
     this.setState({ header: header });
     let newVal = this.state.newVal;
-    console.log(this.state.newColumnAttr);
-
+    // console.log(this.state.newColumnAttr);
     this.addColHandler(newVal);
   }
 
@@ -180,6 +181,7 @@ class CreateTable extends Component {
     for (let k = 0; k < this.state.icol; k++) {
       let reN = {
         id: k + "",
+        colName: reArr[0][k].colName,
         pk: reArr[0][k].pk,
         defaultValue: reArr[0][k].value,
         value: reArr[0][k].defaultValue,
@@ -200,12 +202,13 @@ class CreateTable extends Component {
     this.setState({ irow: irow });
   };
   addColHandler = newVal => {
-    console.log(newVal);
+    // console.log(newVal);
     let reArr = this.state.storeData;
     for (let k = 0; k < this.state.irow; k++) {
       console.log("k " + k);
       let reNew = {
         id: k + "",
+        colName: this.state.newHeader,
         pk: this.state.newColumnAttr.pk + "",
         defaultValue: this.state.newColumnAttr.defaultValue,
         value: this.state.newColumnAttr.defaultValue,

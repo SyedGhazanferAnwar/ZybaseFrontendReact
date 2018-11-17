@@ -2,14 +2,15 @@ import React, { Component } from "react";
 
 class ModalPopup extends Component {
   state = {
-    status: 1
+    status: 1,
+    dv: ""
   };
 
   call() {
-    return this.props.addHeaderHandler;
+    return this.props.addNewColumnsHandler;
   }
+
   render() {
-    console.log("dasa " + this.props.setIndex);
     return (
       <React.Fragment>
         <div
@@ -36,6 +37,7 @@ class ModalPopup extends Component {
                 </button>
               </div>
               <form onSubmit={this.props.addHeaderHandler}>
+                {console.log("divset")}
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
                   <label style={{ color: "white" }}>Enter Column Name</label>
@@ -44,7 +46,7 @@ class ModalPopup extends Component {
                     className="cellInput"
                     placeholder="Column Name"
                     id="ColumnName"
-                    name={this.props.newHeader}
+                    // name={this.props.newHeader}
                     onChange={this.props.onUpdateHeader}
                     required
                   />
@@ -109,27 +111,13 @@ class ModalPopup extends Component {
                     type="checkbox"
                     onChange={this.props.onUpdateValueColumnAttr}
                   />
-                  {/* <input
-                list="hosting-plan2"
-                type="text"
-                placeholder="Value"
-                id="inpColValue"
-                name={this.props.newValue}
-                onChange={this.props.onUpdateValue}
-              />
-              <datalist id="hosting-plan2">
-                <option value="STRING" />
-                <option value="INT" />
-                <option value="FLOAT" />
-              </datalist> */}
                 </div>
-
                 <div className="modal-footer">
                   <button
                     type="reset"
                     className="btn btn-danger zoomBtn"
                     style={{ marginRight: "45%" }}
-                    // onClick={this.props.addHeaderHandler}
+                    // onClick={this.props.addNewColumnsHandler}
                     // data-dismiss="modal"
                   >
                     Reset
@@ -146,7 +134,7 @@ class ModalPopup extends Component {
                   <button
                     type="submit"
                     className="btn btn-primary zoomBtn"
-                    // onClick={this.props.addHeaderHandler}
+                    // onClick={this.props.addNewColumnsHandler}
                     // data-dismiss="modal"
                   >
                     Savechanges
@@ -189,12 +177,16 @@ class ModalPopup extends Component {
                   <input
                     style={{ marginLeft: "2%" }}
                     className="cellInput"
-                    defaultValue={this.props.header[this.props.setIndex]}
+                    defaultValue={
+                      this.props.storeData[0][this.props.setIndex].colName
+                    }
+                    // defaultValue="9999"
                     id="ColumnName"
-                    name={this.props.newHeader}
+                    // name={this.props.newHeader}
                     onChange={this.props.onUpdateHeader}
                     required
                   />
+
                   <br />
                   {/* %%%%%%%%%%%%%%%%  Default Value %%%%%%%%%%%%%%%% */}
                   <label style={{ color: "white" }}>Enter Default-Value</label>
@@ -243,7 +235,6 @@ class ModalPopup extends Component {
                     id="length"
                     type="number"
                     min="0"
-                    value={this.value}
                     defaultValue={
                       this.props.storeData[0][this.props.setIndex].size
                     }
@@ -287,7 +278,7 @@ class ModalPopup extends Component {
                   <button
                     type="submit"
                     className="btn btn-primary zoomBtn"
-                    // onClick={this.props.addHeaderHandler}
+                    // onClick={this.props.addNewColumnsHandler}
                     // data-dismiss="modal"
                   >
                     Savechanges

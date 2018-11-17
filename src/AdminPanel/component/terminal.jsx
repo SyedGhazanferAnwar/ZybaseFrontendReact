@@ -4,7 +4,8 @@ import SideMenu from "./sideMenu.jsx";
 
 class Terminal extends Component {
   state = {
-    messages: ["helllo,hiii"]
+    messages: ["helllo,hiii"],
+    fname: "Salman@root#"
   };
 
   keyPress(e) {
@@ -13,6 +14,8 @@ class Terminal extends Component {
       let message = this.state.messages;
       message.push(e.target.value);
       this.setState({ messages: message });
+
+
       console.log(e);
       document.getElementById("prompt-input").value = "";
       // e.preventDefault();
@@ -31,19 +34,25 @@ class Terminal extends Component {
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
           {/* <CreateTable /> */}
-          <div className="terminal">
-            <div className="messages">
-              {this.state.messages.map(message => (
-                <p>{message}</p>
-              ))}
-            </div>
-            <div className="prompt">
-              >
-              <input
-                id="prompt-input"
-                type="text"
-                onKeyPress={this.keyPress.bind(this)}
-              />
+          <div className="main">
+            <div className="terminal">
+              <div className="messages">
+                {this.state.messages.map(message => (
+                  <span>
+                    <p  className="input-prompt p-inline prompt-display">{this.state.fname}</p>
+                    <p className="p-inline"> {message}</p>
+                    <br />
+                  </span>
+                ))}
+              </div>
+              <div className="prompt">
+                <p className="input-prompt">{this.state.fname}</p>
+                <input
+                  id="prompt-input"
+                  type="text"
+                  onKeyPress={this.keyPress.bind(this)}
+                />
+              </div>
             </div>
           </div>
           {/* <!-- END MAIN --> */}

@@ -91,7 +91,15 @@ class SideMenu extends Component {
                     <i className="lnr lnr-cog" /> <span> Settings Panel</span>
                   </Link>
                 </li>
-
+                <li>
+                  <Link
+                    name="Terminal"
+                    to="/terminal"
+                    className={this.getActiveClassName("Terminal")}
+                  >
+                    <i className="lnr lnr-code" /> <span> Terminal</span>
+                  </Link>
+                </li>
                 {/* Start of push Notificcation */}
                 {/* <li>
                   <a href="notifications.html" className="">

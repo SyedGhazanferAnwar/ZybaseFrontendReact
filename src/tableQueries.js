@@ -10,84 +10,79 @@ state = {
   storeData: [
     [
       {
-        id: "6",
-        value: "2",
-        length: "",
-        autoInc: "",
-        type: "",
-        notNull: "",
-        unique: ""
-      },
-      {
-        id: "1",
+        id: "0",
+        pk: "1",
+        defaultValue: "",
         value: "1",
-        length: "50",
+        size: "1",
         autoInc: "1",
         type: "int",
         notNull: "0",
         unique: "1"
       },
       {
-        id: "2",
-        value: "1",
-        length: "",
-        autoInc: "",
-        type: "",
-        notNull: "",
-        unique: ""
+        id: "1",
+        pk: "0",
+        defaultValue: "hello",
+        value: "zayan",
+        size: "50",
+        autoInc: "0",
+        type: "VARCHAR",
+        notNull: "1",
+        unique: "0"
       }
     ]
   ],
-  header: ["id", "value", "name", "action"],
+  header: ["Id", "Name", "Action"],
   columns: [],
   row: [{ id: 1, value: 2 }]
 };
 
 // Few things to consider:
 //Send rowNum starting from 0 as in array.
-//Design Table so that First column should always be a PK.
+//Size should only be sent in String Data type
+//Varchar should be sent when string data type is selected
 
 //Remaining things:
 // 1. Default value
-// 2. PK problem.
 
 //Function declarations
 
-// console.log(createTable(state, "NewTable"));
-// console.log(insertRows(state, "NewTable", 0));
-// console.log(deleteRow("NewTable", 0, state));
-// console.log(deleteColumn("NewTable", "name", state));
-// console.log(dropTable("NewTable"));
-// console.log(insertColumn("NewTable", "newColumn", state, 1));
-// console.log(alterColumn("NewTable", "newColumn", state, 1));
-// console.log(alterColumnName("NewTable", "newColumn", "latestColumn", state, 1));
+console.log(createTable(state, "NewTable"));
+console.log(insertRows(state, "NewTable", 0));
+console.log(deleteRow("NewTable", 0, state));
+console.log(deleteColumn("NewTable", "name", state));
+console.log(dropTable("NewTable"));
+console.log(insertColumn("NewTable", "newColumn", state, 1));
+console.log(alterColumn("NewTable", "newColumn", state, 1));
+console.log(alterColumnName("NewTable", "newColumn", "latestColumn", state, 1));
 console.log(modifyRow("NewTable", 0, state));
 
 function createTable(state, tableName) {
-  var query = `CREATE TABLE ${tableName} (${state.header[0]} int (30), ${
+  var query = `CREATE TABLE ${tableName} (Id int (30) AUTO_INCREMENT PRIMARY KEY, ${
     state.header[1]
-  } int (30), ${state.header[2]} varchar2 (255));`;
+  } varchar (255);`;
 
   return query;
 }
 
 function insertRows(state, tableName, rowNum) {
   var data = state.storeData;
-  // console.log(data[0][0]);
+  // console.log(data[0][1]);
   var column = state.header;
   var j = rowNum;
 
   //Inserting 2 rows
   var query = `INSERT INTO ${tableName} (`;
 
-  for (var i = 0; i < column.length - 1; i++) {
+  for (var i = 1; i < column.length - 1; i++) {
     if (i === column.length - 2) query = query + column[i];
     else query = query + column[i] + ", ";
   }
 
   query = query + ") VALUES (";
 
-  for (var i = 0; i < column.length - 1; i++) {
+  for (var i = 1; i < column.length - 1; i++) {
     if (i === column.length - 2) query = query + "'" + data[j][i].value + "'";
     else query = query + "'" + data[j][i].value + "', ";
     //console.log(data[j][i]);
@@ -136,7 +131,7 @@ function insertColumn(tableName, columnName, state, columnId) {
     " " +
     data[0][columnId].type +
     " (" +
-    data[0][columnId].length +
+    data[0][columnId].size +
     ")";
 
   //Provide 0 or 1 for constraints;
@@ -146,6 +141,11 @@ function insertColumn(tableName, columnName, state, columnId) {
   if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
   if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+
+  if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
+
+  if (data[0][columnId].defaultValue.length > 0)
+    query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
   query = query + ";";
 
@@ -164,7 +164,7 @@ function alterColumnName(tableName, oldCName, newCName, state, columnId) {
     " " +
     data[0][columnId].type +
     " (" +
-    data[0][columnId].length +
+    data[0][columnId].size +
     ")";
 
   if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
@@ -172,6 +172,11 @@ function alterColumnName(tableName, oldCName, newCName, state, columnId) {
   if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
   if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+
+  if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
+
+  if (data[0][columnId].defaultValue.length > 0)
+    query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
   query = query + ";";
 
@@ -189,7 +194,7 @@ function alterColumn(tableName, columnName, state, columnId) {
     " " +
     data[0][columnId].type +
     " (" +
-    data[0][columnId].length +
+    data[0][columnId].size +
     ")";
 
   if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
@@ -197,6 +202,11 @@ function alterColumn(tableName, columnName, state, columnId) {
   if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
   if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+
+  if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
+
+  if (data[0][columnId].defaultValue.length > 0)
+    query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
   query = query + ";";
 

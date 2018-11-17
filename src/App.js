@@ -14,6 +14,7 @@ import PrivateDashboard from "./components/PrivateDashboard";
 import Auth from "./Auth";
 import Dashboard from "./AdminPanel/Admin";
 import CreateTableUI from "./AdminPanel/CreateTableUI";
+import Terminal from "./AdminPanel/component/terminal";
 
 import comp1 from "./AdminPanel/component/main";
 class App extends Component {
@@ -36,6 +37,7 @@ class App extends Component {
               path="/private-dashboard"
               component={PrivateDashboard}
             />
+            <Route path="/terminal" component={Terminal} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/test" component={comp1} />
             <Route path="/create" component={CreateTableUI} />

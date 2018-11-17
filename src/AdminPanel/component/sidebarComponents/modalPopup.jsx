@@ -170,19 +170,20 @@ class ModalPopup extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form onSubmit={this.props.addHeaderHandler}>
+              <form onSubmit={this.props.modifyColumnHandler}>
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
                   <label style={{ color: "white" }}>Enter Column Name</label>
+                  {console.log("colerrie " + this.props.icol)}
                   <input
                     style={{ marginLeft: "2%" }}
                     className="cellInput"
                     defaultValue={
-                      this.props.storeData[0][this.props.setIndex].colName
+                      this.props.icol > 0
+                        ? this.props.storeData[0][this.props.setIndex].colName
+                        : ""
                     }
-                    // defaultValue="9999"
                     id="ColumnName"
-                    // name={this.props.newHeader}
                     onChange={this.props.onUpdateHeader}
                     required
                   />
@@ -192,7 +193,10 @@ class ModalPopup extends Component {
                   <label style={{ color: "white" }}>Enter Default-Value</label>
                   <input
                     defaultValue={
-                      this.props.storeData[0][this.props.setIndex].defaultValue
+                      this.props.icol > 1
+                        ? this.props.storeData[0][this.props.setIndex]
+                            .defaultValue
+                        : ""
                     }
                     type="text"
                     // defaultValue={this.props.storeData[this.props.setIndex]}
@@ -209,7 +213,8 @@ class ModalPopup extends Component {
                     className="cellInput"
                     id="Data-type"
                     defaultValue={
-                      this.props.storeData[0][this.props.setIndex].type
+                      ""
+                      // this.props.storeData[0][this.props.setIndex].type
                     }
                     onChange={this.props.onUpdateValueColumnAttr}
                   >
@@ -236,7 +241,9 @@ class ModalPopup extends Component {
                     type="number"
                     min="0"
                     defaultValue={
-                      this.props.storeData[0][this.props.setIndex].size
+                      this.props.icol > 1
+                        ? this.props.storeData[0][this.props.setIndex].size
+                        : ""
                     }
                     onChange={this.props.onUpdateValueColumnAttr}
                     required
@@ -251,9 +258,12 @@ class ModalPopup extends Component {
                     style={{ marginLeft: "5px" }}
                     type="checkbox"
                     checked={
-                      this.props.storeData[0][this.props.setIndex].pk == "true"
-                        ? 1
-                        : 0
+                      this.props.icol > 1
+                        ? this.props.storeData[0][this.props.setIndex].pk ==
+                          "true"
+                          ? 1
+                          : 0
+                        : ""
                     }
                     onChange={this.props.onUpdateValueColumnAttr}
                   />

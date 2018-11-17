@@ -16,7 +16,6 @@ class Rows extends Component {
         parseInt(this.props.inputisEditableIndex) &&
       index !== 0
     ) {
-      // console.log(index + "  dara " + this.props.storeData[0][index].type);
       return (
         <input
           maxLength={
@@ -44,6 +43,7 @@ class Rows extends Component {
         />
       );
     } else {
+      console.log("change detected");
       return (
         <input
           readOnly

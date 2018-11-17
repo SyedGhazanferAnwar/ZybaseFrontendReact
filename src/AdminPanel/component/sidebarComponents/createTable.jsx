@@ -22,7 +22,8 @@ class CreateTable extends Component {
       autoInc: "",
       type: "STRING",
       notNull: "",
-      unique: ""
+      unique: "",
+      pk: ""
     },
     datatarget: "",
     lengthDisableStatus: 0,
@@ -55,7 +56,7 @@ class CreateTable extends Component {
         },
         {
           id: "1",
-          colName: "Name",
+          colName: "",
           pk: "",
           defaultValue: "",
           value: "",
@@ -160,6 +161,30 @@ class CreateTable extends Component {
     this.setState({ irow: irow });
     console.log(rows);
   }
+  modifyColumnHandler = evt => {
+    evt.preventDefault();
+    // console.log("pk:  " + this.state.newColumnAttr.pk);
+    console.log("type:  " + this.state.newColumnAttr.defaultValue);
+    let storeData = [...this.state.storeData];
+    let header = [...this.state.header];
+    header[this.state.setIndex] = this.state.newHeader;
+    this.setState({ header: header });
+    for (let i = 0; i < this.state.irow; i++) {
+      storeData[i][this.state.setIndex].pk = this.state.newColumnAttr.pk;
+      storeData[i][this.state.setIndex].colName = this.state.newVal;
+      storeData[i][this.state.setIndex].size = this.state.newColumnAttr.size;
+      storeData[i][this.state.setIndex].type = this.state.newColumnAttr.type;
+      storeData[i][
+        this.state.setIndex
+      ].defaultValue = this.state.newColumnAttr.defaultValue;
+    }
+    this.change(storeData);
+    // this.setState({ storeData: storeData });
+  };
+  change = storeData => {
+    // this.setState({ header: header });
+    this.setState({ storeData: storeData });
+  };
   addHeaderHandler(evt) {
     evt.preventDefault();
     let header = [...this.state.header];
@@ -205,7 +230,7 @@ class CreateTable extends Component {
     // console.log(newVal);
     let reArr = this.state.storeData;
     for (let k = 0; k < this.state.irow; k++) {
-      console.log("k " + k);
+      // console.log("k " + k);
       let reNew = {
         id: k + "",
         colName: this.state.newHeader,
@@ -261,9 +286,7 @@ class CreateTable extends Component {
     let val = evt.target.value;
     this.setState({ newHeader: val });
   };
-  print() {
-    // console.log(this.state.storeData);
-  }
+
   addSubmitHandler() {
     // let sub = JSON.stringify(this.state.storeData);
     console.log(JSON.stringify(this.state.storeData));
@@ -271,6 +294,9 @@ class CreateTable extends Component {
   }
   crossBtnClickHandler = index => {
     console.log(index);
+    let setIndex = this.state.setIndex;
+    setIndex = 0;
+    this.setState({ setIndex: setIndex });
     let flag = 0;
     this.setState({ flag: flag });
     let l = 0;
@@ -304,8 +330,6 @@ class CreateTable extends Component {
   };
   myfunc(evt) {
     console.log("yuhooo" + evt);
-    // let flag = this.state.flag;
-    // flag = 1;
     this.setState({ setIndex: evt });
   }
   // check(evt) {
@@ -343,12 +367,6 @@ class CreateTable extends Component {
         </div>
       );
     }
-  }
-  editColumnOpen() {
-    console.log("herer er");
-    let flag = this.state.flag;
-    flag = 1;
-    this.setState({ flag: flag });
   }
   makeInputFieldEditable(evt) {
     // this.crossEditBtnInHeader();
@@ -450,9 +468,11 @@ class CreateTable extends Component {
                     Add Row
                   </button>
                   <ModalPopup
+                    modifyColumnHandler={this.modifyColumnHandler.bind(this)}
                     setIndex={this.state.setIndex}
                     storeData={this.state.storeData}
                     flag={this.state.flag}
+                    icol={this.state.icol}
                     header={this.state.header}
                     newHeader={this.state.newHeader}
                     onUpdateHeader={this.onUpdateHeader.bind(this)}
@@ -500,7 +520,7 @@ class CreateTable extends Component {
                     </tbody>
                   </table>
 
-                  <button onClick={this.print.bind(this)}>print</button>
+                  {/* <button onClick={this.print.bind(this)}>print</button> */}
                   <button
                     id="addBtn"
                     onClick={() => this.addColHandler(this.state.columns)}

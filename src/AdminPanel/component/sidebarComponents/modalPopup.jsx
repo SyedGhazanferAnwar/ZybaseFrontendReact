@@ -174,16 +174,14 @@ class ModalPopup extends Component {
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
                   <label style={{ color: "white" }}>Enter Column Name</label>
-                  {console.log("colerrie " + this.props.icol)}
+                  {console.log("colerrie " + this.props.setIndex)}
                   <input
                     style={{ marginLeft: "2%" }}
                     className="cellInput"
                     defaultValue={
-                      this.props.icol > 0
-                        ? this.props.storeData[0][this.props.setIndex].colName
-                        : ""
+                      this.props.storeData[0][this.props.setIndex].colName
                     }
-                    id="ColumnName"
+                    id="ColumnNameModify"
                     onChange={this.props.onUpdateHeader}
                     required
                   />
@@ -251,19 +249,19 @@ class ModalPopup extends Component {
                   />
                   <br />
                   {/* %%%%%%%%%%%%%%%%  pk  %%%%%%%%%%%%%%%% */}
+                  {console.log(
+                    this.props.storeData[0][this.props.setIndex].pk + "  pk"
+                  )}
                   <label style={{ color: "white" }}>Primary Key</label>
                   <input
                     className="cellInput"
                     id="pk"
                     style={{ marginLeft: "5px" }}
                     type="checkbox"
-                    checked={
-                      this.props.icol > 1
-                        ? this.props.storeData[0][this.props.setIndex].pk ==
-                          "true"
-                          ? 1
-                          : 0
-                        : ""
+                    defaultChecked={
+                      this.props.storeData[0][this.props.setIndex].pk === "true"
+                        ? 1
+                        : 0
                     }
                     onChange={this.props.onUpdateValueColumnAttr}
                   />
@@ -273,6 +271,7 @@ class ModalPopup extends Component {
                     type="reset"
                     className="btn btn-danger zoomBtn"
                     style={{ marginRight: "45%" }}
+                    id="resetBtn"
                   >
                     Reset
                   </button>

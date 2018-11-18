@@ -39,16 +39,16 @@ class NavBar extends Component {
                 </span>
               </div>
             </form>
-            <div className="navbar-btn navbar-btn-right">
+            {/* <div className="navbar-btn navbar-btn-right">
               <a
                 className="btn btn-success update-pro"
                 href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro"
                 title="Upgrade to Pro"
                 target="_blank"
               >
-                <i className="fa fa-rocket" /> <span>UPGRADE TO PRO</span>
+                <i className="fa fa-rocket" /> <span>UPGRADE eTO PRO</span>
               </a>
-            </div>
+            </div> */}
             <div id="navbar-menu">
               <ul className="nav navbar-nav navbar-right">
                 <li className="dropdown">
@@ -159,7 +159,7 @@ class NavBar extends Component {
                     </li>
                   </ul>
                 </li>
-                <li>
+                {/* <li>
                   <a
                     className="update-pro"
                     href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro"
@@ -168,7 +168,7 @@ class NavBar extends Component {
                   >
                     <i className="fa fa-rocket" /> <span>UPGRADE TO PRO</span>
                   </a>
-                </li>{" "}
+                </li>{" "} */}
               </ul>
             </div>
           </div>

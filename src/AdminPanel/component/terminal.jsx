@@ -3,18 +3,30 @@ import NavBar from "./navBar.jsx";
 import SideMenu from "./sideMenu.jsx";
 
 class Terminal extends Component {
+  // state = {
+  //   messages: ["helllo,hiii"],
+  //   fname: "Salman@root#",
+  //   prompt: true
+  // };
+
   state = {
-    messages: ["helllo,hiii"],
+    data: [
+      
+    ],
     fname: "Salman@root#",
-    prompt: true
+    prompt: true,
+    requestCount: 0,
+    responseCount: 0
   };
 
   keyPress(e) {
     if (e.key === "Enter") {
       //console.log("enter preesed");
-      let message = this.state.messages;
-      message.push(e.target.value);
-      this.setState({ messages: message });
+      let request = this.state.data;
+      request.push({ type: true, text: e.target.value });
+      //request.push(e.target.value);
+      this.setState({ data: request });
+      //this.setState({ requestCount: this.state.requestCount + 1 });
       this.setState({ prompt: false });
       fetch("http://localhost:3001", {
         method: "GET"
@@ -25,9 +37,10 @@ class Terminal extends Component {
         })
         .then(res => {
           console.log(res);
-          message = this.state.messages;
-          message.push(res);
-          this.setState({ messages: message });
+          let response = this.state.data;
+          response.push({ type:false, text: res });
+          this.setState({ data: response });
+          //this.setState({ responseCount: this.state.responseCount + 1 });
           this.setState({ prompt: true });
         });
       //console.log(e);
@@ -52,12 +65,13 @@ class Terminal extends Component {
           <div className="main">
             <div className="terminal">
               <div className="messages">
-                {this.state.messages.map(message => (
+                {this.state.data.map(message => (
                   <span>
-                    <p className="input-prompt p-inline ">{this.state.prompt?this.state.fname:""}</p>
-
-                    <p className="p-inline">{message}</p>
-                    <br />
+                    {message.type?<p className="messages p-inline ">{this.state.fname}</p>:null}&nbsp;
+                    {message.type?<p className="p-inline"input-prompt>{message.text}</p>:null}
+                    {message.tyepe?<br />:null}
+                    {!message.type?<p>{message.text}</p>:null}
+                    
                   </span>
                 ))}
               </div>

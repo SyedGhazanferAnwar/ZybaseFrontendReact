@@ -33,6 +33,7 @@ class CreateTable extends Component {
     editRowIndex: -9,
     headerEditedValue: "",
     setIndex: 1,
+    evt: "",
     flag: 0,
     irow: 1,
     icol: 2,
@@ -163,17 +164,27 @@ class CreateTable extends Component {
   }
   modifyColumnHandler = evt => {
     evt.preventDefault();
+    evt.target.reset();
     // console.log("pk:  " + this.state.newColumnAttr.pk);
-    console.log("type:  " + this.state.newColumnAttr.defaultValue);
+    console.log("type:  ");
+    this.setState({ setIndex: 0 });
+    // this.setState({ newHeader: this.state.header[this.state.setIndex] });
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({ header: header });
     for (let i = 0; i < this.state.irow; i++) {
+      // storeData[i][
+      //   this.state.setIndex
+      // ].value = this.state.newColumnAttr.defaultValue;
       storeData[i][this.state.setIndex].pk = this.state.newColumnAttr.pk;
-      storeData[i][this.state.setIndex].colName = this.state.newVal;
+      storeData[i][this.state.setIndex].colName = this.state.newHeader;
       storeData[i][this.state.setIndex].size = this.state.newColumnAttr.size;
       storeData[i][this.state.setIndex].type = this.state.newColumnAttr.type;
+      storeData[i][
+        this.state.setIndex
+      ].value = this.state.newColumnAttr.defaultValue;
+
       storeData[i][
         this.state.setIndex
       ].defaultValue = this.state.newColumnAttr.defaultValue;
@@ -187,6 +198,8 @@ class CreateTable extends Component {
   };
   addHeaderHandler(evt) {
     evt.preventDefault();
+    evt.target.reset();
+    // evt.target.value = "";
     let header = [...this.state.header];
     header[header.length] = header[header.length - 1];
     header[header.length - 2] = this.state.newHeader;
@@ -208,7 +221,7 @@ class CreateTable extends Component {
         id: k + "",
         colName: reArr[0][k].colName,
         pk: reArr[0][k].pk,
-        defaultValue: reArr[0][k].value,
+        defaultValue: reArr[0][k].defaultValue,
         value: reArr[0][k].defaultValue,
         size: reArr[0][k].size,
         autoInc: reArr[0][k].autoInc,
@@ -234,7 +247,7 @@ class CreateTable extends Component {
       let reNew = {
         id: k + "",
         colName: this.state.newHeader,
-        pk: this.state.newColumnAttr.pk + "",
+        pk: this.state.newColumnAttr.pk,
         defaultValue: this.state.newColumnAttr.defaultValue,
         value: this.state.newColumnAttr.defaultValue,
         size: this.state.newColumnAttr.size,
@@ -252,7 +265,6 @@ class CreateTable extends Component {
   };
   onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
-
     if (evt.target.id === "pk") {
       newColumnAttr.pk = evt.target.checked;
       console.log("pk is here   " + newColumnAttr.pk);

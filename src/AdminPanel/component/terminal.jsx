@@ -67,8 +67,8 @@ class Terminal extends Component {
               <div className="messages">
                 {this.state.data.map(message => (
                   <span>
-                    {message.type?<p className="messages p-inline ">{this.state.fname}</p>:null}&nbsp;
-                    {message.type?<p className="p-inline"input-prompt>{message.text}</p>:null}
+                    {message.type?<p className="input-prompt  p-inline ">{this.state.fname}</p>:null}&nbsp;
+                    {message.type?<p className="p-inline text"input-prompt>{message.text}</p>:null}
                     {message.tyepe?<br />:null}
                     {!message.type?<p>{message.text}</p>:null}
                     
@@ -83,6 +83,7 @@ class Terminal extends Component {
                 <input
                   id="prompt-input"
                   type="text"
+                  className="input-prompt"
                   onKeyPress={this.keyPress.bind(this)}
                 />
               </div>

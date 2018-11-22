@@ -144,24 +144,15 @@ th {
   position: fixed;
   clear: both;
   position: absolute;
-  font-size: 18px;
-  font-style: bold;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   width: 90%;
   max-height: 300px;
   overflow-y: auto;
   background-color: rgba(0, 0, 0, 0.562);
 }
 .messages {
-  font-size: 18px;
-  font-style: bold;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   margin-left: 6px;
 }
 .prompt {
-  font-size: 18px;
-  font-style: bold;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   margin-left: 3px;
   clear: both;
   position: relative;
@@ -170,18 +161,12 @@ th {
 }
 .input-prompt {
   margin-top: -6px;
-  font-size: 18px;
-  font-style: bold;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   display: inline;
   color: green;
-  font-weight: bold;
+
 }
 .prompt input {
   color: white;
-  font-size: 18px;
-  font-style: bold;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   margin-left: 6px;
   font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   position: relative;
@@ -190,17 +175,14 @@ th {
   border: none;
   outline: none;
 }
-.messages {
-  font-size: 18px;
-  font-style: bold;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
-  color: green;
-}
 .p-inline {
   display: inline;
 }
-.terminal p {
-  font-size: 14px;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
-  margin-top: -8px;
+
+.p-font {
+  font-size: 15px;
+  font-style: bold;
+}
+.text{
+  margin-top: 9px;
 }

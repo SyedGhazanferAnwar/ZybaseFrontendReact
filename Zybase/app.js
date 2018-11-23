@@ -89,6 +89,7 @@ passport.deserializeUser(function(email, done) {
     if (err) throw err;
     else if (user == null) console.log("user doesn't exist");
     else {
+      console.log(user[0]);
       done(err, user[0]);
     }
   });
@@ -191,4 +192,44 @@ app.post("/test", function(req, res) {
   console.log("yolo");
   console.log(req.body);
   res.send("hello world");
+});
+////////////////////////////////////////terminal//////////////////////////////////
+
+app.post("/terminal", (req, res) => {
+  try{
+  setTimeout(()=>{
+    if (Object.keys(req.user).length>0) {
+      var con = mysql.createConnection({
+        host: "localhost",
+        user: req.user.product_id,
+        password: req.user.api_key,
+        database: req.user.product_id
+      });
+      con.connect(err => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("connected to",req.user.fullname);
+      });
+      con.query(req.body.query,(err,result)=>{
+        if(err){
+          res.send(err);
+        }else{
+          res.send(result);
+          
+        }
+      })
+
+      
+    
+  } else {
+    res.send("failed");
+  }
+  },3000)
+} catch(e){
+  console.log(e);
+  res.send(e);
+}
+  
 });

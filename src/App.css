@@ -139,6 +139,9 @@ th {
   ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .terminal {
+  border-radius: 8px;
+  min-height: 200px;
+  max-height: 500px;
   margin-top: 2%;
   margin-left: 45px;
   position: fixed;
@@ -147,19 +150,22 @@ th {
   width: 90%;
   max-height: 300px;
   overflow-y: auto;
+
   background-color: rgba(0, 0, 0, 0.562);
 }
 .messages {
-  margin-left: 6px;
+  margin-left: 9px;
 }
 .prompt {
-  margin-left: 3px;
+  margin-left: 9px;
   clear: both;
   position: relative;
   overflow: auto;
   color: while;
 }
 .input-prompt {
+  font-size: 16px;
+  font-family: 'Consolas';
   margin-top: -6px;
   display: inline;
   color: green;
@@ -168,12 +174,12 @@ th {
 .prompt input {
   color: white;
   margin-left: 6px;
-  font-family: "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
   position: relative;
   caret-color: green;
   background-color: transparent;
   border: none;
   outline: none;
+  font-family: Consolas;
 }
 .p-inline {
   display: inline;
@@ -184,5 +190,17 @@ th {
   font-style: bold;
 }
 .text{
+  font-size: 16px;
   margin-top: 9px;
+  font-family: 'Consolas'
+}
+.error{
+  color:red
+}
+.success{
+  font-family: Consolas;
+  color:white;
+  line-height: 16px;
+  font-size: 16px;
+
 }

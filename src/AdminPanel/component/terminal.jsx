@@ -64,12 +64,13 @@ class Terminal extends Component {
       })
         .then(res => {
           //console.log(res);
-          return res.text();
+          return res.json();
         })
         .then(res => {
           console.log(res);
+          res = JSON.stringify(res);
           let response = this.state.data;
-          response.push({ type:false, text: res });
+          response.push({ type:false, text: res,error:true });
           this.setState({ data: response });
           //this.setState({ responseCount: this.state.responseCount + 1 });
           this.setState({ prompt: true });

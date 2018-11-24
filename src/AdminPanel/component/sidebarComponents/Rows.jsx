@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 class Rows extends Component {
   state = {};
   // addColHandler = col => {
@@ -10,29 +10,25 @@ class Rows extends Component {
   // };
 
   inputField(index) {
+    {
+      console.log(index + ' here  index ');
+    }
     if (
-      this.props.inputisEditableFlag === "false" &&
-      parseInt(this.props.index) ===
-        parseInt(this.props.inputisEditableIndex) &&
+      this.props.inputisEditableFlag === 'false' &&
+      parseInt(this.props.index) === parseInt(this.props.inputisEditableIndex) &&
       index !== 0
     ) {
       return (
         <input
           maxLength={
-            this.props.storeData[0][index].type === "STRING"
-              ? String(this.props.storeData[0][index].size)
-              : ""
+            this.props.storeData[0][index].type === 'STRING'
+              ? String(this.props.storeData[this.props.index][index].size)
+              : ''
           }
-          type={
-            this.props.storeData[0][index].type !== "STRING" ? "number" : "text"
-          }
+          type={this.props.storeData[0][index].type !== 'STRING' ? 'number' : 'text'}
           // placeholder={this.props.storeData[0][index].value}
           // value={index === 0 ? this.props.index : ""}
-          defaultValue={
-            index === 0
-              ? this.props.index
-              : this.props.storeData[0][index].defaultValue
-          }
+          defaultValue={index === 0 ? this.props.index : this.props.storeData[0][index].defaultValue}
           onClick={this.props.defaultEditable}
           className="cellInput"
           name={this.props.index}
@@ -43,20 +39,15 @@ class Rows extends Component {
         />
       );
     } else {
-      console.log("change detected");
       return (
         <input
           readOnly
           maxLength={
-            this.props.storeData[0][index].type === "STRING"
-              ? String(this.props.storeData[0][index].size)
-              : ""
+            this.props.storeData[0][index].type === 'STRING'
+              ? String(this.props.storeData[this.props.index][index].size)
+              : ''
           }
-          defaultValue={
-            index === 0
-              ? this.props.index
-              : this.props.storeData[0][index].defaultValue
-          }
+          defaultValue={index === 0 ? this.props.index : this.props.storeData[0][index].defaultValue}
           // type={this.props.storeData[0][index].type}
           // placeholder={
           //   index === 0
@@ -79,19 +70,15 @@ class Rows extends Component {
       <React.Fragment>
         <tr key={this.props.id}>
           {this.props.storeData[this.props.index].map((row, index) => {
-            return (
-              <td key={String(this.props.index) + String(index)}>
-                {this.inputField(index)}
-              </td>
-            );
+            return <td key={String(this.props.index) + String(index)}>{this.inputField(index)}</td>;
           })}
 
           <td>
             <button
               id={this.props.index}
               onClick={this.props.onDelete}
-              className="btn btn-danger"
-              style={{ margin: 5 }}
+              className="btn btn-danger zoomBtn"
+              style={{margin: 5}}
             >
               Delete
             </button>

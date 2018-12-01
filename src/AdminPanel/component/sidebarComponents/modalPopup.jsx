@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 
 class ModalPopup extends Component {
   state = {
     status: 1,
-    dv: "",
-    checking: 0
+    dv: '',
+    checking: 0,
   };
 
   call() {
@@ -13,37 +13,39 @@ class ModalPopup extends Component {
   resetForm() {}
   checked() {
     let t = this.props.storeData[0][this.props.setIndex].pk;
-
-    // if (t === "1") {
-    //   return (
-    //     <div>
-    //       <input
-    //         className="cellInput"
-    //         id="pkModify"
-    //         style={{ marginLeft: "5px" }}
-    //         type="checkbox"
-    //         defaultChecked={1}
-    //         onChange={this.props.onUpdateValueColumnAttr}
-    //       />
-    //     </div>
-    //   );
-    // } else {
-    //   console.log(t + " here t");
-    //   return (
-    //     <div>
-    //       <div>
-    //         <input
-    //           className="cellInput"
-    //           id="pkModify"
-    //           style={{ marginLeft: "5px" }}
-    //           type="checkbox"
-    //           defaultChecked={0}
-    //           onChange={this.props.onUpdateValueColumnAttr}
-    //         />
-    //       </div>
-    //     </div>
-    //   );
-    // }
+    console.log('t is here' + typeof t);
+    if (t === '1') {
+      return (
+        <div>
+          <input
+            className="cellInput"
+            id="pk"
+            name="pk"
+            style={{marginLeft: '5px'}}
+            type="checkbox"
+            defaultChecked={1}
+            onChange={this.props.onUpdateValueColumnAttr}
+          />
+        </div>
+      );
+    } else {
+      console.log(t + ' here t');
+      return (
+        <div>
+          <div>
+            <input
+              className="cellInput"
+              id="pk"
+              name="pk"
+              style={{marginLeft: '5px'}}
+              type="checkbox"
+              defaultChecked={0}
+              onChange={this.props.onUpdateValueColumnAttr}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -63,22 +65,17 @@ class ModalPopup extends Component {
                 <h5 className="modal-title" id="exampleModalLabel">
                   Add New Column
                 </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <form onSubmit={this.props.addHeaderHandler} method="post">
-                {console.log("divset")}
+                {console.log('divset')}
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter Column Name</label>
+                  <label style={{color: 'white'}}>Enter Column Name</label>
                   <input
-                    style={{ marginLeft: "2%" }}
+                    style={{marginLeft: '2%'}}
                     className="cellInput"
                     placeholder="Column Name"
                     id="ColumnName"
@@ -89,10 +86,10 @@ class ModalPopup extends Component {
                   <br />
                   {/* %%%%%%%%%%%%%%%%  Default Value %%%%%%%%%%%%%%%% */}
 
-                  <label style={{ color: "white" }}>Enter Default-Value</label>
+                  <label style={{color: 'white'}}>Enter Default-Value</label>
                   <input
                     type="text"
-                    style={{ marginLeft: "3%" }}
+                    style={{marginLeft: '3%'}}
                     className="cellInput"
                     placeholder="Optional.."
                     id="Default-Value"
@@ -101,9 +98,9 @@ class ModalPopup extends Component {
 
                   <br />
                   {/* %%%%%%%%%%%%%%%%  data type  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter Data-type</label>
+                  <label style={{color: 'white'}}>Enter Data-type</label>
                   <select
-                    style={{ marginLeft: "7.5%" }}
+                    style={{marginLeft: '7.5%'}}
                     className="cellInput"
                     id="Data-type"
                     defaultValue="STRING"
@@ -124,9 +121,9 @@ class ModalPopup extends Component {
                   </select>
                   <br />
                   {/* %%%%%%%%%%%%%%%%  length  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter length</label>
+                  <label style={{color: 'white'}}>Enter length</label>
                   <input
-                    style={{ marginLeft: "12%" }}
+                    style={{marginLeft: '12%'}}
                     className="cellInput"
                     id="length"
                     type="number"
@@ -139,14 +136,14 @@ class ModalPopup extends Component {
                   />
                   <br />
                   {/* %%%%%%%%%%%%%%%%  pk  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Primary Key</label>
+                  <label style={{color: 'white'}}>Primary Key</label>
                   <input
                     className="cellInput"
                     name="pk"
                     id={this.props.num}
-                    style={{ marginLeft: "5px" }}
+                    style={{marginLeft: '5px'}}
                     type="checkbox"
-                    checked={parseInt(this.props.newColumnAttr.pk)}
+                    defaultChecked={parseInt(this.props.newColumnAttr.pk)}
                     onChange={this.props.onUpdateValueColumnAttr}
                   />
                 </div>
@@ -154,14 +151,14 @@ class ModalPopup extends Component {
                   <button
                     type="reset"
                     className="btn btn-danger zoomBtn"
-                    style={{ marginRight: "45%" }}
+                    style={{marginRight: '45%'}}
                     onClick={this.props.resetForm}
                     // data-dismiss="modal"
                   >
                     Reset
                   </button>
                   <button
-                    style={{ marginRight: "8px" }}
+                    style={{marginRight: '8px'}}
                     type="button"
                     className="btn btn-default zoomBtn"
                     data-dismiss="modal"
@@ -197,28 +194,21 @@ class ModalPopup extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="modifyColumnModal">
-                  Add New Column
+                  Modify Column
                 </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <form onSubmit={this.props.modifyColumnHandler}>
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter Column Name</label>
-                  {console.log("colerrie " + this.props.setIndex)}
+                  <label style={{color: 'white'}}>Enter Column Name</label>
+                  {console.log('colerrie ' + this.props.setIndex)}
                   <input
-                    style={{ marginLeft: "2%" }}
+                    style={{marginLeft: '2%'}}
                     className="cellInput"
-                    defaultValue={
-                      this.props.storeData[0][this.props.setIndex].colName
-                    }
+                    defaultValue={this.props.storeData[0][this.props.setIndex].colName}
                     id="ColumnNameModify"
                     onChange={this.props.onUpdateHeader}
                     required
@@ -226,30 +216,25 @@ class ModalPopup extends Component {
 
                   <br />
                   {/* %%%%%%%%%%%%%%%%  Default Value %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter Default-Value</label>
+                  <label style={{color: 'white'}}>Enter Default-Value</label>
                   <input
-                    defaultValue={
-                      this.props.icol > 1
-                        ? this.props.storeData[0][this.props.setIndex]
-                            .defaultValue
-                        : ""
-                    }
+                    defaultValue={this.props.icol > 1 ? this.props.storeData[0][this.props.setIndex].defaultValue : ''}
                     type="text"
                     // defaultValue={this.props.storeData[this.props.setIndex]}
-                    style={{ marginLeft: "3%" }}
+                    style={{marginLeft: '3%'}}
                     className="cellInput"
                     id="Default-Value"
                     onChange={this.props.onUpdateValueColumnAttr}
                   />
                   <br />
                   {/* %%%%%%%%%%%%%%%%  data type  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter Data-type</label>
+                  <label style={{color: 'white'}}>Enter Data-type</label>
                   <select
-                    style={{ marginLeft: "7.5%" }}
+                    style={{marginLeft: '7.5%'}}
                     className="cellInput"
                     id="Data-type"
                     defaultValue={
-                      ""
+                      ''
                       // this.props.storeData[0][this.props.setIndex].type
                     }
                     onChange={this.props.onUpdateValueColumnAttr}
@@ -269,18 +254,14 @@ class ModalPopup extends Component {
                   </select>
                   <br />
                   {/* %%%%%%%%%%%%%%%%  length  %%%%%%%%%%%%%%%% */}
-                  <label style={{ color: "white" }}>Enter length</label>
+                  <label style={{color: 'white'}}>Enter length</label>
                   <input
-                    style={{ marginLeft: "12%" }}
+                    style={{marginLeft: '12%'}}
                     className="cellInput"
                     id="length"
                     type="number"
                     min="0"
-                    defaultValue={
-                      this.props.icol > 1
-                        ? this.props.storeData[0][this.props.setIndex].size
-                        : ""
-                    }
+                    defaultValue={this.props.icol > 1 ? this.props.storeData[0][this.props.setIndex].size : ''}
                     onChange={this.props.onUpdateValueColumnAttr}
                     required
                     disabled={this.props.lengthDisableStatus}
@@ -288,20 +269,15 @@ class ModalPopup extends Component {
                   <br />
                   {/* %%%%%%%%%%%%%%%%  pk  %%%%%%%%%%%%%%%% */}
 
-                  <label style={{ color: "white" }}>Primary Key</label>
+                  <label style={{color: 'white'}}>Primary Key</label>
                   {this.checked()}
                 </div>
                 <div className="modal-footer">
-                  <button
-                    type="reset"
-                    className="btn btn-danger zoomBtn"
-                    style={{ marginRight: "42%" }}
-                    id="resetBtn"
-                  >
+                  <button type="reset" className="btn btn-danger zoomBtn" style={{marginRight: '42%'}} id="resetBtn">
                     Restore
                   </button>
                   <button
-                    style={{ marginRight: "8px" }}
+                    style={{marginRight: '8px'}}
                     type="button"
                     className="btn btn-default zoomBtn"
                     data-dismiss="modal"

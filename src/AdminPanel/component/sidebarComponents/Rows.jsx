@@ -10,9 +10,6 @@ class Rows extends Component {
   // };
 
   inputField(index) {
-    {
-      console.log(index + ' here  index ');
-    }
     if (
       this.props.inputisEditableFlag === 'false' &&
       parseInt(this.props.index) === parseInt(this.props.inputisEditableIndex) &&
@@ -28,7 +25,7 @@ class Rows extends Component {
           type={this.props.storeData[0][index].type !== 'STRING' ? 'number' : 'text'}
           // placeholder={this.props.storeData[0][index].value}
           // value={index === 0 ? this.props.index : ""}
-          defaultValue={index === 0 ? this.props.index : this.props.storeData[0][index].defaultValue}
+          defaultValue={index === 0 ? this.props.index : this.props.storeData[this.props.index][index].defaultValue}
           onClick={this.props.defaultEditable}
           className="cellInput"
           name={this.props.index}
@@ -47,7 +44,7 @@ class Rows extends Component {
               ? String(this.props.storeData[this.props.index][index].size)
               : ''
           }
-          defaultValue={index === 0 ? this.props.index : this.props.storeData[0][index].defaultValue}
+          defaultValue={index === 0 ? this.props.storeData[this.props.index][index].id : this.props.storeData[this.props.index][index].defaultValue}
           // type={this.props.storeData[0][index].type}
           // placeholder={
           //   index === 0

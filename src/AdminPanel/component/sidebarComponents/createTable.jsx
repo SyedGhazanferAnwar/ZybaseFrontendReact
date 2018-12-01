@@ -63,7 +63,7 @@ class CreateTable extends Component {
           value: '',
           size: '',
           autoInc: '',
-          type: '',
+          type: 'STRING',
           notNull: '',
           unique: '',
         },
@@ -151,26 +151,41 @@ class CreateTable extends Component {
   }
   handleRowDelete(evt) {
     const index = evt.target.id;
-    if (index === '0') {
-      return alert('cant delete first row');
+    // if (index === '0') {
+    //   return alert('cant delete first row');
+    // }
+    let i = 0;
+    let dupRows = []; //
+    let storeData = [...this.state.storeData];
+    // rows.splice(index);
+    for (let k = 0; k < this.state.irow; k++) {
+      if (k !== parseInt(index)) {
+        console.log('asd');
+        dupRows[i] = storeData[k];
+        console.log(storeData[k]);
+        i++;
+      }
+      // console.log('index come her e  ' + k + '  d ' + index);
     }
-    let rows = [...this.state.storeData];
-    rows.splice(index, index);
-    this.setState({storeData: rows});
+    // console.log(dupRows);
     let irow = this.state.irow;
     irow--;
-    this.setState({irow: irow});
+    this.setState({storeData: dupRows});
+    this.setState({irow, irow});
+
+    // this.setState();
+
+    // console.log(rows);
     // console.log(rows);
   }
   modifyColumnHandler = evt => {
     evt.preventDefault();
-    evt.target.resetForm();
-    // console.log("pk:  " + this.state.newColumnAttr.pk);
-    // console.log("type:  ");
+    evt.target.reset();
+    // this.setState({newHeader: this.state.header[this.state.setIndex]});
     this.setState({setIndex: 0});
-    // this.setState({ newHeader: this.state.header[this.state.setIndex] });
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
+    console.log('new header is  ' + this.state.newHeader);
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({header: header});
     for (let i = 0; i < this.state.irow; i++) {
@@ -213,21 +228,36 @@ class CreateTable extends Component {
     //ADD ROW HANDLER
     let reArr = this.state.storeData;
     let reNew = [];
-
+    let reN = [];
     // console.log("asdsa" + reArr);
     for (let k = 0; k < this.state.icol; k++) {
-      let reN = {
-        id: k + '',
-        colName: reArr[0][k].colName,
-        pk: reArr[0][k].pk,
-        defaultValue: reArr[0][k].defaultValue,
-        value: reArr[0][k].defaultValue,
-        size: reArr[0][k].size,
-        autoInc: reArr[0][k].autoInc,
-        type: reArr[0][k].type,
-        notNull: reArr[0][k].notNull,
-        unique: reArr[0][k].unique,
-      };
+      if (k === 0) {
+        reN = {
+          id: this.state.irow + '',
+          colName: reArr[0][k].colName,
+          pk: reArr[0][k].pk,
+          defaultValue: reArr[0][k].defaultValue,
+          value: this.state.irow,
+          size: reArr[0][k].size,
+          autoInc: reArr[0][k].autoInc,
+          type: reArr[0][k].type,
+          notNull: reArr[0][k].notNull,
+          unique: reArr[0][k].unique,
+        };
+      } else {
+        reN = {
+          id: k + '',
+          colName: reArr[0][k].colName,
+          pk: reArr[0][k].pk,
+          defaultValue: reArr[0][k].defaultValue,
+          value: reArr[0][k].defaultValue,
+          size: reArr[0][k].size,
+          autoInc: reArr[0][k].autoInc,
+          type: reArr[0][k].type,
+          notNull: reArr[0][k].notNull,
+          unique: reArr[0][k].unique,
+        };
+      }
 
       reNew.push(reN);
     }
@@ -353,13 +383,9 @@ class CreateTable extends Component {
   };
   myfunc(evt) {
     // console.log("yuhooo" + evt);
+    this.setState({newHeader: this.state.header[evt]});
     this.setState({setIndex: evt});
   }
-  // check(evt) {
-  //   console.log("herher");
-  //   return (evt.value = "");
-  // }
-  // ****************************{all header working here}*********************
 
   crossEditBtnInHeader(header, index) {
     if (index > 0 && index < this.state.header.length - 1) {
@@ -391,47 +417,56 @@ class CreateTable extends Component {
       );
     }
   }
-  makeInputFieldEditable(evt) {
-    // this.crossEditBtnInHeader();
-    // let datatarget = this.state.datatarget;
-    // datatarget = "#modifyColumnModal";
-    // this.setState({ datatarget: datatarget });
-    // console.log("yes" + evt.target.id);
-    // Auth.onEditBtnClick();
-    // let flag = this.state.flag;
-    // flag = 1;
-    // this.setState({ flag: flag });
-    // return "#modifyColumnModal";
-    // let checkBhund = this.state.checkBhund;
-    // checkBhund = evt;
-    // console.log("sd " + evt.id)
-    // this.setState({ checkBhund: checkBhund });
-    // return "#modifyColumnModal";
-    // Auth.onEditBtnClick();
-    // console.log(this.state.storeData[0][1].value);
-    // console.log(this.state.flag);
+  makeInputFieldEditable(evt) {}
+
+  fetchDataInStoreData(response) {
+    let header = [],
+      storeData = [[]],
+      mainArr = [],
+      i = 0;
+    let colDetails = {};
+
+    for (i = 0; i < response.column.length; i++) {
+      header[i] = response.column[i].name;
+    }
+    header[i] = 'Action';
+    let arr = response.data[0];
+
+    let colObject = Object.entries(arr);
+
+    for (let k = 0; k < response.data.length; k++) {
+      storeData = [];
+      let arr = response.data[k];
+      colObject = Object.entries(arr);
+      for (let j = 0; j < colObject.length; j++) {
+        let defaultValue = colObject[j][1];
+        let colName = colObject[j][0];
+
+        colDetails.id = String(k + j);
+        colDetails.value = defaultValue;
+        colDetails.defaultValue = defaultValue;
+        colDetails.colName = colName;
+        colDetails.size = response.column[k].length;
+
+        if (response.column[j].type === 3) {
+          colDetails.type = 'Number';
+        }
+        if (response.column[j].type === 4) {
+          colDetails.type = 'Float';
+        }
+        if (response.column[j].type === 253) {
+          colDetails.type = 'STRING';
+        }
+        storeData.push(colDetails);
+        colDetails = {};
+      }
+      mainArr.push(storeData);
+    }
+    this.setState({icol: colObject.length});
+    this.setState({irow: response.data.length});
+    this.setState({storeData: mainArr});
+    this.setState({header: header});
   }
-  // handleHeaderValueChange(evt) {
-  //   // console.log("handleHeaderValueChange()" + " " + evt.target.value);
-  //   let headerEdited = evt.target.value;
-  //   this.setState({ headerEditedValue: headerEdited });
-  // }
-  // saveEditedHeader(evt) {
-  //   let header = this.state.header;
-  //   if (this.state.headerEditedValue === "") {
-  //     this.setState({ header: header });
-  //     let flag = this.state.flag;
-  //     flag = 0;
-  //     this.setState({ flag: flag });
-  //   } else {
-  //     header[evt.target.id] = this.state.headerEditedValue;
-  //     this.setState({ header: header });
-  //     this.setState({ headerEditedValue: "" });
-  //     let flag = this.state.flag;
-  //     flag = 0;
-  //     this.setState({ flag: flag });
-  //   }
-  // }
   fetchHandler() {
     fetch('http://localhost:5000/getTable', {
       method: 'POST',
@@ -448,85 +483,7 @@ class CreateTable extends Component {
       })
       // string 253   int 3   float 4
       .then(response => {
-        console.log(response.data);
-        console.log(response.column);
-        // let header = [...this.state.header];
-        // console.log(response.primaryKey);
-        //console.log(response.uniqueKey);
-        let header = [],
-          storeData = [[]],
-          mainArr = [],
-          i = 0;
-        let colDetails = {
-          // id: '1',
-          // colName: '',
-          // pk: '',
-          // defaultValue: '',
-          // value: '',
-          // size: '',
-          // autoInc: '',
-          // type: '',
-          // notNull: '',
-          // unique: '',
-        };
-
-        for (i = 0; i < response.column.length; i++) {
-          header[i] = response.column[i].name;
-        }
-        header[i + 1] = 'Action';
-
-        /////////////////////////////////////////////////////////////
-
-        // for (let m = 0; m < response.data.length; m++) {
-        // let arr = response.data[m];
-        // // let colObject = Object.keys(arr);
-        // let colObject = Object.entries(arr);
-
-        //impwork
-        let arr = response.data[0];
-
-        let colObject = Object.entries(arr);
-
-        for (let k = 0; k < response.data.length; k++) {
-          storeData = [];
-          let arr = response.data[k];
-          colObject = Object.entries(arr);
-          for (let j = 0; j < colObject.length; j++) {
-            let defaultValue = colObject[j][1];
-            let colName = colObject[j][0];
-
-            colDetails.id = String(k + j);
-
-            // colDetails.defaultValue = defaultValue;
-            colDetails.value = defaultValue;
-            colDetails.defaultValue = defaultValue;
-            colDetails.colName = colName;
-            console.log(colDetails.colName + ' d' + k);
-            colDetails.size = response.column[k].length;
-
-            if (response.column[k].type === 3) {
-              colDetails.type = 'Number';
-            }
-            if (response.column[k].type === 4) {
-              colDetails.type = 'Float';
-            }
-            if (response.column[k].type === 253) {
-              colDetails.type = 'STRING';
-            }
-            storeData.push(colDetails);
-            colDetails = {};
-          }
-          mainArr.push(storeData);
-        }
-        this.setState({icol: 5});
-        this.setState({irow: 3});
-        this.setState({storeData: mainArr});
-
-        //impwork finish
-
-        // }
-        console.log(mainArr);
-        this.setState({header: header});
+        this.fetchDataInStoreData(response); // this funtion to print fetch data in table
       })
       .catch(function(res) {
         console.log(res);

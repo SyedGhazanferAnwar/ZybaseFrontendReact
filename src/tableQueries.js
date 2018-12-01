@@ -64,7 +64,7 @@ export default {
     } varchar (255);`;
 
     return query;
-},
+  },
 
   insertRows(state, tableName, rowNum) {
     var data = state.storeData;
@@ -78,7 +78,7 @@ export default {
     for (var i = 1; i < column.length - 1; i++) {
       if (i === column.length - 2) query = query + column[i];
       else query = query + column[i] + ", ";
-}
+    }
 
     query = query + ") VALUES (";
 
@@ -86,11 +86,11 @@ export default {
       if (i === column.length - 2) query = query + "'" + data[j][i].value + "'";
       else query = query + "'" + data[j][i].value + "', ";
       //console.log(data[j][i]);
-}
+    }
 
     query = query + ");";
     return query;
-},
+  },
 
   //
 
@@ -104,7 +104,7 @@ export default {
       ";";
 
     return query;
-},
+  },
 
   deleteColumn(tableName, cName, state) {
     // console.log(state.header);
@@ -113,14 +113,15 @@ export default {
 
     var query = "ALTER TABLE " + tableName + " DROP COLUMN " + cName + ";";
     return query;
-},
+  },
 
   dropTable(tableName) {
     var query = "DROP TABLE " + tableName + ";";
     return query;
-},
+  },
 
-  insertColumn(tableName, columnName, state, columnId) { //done
+  insertColumn(tableName, columnName, state, columnId) {
+    //done
     var data = state.storeData;
     var query =
       "ALTER TABLE " +
@@ -149,41 +150,42 @@ export default {
     query = query + ";";
 
     return query;
-},
+  },
 
-//   alterColumnName(tableName, oldCName, newCName, state, columnId) {
-//     var data = state.storeData;
-//     var query =
-//       "ALTER TABLE " +
-//       tableName +
-//       " CHANGE " +
-//       oldCName +
-//       " " +
-//       newCName +
-//       " " +
-//       data[0][columnId].type +
-//       " (" +
-//       data[0][columnId].size +
-//       ")";
+  //   alterColumnName(tableName, oldCName, newCName, state, columnId) {
+  //     var data = state.storeData;
+  //     var query =
+  //       "ALTER TABLE " +
+  //       tableName +
+  //       " CHANGE " +
+  //       oldCName +
+  //       " " +
+  //       newCName +
+  //       " " +
+  //       data[0][columnId].type +
+  //       " (" +
+  //       data[0][columnId].size +
+  //       ")";
 
-//     if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
+  //     if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
 
-//     if (data[0][columnId].unique == 1) query = query + " UNIQUE";
+  //     if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
-//     if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+  //     if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
 
-//     if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
+  //     if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
 
-//     if (data[0][columnId].defaultValue.length > 0)
-//       query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+  //     if (data[0][columnId].defaultValue.length > 0)
+  //       query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
-//     query = query + ";";
+  //     query = query + ";";
 
-//     return query;
-// },
+  //     return query;
+  // },
 
-  alterColumn(tableName, columnName, state, columnId, pk) {
+  alterColumn(tableName, columnName, state, columnId, pk, pkColumn) {
     var data = state.storeData;
+    console.log(pkColumn[0]);
 
     var query =
       "ALTER TABLE " +
@@ -194,25 +196,58 @@ export default {
       data[0][columnId].type +
       " (" +
       data[0][columnId].size +
-      ")";
+      ");\n";
 
-    if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
+    //     ALTER TABLE `emp`
+    // DROP PRIMARY KEY,
+    //  ADD PRIMARY KEY(
+    //    `eno`,
+    //    `ename`,
+    //    `dno`);
 
-    if (data[0][columnId].unique == 1) query = query + " UNIQUE";
+    // if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
 
-    if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+    // if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
-    if (data[0][columnId].defaultValue.length > 0)
-      query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+    // if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+    // console.log("coming  " + pkColumn.size);
 
-    if (pk == 1) query = query + " PRIMARY KEY";
+    // for (var i = 0; i < pkColumn.length; i++) {
+    //   // query = query + pkColumn[i];
 
-    else if (pk == -1) query = query + " DROP CONSTRAINT PRIMARY KEY"
+    //   console.log("com  " + pkColumn[i]);
+    // }
 
-    query = query + ";";
+    // if (data[0][columnId].defaultValue.length > 0)
+    //   query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+    query = query + "ALTER TABLE " + tableName + " \n";
+
+    if (pk == 1){
+      query = query + "DROP PRIMARY KEY,";
+      query = query + "ADD PRIMARY KEY(";
+      for (var i = 0; i < pkColumn.length; i++){
+        query = query + pkColumn[i];
+        if (i < pkColumn.length - 1)
+          query = query + ",";
+        else
+          query = query + ");"
+      }
+    }
+
+    else if (pk == -1) {
+      query = query + "DROP PRIMARY KEY,";
+      query = query + "ADD PRIMARY KEY(";
+      for (var i = 0; i < pkColumn.length; i++){
+        query = query + pkColumn[i];
+        if (i < pkColumn.length - 1)
+          query = query + ",";
+        else
+          query = query + ");"
+      }
+    }
 
     return query;
-},
+  },
 
   modifyRow(tableName, rowNum, state) {
     var data = state.storeData;
@@ -226,10 +261,10 @@ export default {
       if (i === column.length - 2)
         query = query + column[i] + " = " + "'" + data[j][i].value + "' ";
       else query = query + column[i] + " = " + "'" + data[j][i].value + "', ";
-}
+    }
 
     query = query + "WHERE " + "id = " + j + ";";
 
     return query;
-}
+  }
 };

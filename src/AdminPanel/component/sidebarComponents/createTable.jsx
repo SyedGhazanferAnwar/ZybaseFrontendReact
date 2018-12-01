@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Rows from './Rows.jsx';
 import ModalPopup from './modalPopup.jsx';
+import Queries from '../../../tableQueries.js';
 import Auth from '../../../Auth.js';
 // import { connect } from "r";
 import validator from 'react-validation';
@@ -25,6 +26,7 @@ class CreateTable extends Component {
       unique: '',
       pk: '0',
     },
+    pkDecide: '',
     datatarget: '',
     lengthDisableStatus: 0,
     inputisEditableIndex: 0,
@@ -82,6 +84,7 @@ class CreateTable extends Component {
     let inputisEditableFlag = this.state.inputisEditableFlag;
     inputisEditableFlag = 'true';
     this.setState({inputisEditableFlag: inputisEditableFlag});
+    console.log(Queries.modifyRow('ABC', this.state.editRowIndex, this.state)); //change abc to tablename
   }
   editRow(evt) {
     // console.log("evt " + evt.target.id);
@@ -151,9 +154,9 @@ class CreateTable extends Component {
   }
   handleRowDelete(evt) {
     const index = evt.target.id;
-    // if (index === '0') {
-    //   return alert('cant delete first row');
-    // }
+    if (index === '0') {
+      return alert('cant delete first row');
+    }
     let i = 0;
     let dupRows = []; //
     let storeData = [...this.state.storeData];
@@ -172,6 +175,7 @@ class CreateTable extends Component {
     irow--;
     this.setState({storeData: dupRows});
     this.setState({irow, irow});
+    console.log(Queries.deleteRow('tableName', parseInt(index), this.state));
 
     // this.setState();
 
@@ -180,18 +184,20 @@ class CreateTable extends Component {
   }
   modifyColumnHandler = evt => {
     evt.preventDefault();
-    evt.target.reset();
     // this.setState({newHeader: this.state.header[this.state.setIndex]});
-    this.setState({setIndex: 0});
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
     console.log('new header is  ' + this.state.newHeader);
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({header: header});
+    let pkPrevious = storeData[0][this.state.setIndex].pk;
+
     for (let i = 0; i < this.state.irow; i++) {
       // storeData[i][
       //   this.state.setIndex
       // ].value = this.state.newColumnAttr.defaultValue;
+
+      console.log('previous  ' + pkPrevious + '  new ' + this.state.newColumnAttr.pk);
       storeData[i][this.state.setIndex].pk = this.state.newColumnAttr.pk;
       storeData[i][this.state.setIndex].colName = this.state.newHeader;
       storeData[i][this.state.setIndex].size = this.state.newColumnAttr.size;
@@ -200,7 +206,19 @@ class CreateTable extends Component {
 
       storeData[i][this.state.setIndex].defaultValue = this.state.newColumnAttr.defaultValue;
     }
+    if (pkPrevious === '1' && storeData[0][this.state.setIndex].pk === '0') {
+      console.log(Queries.alterColumn('tableName', this.state.newHeader, this.state, this.state.setIndex, '-1'));
+    } else if (storeData[0][this.state.setIndex].pk === '1') {
+      console.log(Queries.alterColumn('tableName', this.state.newHeader, this.state, this.state.setIndex, '1'));
+    } else {
+      console.log(Queries.alterColumn('tableName', this.state.newHeader, this.state, this.state.setIndex, '0'));
+    }
+
     this.change(storeData);
+    this.setState({setIndex: 0});
+
+    evt.target.reset();
+
     // this.setState({ storeData: storeData });
   };
   change = storeData => {
@@ -221,6 +239,7 @@ class CreateTable extends Component {
     let newVal = this.state.newVal;
     // console.log(this.state.newColumnAttr);
     this.addColHandler(newVal);
+    this.resetForm();
   }
 
   printHeader() {}
@@ -267,6 +286,7 @@ class CreateTable extends Component {
     let irow = this.state.irow;
     irow++;
     this.setState({irow: irow});
+    console.log(Queries.insertRows(this.state, 'XYZ', irow - 1));
   };
   addColHandler = newVal => {
     // console.log(newVal);
@@ -291,6 +311,7 @@ class CreateTable extends Component {
     let icol = this.state.icol;
     icol++;
     this.setState({icol: icol});
+    console.log(Queries.insertColumn('XYZ', this.state.newHeader, this.state, this.state.icol));
   };
   onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
@@ -374,6 +395,8 @@ class CreateTable extends Component {
     }
     let icol = this.state.icol;
     icol--;
+    console.log(Queries.deleteColumn('tableName', this.state.header[index], this.state));
+
     this.setState({icol: icol});
     this.setState({header: dupHeader});
     this.setState({storeData: dupStoreData});
@@ -383,6 +406,7 @@ class CreateTable extends Component {
   };
   myfunc(evt) {
     // console.log("yuhooo" + evt);
+    this.state.newColumnAttr.pk = this.state.storeData[0][evt].pk;
     this.setState({newHeader: this.state.header[evt]});
     this.setState({setIndex: evt});
   }

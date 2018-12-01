@@ -44,7 +44,7 @@ class Rows extends Component {
               ? String(this.props.storeData[this.props.index][index].size)
               : ''
           }
-          defaultValue={index === 0 ? this.props.index : this.props.storeData[this.props.index][index].defaultValue}
+          defaultValue={index === 0 ? this.props.storeData[this.props.index][index].id : this.props.storeData[this.props.index][index].defaultValue}
           // type={this.props.storeData[0][index].type}
           // placeholder={
           //   index === 0

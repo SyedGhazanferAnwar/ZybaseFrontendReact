@@ -138,9 +138,9 @@ export default {
 
     if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
 
-    if (data[0][columnId].unique == 1) query = query + " UNIQUE";
+    // if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
-    if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
+    // if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
 
     if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
 
@@ -196,8 +196,12 @@ export default {
       data[0][columnId].type +
       " (" +
       data[0][columnId].size +
-      ");\n";
+      ") ";
+      
+    if (data[0][columnId].defaultValue.length > 0)
+      query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
+      query = query + ";\n";
     //     ALTER TABLE `emp`
     // DROP PRIMARY KEY,
     //  ADD PRIMARY KEY(
@@ -218,8 +222,6 @@ export default {
     //   console.log("com  " + pkColumn[i]);
     // }
 
-    // if (data[0][columnId].defaultValue.length > 0)
-    //   query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
     query = query + "ALTER TABLE " + tableName + " \n";
 
     if (pk == 1){

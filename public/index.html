@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#000000">
-  <!--
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-  <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
-  <link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/vendor/linearicons/style.css" />
+    <link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" />
 
-  <!-- MAIN CSS -->
-  <link rel="stylesheet" href="assets/css/main.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="assets/css/main.css" />
 
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
-  <script src="assets/vendor/chartist/js/chartist.min.js"></script>
-  <script src="assets/scripts/klorofil-common.js"></script>
-  <!--
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
+    <script src="assets/scripts/klorofil-common.js"></script>
+    <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -37,20 +35,75 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="css/util.css">
-  <link rel="stylesheet" type="text/css" href="css/main2.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/util.css" />
+    <link rel="stylesheet" type="text/css" href="css/main2.css" />
 
-  <title>React App</title>
-</head>
+    <script>
+      /* ===== Logic for creating fake Select Boxes ===== */
+      $('.sel').each(function() {
+        $(this)
+          .children('select')
+          .css('display', 'none');
 
-<body>
-  <noscript>
-    You need to enable JavaScript to run this app.
-  </noscript>
-  <div id="root">
+        var $current = $(this);
 
-  </div>
-</body>
+        $(this)
+          .find('option')
+          .each(function(i) {
+            if (i == 0) {
+              $current.prepend(
+                $('<div>', {
+                  class: $current.attr('class').replace(/sel/g, 'sel__box'),
+                })
+              );
 
+              var placeholder = $(this).text();
+              $current.prepend(
+                $('<span>', {
+                  class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+                  text: placeholder,
+                  'data-placeholder': placeholder,
+                })
+              );
+
+              return;
+            }
+
+            $current.children('div').append(
+              $('<span>', {
+                class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+                text: $(this).text(),
+              })
+            );
+          });
+      });
+
+      // Toggling the `.active` state on the `.sel`.
+      $('.sel').click(function() {
+        $(this).toggleClass('active');
+      });
+
+      // Toggling the `.selected` state on the options.
+      $('.sel__box__options').click(function() {
+        var txt = $(this).text();
+        var index = $(this).index();
+
+        $(this)
+          .siblings('.sel__box__options')
+          .removeClass('selected');
+        $(this).addClass('selected');
+
+        var $currentSel = $(this).closest('.sel');
+        $currentSel.children('.sel__placeholder').text(txt);
+        $currentSel.children('select').prop('selectedIndex', index + 1);
+      });
+    </script>
+    <title>React App</title>
+  </head>
+
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="root"></div>
+  </body>
 </html>

@@ -3,6 +3,7 @@ import Rows from './Rows.jsx';
 import ModalPopup from './modalPopup.jsx';
 import Queries from '../../../tableQueries.js';
 import Auth from '../../../Auth.js';
+import ComboBox from './comboBox.jsx';
 // import { connect } from "r";
 import validator from 'react-validation';
 import {validate, ValidationIn} from 'simple-react-validator';
@@ -60,7 +61,7 @@ class CreateTable extends Component {
         {
           id: '1',
           colName: '',
-          pk: '',
+          pk: '0',
           defaultValue: '',
           value: '',
           size: '',
@@ -218,6 +219,7 @@ class CreateTable extends Component {
     this.setState({setIndex: 0});
 
     evt.target.reset();
+    this.resetForm();
 
     // this.setState({ storeData: storeData });
   };
@@ -227,7 +229,7 @@ class CreateTable extends Component {
   };
   addHeaderHandler(evt) {
     evt.preventDefault();
-    evt.target.reset();
+
     let num = this.state.num;
     num++;
     this.setState({num: num});
@@ -239,6 +241,7 @@ class CreateTable extends Component {
     let newVal = this.state.newVal;
     // console.log(this.state.newColumnAttr);
     this.addColHandler(newVal);
+    evt.target.reset();
     this.resetForm();
   }
 
@@ -298,7 +301,7 @@ class CreateTable extends Component {
         colName: this.state.newHeader,
         pk: String(this.state.newColumnAttr.pk),
         defaultValue: this.state.newColumnAttr.defaultValue,
-        value: this.state.newColumnAttr.defaultValue,
+        value: this.state.newColumnAttr.value,
         size: this.state.newColumnAttr.size,
         autoInc: '',
         type: this.state.newColumnAttr.type,
@@ -316,8 +319,9 @@ class CreateTable extends Component {
   onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
     // let check = evt.target.checked;
-    console.log('hit ' + evt);
     if (evt.target.name === 'pk') {
+      console.log('hit ' + evt.target.checked + 'hit ' + evt.target.defaultChecked);
+
       if (evt.target.checked === true) {
         console.log(evt.target.checked + ' installed ');
         newColumnAttr.pk = '1';
@@ -405,8 +409,9 @@ class CreateTable extends Component {
     // console.log(array);
   };
   myfunc(evt) {
-    // console.log("yuhooo" + evt);
     this.state.newColumnAttr.pk = this.state.storeData[0][evt].pk;
+    console.log('yuhooo pk' + this.state.newColumnAttr.pk);
+
     this.setState({newHeader: this.state.header[evt]});
     this.setState({setIndex: evt});
   }
@@ -534,9 +539,12 @@ class CreateTable extends Component {
                   <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
                 </div>
                 <div className="panel-body">
+                  <ComboBox />
+
                   <button
                     type="button"
                     className="btn btn-primary zoomBtn"
+                    onClick={this.resetForm.bind(this)}
                     data-toggle="modal"
                     data-target="#exampleModal"
                   >

@@ -10,14 +10,17 @@ class Terminal extends Component {
   // };
 
   state = {
+    width: 700,
     data: [],
-    inputWidth :90,
-    connnection :false,
+    inputWidth: 2,
+    connnection: false,
     fname: "Salman@root#",
     prompt: true,
-    requestCount: 0,
-    responseCount: 0,
+    queries: [],
+    qc: 0,
+    cqc: 0
   };
+
   // componentWillMount(){
   //   let data = this.state.data;
   //   data.push({type:false,text:"connecting to server..."})
@@ -39,13 +42,30 @@ class Terminal extends Component {
   //         this.setState({prompt:true});
   //       });
   // }
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  };
 
+  componentDidMount() {
+    this.scrollToBottom();
+  }
 
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
   keyPress(e) {
-    this.setState({inputWidth:this.state.inputWidth+15});
+    this.setState({ width: this.state.inputWidth });
+    this.setState({ inputWidth: this.state.inputWidth + 1 });
     if (e.key === "Enter") {
-      this.setState({inputWidth:60})
-      //console.log("enter preesed");
+      this.setState({ cqc: 0 });
+      let queries = this.state.queries;
+      console.error(queries);
+      queries.push(e.target.value);
+      this.setState({ queries: queries });
+      this.setState({ qc: this.state.qc + 1 });
+      this.setState({ width: 60 });
+      this.setState({ inputWidth: 60 });
+      console.log("enter preesed");
       let request = this.state.data;
       request.push({ type: true, text: e.target.value });
       //request.push(e.target.value);
@@ -56,10 +76,10 @@ class Terminal extends Component {
         method: "POST",
         credentials: "include",
         headers: {
-         "Content-Type": "application/json"
-      },
-        body:JSON.stringify({
-        query:e.target.value
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          query: e.target.value
         })
       })
         .then(res => {
@@ -68,17 +88,28 @@ class Terminal extends Component {
         })
         .then(res => {
           console.log(res);
-          res = JSON.stringify(res);
+
           let response = this.state.data;
-          response.push({ type:false, text: res,error:true });
-          this.setState({ data: response });
+          if (res.error == true) {
+            if (res.data.sqlMessage.includes("Access denied")) {
+              res.data.sqlMessage =
+                "You are not allowed to perform this operation";
+            }
+            res = JSON.stringify(res.data.sqlMessage);
+            response.push({ type: false, text: res, error: true });
+          } else {
+            res = JSON.stringify(res);
+            response.push({ type: false, text: res, error: false });
+            this.setState({ data: response });
+          }
           //this.setState({ responseCount: this.state.responseCount + 1 });
           this.setState({ prompt: true });
-        }).catch((error)=>{
+        })
+        .catch(error => {
           let data = this.state.data;
-          data.push({type:false,text:"Request timeout.",error:true});
-          this.setState({data:data});
-          this.setState({prompt:true});
+          data.push({ type: false, text: "Request timeout.", error: true });
+          this.setState({ data: data });
+          this.setState({ prompt: true });
         });
       //console.log(e);
       document.getElementById("prompt-input").value = "";
@@ -86,6 +117,62 @@ class Terminal extends Component {
       // e.target.reset();
     }
   }
+  onBlur(e) {
+    // this.setState({ inputWidth: 640 });
+  }
+  onFocus(e) {
+    // this.setState({ inputWidth: this.state.width });
+  }
+  onKeyDown(e) {
+    if (e.keyCode === 8) {
+      this.setState({ inputWidth: this.state.inputWidth - 1 });
+    }
+
+    if (e.keyCode === 38) {
+      // console.log(
+      //   "uppperrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
+      // );
+      // if (this.state.qc === -1) {
+      //   document.getElementById("prompt-input").value = "";
+      //   return;
+      // // }
+      // if (this.state.qc == this.state.cqc - 2) {
+      //   return;
+      // }
+
+      console.error(this.state.cqc + "   " + this.state.qc);
+      // if (this.state.qc == this.state.cqc - 2) {
+      //   document.getElementById("prompt-input").value = "";
+      //   return;
+      // }
+      if (
+        this.state.queries[this.state.qc - (this.state.cqc + 1)] != undefined
+      ) {
+        document.getElementById("prompt-input").value = this.state.queries[
+          this.state.qc - (this.state.cqc + 1)
+        ];
+        this.setState({ cqc: this.state.cqc + 1 });
+      }
+
+      console.error(this.state.queries);
+    }
+
+    if (e.keyCode == 40) {
+      console.error(this.state.cqc + "   " + this.state.qc);
+      console.error(this.state.queries);
+
+      if (
+        this.state.queries[this.state.qc - (this.state.cqc - 1)] != undefined
+      ) {
+        console.error(this.state.cqc + "  b  " + this.state.qc);
+        document.getElementById("prompt-input").value = this.state.queries[
+          this.state.qc - (this.state.cqc - 1)
+        ];
+        this.setState({ cqc: this.state.cqc - 1 });
+      }
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -102,16 +189,26 @@ class Terminal extends Component {
           <div className="main">
             <div className="terminal">
               <div className="messages">
-
-              
                 {this.state.data.map(message => (
                   <span>
-                    {message.type?<p className="input-prompt  p-inline ea">{this.state.fname}</p>:null}&nbsp;
-                    {message.type?<p className="p-inline text"input-prompt>{message.text}</p>:null}
+                    {message.type ? (
+                      <p className="input-prompt  p-inline ea">
+                        {this.state.fname}
+                      </p>
+                    ) : null}
+                    &nbsp;
+                    {message.type ? (
+                      <p className="p-inline text" input-prompt>
+                        {message.text}
+                      </p>
+                    ) : null}
                     {/* {message.tyepe?<br />:null} */}
-                    {!message.type?<p className={message.error?"error":"success"}>{message.text}</p>:null}
-                    {!message.type?<br/>:null}
-                    
+                    {!message.type ? (
+                      <p className={message.error ? "error" : "success"}>
+                        {message.text}
+                      </p>
+                    ) : null}
+                    {!message.type ? <br /> : null}
                   </span>
                 ))}
               </div>
@@ -121,16 +218,30 @@ class Terminal extends Component {
               >
                 <p className="input-prompt">{this.state.fname}</p>
                 <input
-                style={{width:this.state.inputWidth+'px'}}
+                  autoFocus
+                  onKeyDown={this.onKeyDown.bind(this)}
+                  onBlur={this.onBlur.bind(this)}
+                  onFocus={this.onFocus.bind(this)}
+                  style={{
+                    width: this.state.inputWidth + "%",
+                    minWidth: "70%"
+                  }}
                   id="prompt-input"
                   type="text"
                   className="input-prompt"
                   onKeyPress={this.keyPress.bind(this)}
                 />
               </div>
+              <div
+                style={{ float: "left", clear: "both" }}
+                ref={el => {
+                  this.messagesEnd = el;
+                }}
+              />
             </div>
           </div>
           {/* <!-- END MAIN --> */}
+
           <div className="clearfix" />
           <footer>
             <div className="container-fluid">

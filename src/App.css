@@ -162,20 +162,23 @@ th {
 }
 .input-prompt {
   font-size: 16px;
-  font-family: 'Consolas';
+  font-family: "Consolas";
   margin-top: -6px;
   display: inline;
   color: green;
 }
 .prompt input {
   color: white;
+  width: 120px;
   margin-left: 6px;
+  margin-right: -2000px;
   position: relative;
   caret-color: green;
   background-color: transparent;
   border: none;
   outline: none;
   font-family: Consolas;
+  white-space: initial;
 }
 .p-inline {
   display: inline;
@@ -187,10 +190,10 @@ th {
 .text {
   font-size: 16px;
   margin-top: 9px;
-  font-family: 'Consolas';
+  font-family: "Consolas";
 }
 .error {
-  color: red;
+  color: rgb(255, 55, 55);
 }
 .success {
   font-family: Consolas;

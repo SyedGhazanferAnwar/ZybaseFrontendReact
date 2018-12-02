@@ -120,7 +120,7 @@ export default {
     return query;
   },
 
-  insertColumn(tableName, columnName, state, columnId) {
+  insertColumn(tableName, columnName, state, columnId, pkColumn) {
     //done
     var data = state.storeData;
     var query =
@@ -196,7 +196,7 @@ export default {
 
   alterColumn(tableName, columnName, state, columnId, pk, pkColumn) {
     var data = state.storeData;
-    console.log(pkColumn[0]);
+    // console.log(pkColumn[0]);
 
     var query =
       "ALTER TABLE " +

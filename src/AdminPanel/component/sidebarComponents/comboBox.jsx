@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
+import Auth from '../../../Auth';
 class ComboBox extends Component {
-  state = {};
+  state = {
+    tableNames: ['nafix', 'database'],
+  };
 
   componentDidMount() {
+    // yaha table ke names fetch honge or tableNames me insert kerwana hai
     /* ===== Logic for creating fake Select Boxes ===== */
     $('.sel').each(function() {
       $(this)
@@ -63,23 +67,30 @@ class ComboBox extends Component {
       $currentSel.children('select').prop('selectedIndex', index + 1);
     });
   }
+  selectTable = evt => {
+    console.log('table name is  ' + evt.target.value);
+  };
   render() {
     return (
       <React.Fragment>
-        <div class="sel sel--black-panther">
+        <div className="sel sel--black-panther">
           <select name="select-profession" id="select-profession">
-            <option value="" disabled>
-              Profession
+            <option value="TableName" disabled>
+              TableName
             </option>
-            <option value="hacker">Hacker</option>
-            <option value="gamer">Gamer</option>
-            <option value="developer">Developer</option>
-            <option value="programmer">Programmer</option>
-            <option value="designer">Designer</option>
+
+            {this.state.tableNames.map((tableNames, index) => (
+              <option key={index} value={tableNames}>
+                {tableNames}
+              </option>
+            ))}
           </select>
         </div>
+        {/* <hr className="rule" /> */}
 
-        <hr class="rule" />
+        <button type="button" className="btn btn-primary zoomBtn" onClick={this.props.comboBoxSelectedValue}>
+          Load Table
+        </button>
       </React.Fragment>
     );
   }

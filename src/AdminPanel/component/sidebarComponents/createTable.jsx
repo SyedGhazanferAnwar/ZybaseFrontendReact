@@ -43,6 +43,7 @@ class CreateTable extends Component {
     newHeader: '',
     newVal: '',
     checkBhund: 0,
+    show: 'yes',
     // empty: [[{ id: "1", value: "2" }]],
     storeData: [
       [
@@ -549,12 +550,14 @@ class CreateTable extends Component {
               {/* {/* <!-- OVERVIEW --> */}
               <div className="panel panel-headline">
                 <div className="panel-heading">
-                  <h3 className="panel-title">Table Name</h3>
+                  <div className="panel-title">
+                    <h3>
+                      Select Table <ComboBox />
+                    </h3>
+                  </div>
                   {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
                 </div>
                 <div className="panel-body">
-                  <ComboBox />
-
                   <button
                     type="button"
                     className="btn btn-primary zoomBtn"
@@ -613,6 +616,7 @@ class CreateTable extends Component {
                       {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
                       {this.state.storeData.map((yo, index) => (
                         <Rows
+                          show={this.props.show}
                           key={String(index)}
                           addDltEdtBtn={this.addDltEdtBtn.bind(this)}
                           onDelete={this.handleRowDelete.bind(this)}

@@ -3,6 +3,7 @@ import NavBar from './component/navBar.jsx';
 import SideMenu from './component/sideMenu.jsx';
 import Main from './component/main.jsx';
 import CreateTable from './component/sidebarComponents/createTable';
+import ViewTable from './component/sidebarComponents/viewTable.jsx';
 
 class CreateTableUI extends Component {
   constructor() {
@@ -26,19 +27,13 @@ class CreateTableUI extends Component {
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
           {/* <CreateTable /> */}
-          <CreateTable />
+          {/* <CreateTable /> */}
+          <ViewTable />
           {/* <!-- END MAIN --> */}
           <div className="clearfix" />
           <footer>
-            <div className="container-fluid">
-              <p className="copyright">
-                &copy; 2017{' '}
-                <a href="https://www.themeineed.com" target="_blank">
-                  Theme I Need
-                </a>
-                . All Rights Reserved.
-              </p>
-            </div>
+            <div className="container-fluid" />
+            Zybase CopyRights
           </footer>
         </div>
         {/* <!-- END WRAPPER --> */}

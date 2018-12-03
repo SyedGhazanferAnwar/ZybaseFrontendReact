@@ -272,14 +272,14 @@ th {
 }
 .sel__box {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: -4px;
   display: none;
   list-style-type: none;
   text-align: left;
   font-size: 1em;
-  background-color: #fff;
-  width: calc(100% + 8px);
+  background-color: rgba(22, 18, 18, 0.719);
+  width: calc(100% + 6px);
   box-sizing: border-box;
 }
 .sel.active .sel__box {
@@ -291,7 +291,7 @@ th {
   display: list-item;
   font-family: inherit;
   font-size: 1.5em;
-  color: #838e95;
+  color: #e4ecf1;
   padding: 0.5em 1em;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -309,7 +309,7 @@ th {
   display: inline;
 }
 .sel__box__options:hover {
-  background-color: #ebedef;
+  background-color: #060e162f;
 }
 /* ----- Select Box Black Panther ----- */
 .sel {

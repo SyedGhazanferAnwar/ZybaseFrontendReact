@@ -123,6 +123,11 @@ export default {
   insertColumn(tableName, columnName, state, columnId, pkColumn) {
     //done
     var data = state.storeData;
+
+    if (data[0][columnId].pk == 1) {
+      pkColumn[pkColumn.length] = columnName;
+    }
+
     var query =
       "ALTER TABLE " +
       tableName +
@@ -150,7 +155,7 @@ export default {
     if (data[0][columnId].pk == 1) {
       query = query + "ALTER TABLE " + tableName + " \n";
       query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(";
+      query = query + "ADD PRIMARY KEY(Id, ";
       for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
         if (i < pkColumn.length - 1) query = query + ",";
@@ -236,7 +241,7 @@ export default {
     if (pk == 1) {
       query = query + "ALTER TABLE " + tableName + " \n";
       query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(";
+      query = query + "ADD PRIMARY KEY(Id, ";
       for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
         if (i < pkColumn.length - 1) query = query + ",";
@@ -245,7 +250,7 @@ export default {
     } else if (pk == -1) {
       query = query + "ALTER TABLE " + tableName + " \n";
       query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(";
+      query = query + "ADD PRIMARY KEY(Id, ";
       for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
         if (i < pkColumn.length - 1) query = query + ",";

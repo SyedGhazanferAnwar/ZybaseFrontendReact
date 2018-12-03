@@ -331,7 +331,18 @@ class CreateTable extends Component {
     let icol = this.state.icol;
     icol++;
     this.setState({icol: icol});
-    console.log(Queries.insertColumn('XYZ', this.state.newHeader, this.state, this.state.icol));
+
+    let pkDecide = [],
+      k = 0;
+    for (let j = 0; j < this.state.icol; j++) {
+      if (this.state.storeData[0][j].pk === '1') {
+        pkDecide[k] = this.state.storeData[0][j].colName;
+        console.log('nafix desice');
+        console.log(pkDecide[k]);
+        k++;
+      }
+    }
+    console.log(Queries.insertColumn('XYZ', this.state.newHeader, this.state, this.state.icol, pkDecide));
   };
   onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
@@ -616,7 +627,7 @@ class CreateTable extends Component {
                       {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
                       {this.state.storeData.map((yo, index) => (
                         <Rows
-                          show={this.props.show}
+                          show={this.state.show}
                           key={String(index)}
                           addDltEdtBtn={this.addDltEdtBtn.bind(this)}
                           onDelete={this.handleRowDelete.bind(this)}

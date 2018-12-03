@@ -26,9 +26,8 @@ class CreateTableUI extends Component {
 
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
-          {/* <CreateTable /> */}
-          {/* <CreateTable /> */}
-          <ViewTable />
+          <CreateTable />
+          {/* <ViewTable /> */}
           {/* <!-- END MAIN --> */}
           <div className="clearfix" />
           <footer>

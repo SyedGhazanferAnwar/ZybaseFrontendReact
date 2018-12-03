@@ -44,7 +44,11 @@ class Rows extends Component {
               ? String(this.props.storeData[this.props.index][index].size)
               : ''
           }
-          defaultValue={index === 0 ? this.props.storeData[this.props.index][index].id : this.props.storeData[this.props.index][index].defaultValue}
+          defaultValue={
+            index === 0
+              ? this.props.storeData[this.props.index][index].id
+              : this.props.storeData[this.props.index][index].defaultValue
+          }
           // type={this.props.storeData[0][index].type}
           // placeholder={
           //   index === 0
@@ -65,24 +69,34 @@ class Rows extends Component {
   render() {
     return (
       <React.Fragment>
-        <tr key={this.props.id}>
-          {this.props.storeData[this.props.index].map((row, index) => {
-            return <td key={String(this.props.index) + String(index)}>{this.inputField(index)}</td>;
-          })}
+        {this.props.show === 'yes' ? ( // run this when create table called
+          <tr key={this.props.id}>
+            {this.props.storeData[this.props.index].map((row, index) => {
+              return <td key={String(this.props.index) + String(index)}>{this.inputField(index)}</td>;
+            })}
 
-          <td>
-            <button
-              id={this.props.index}
-              onClick={this.props.onDelete}
-              className="btn btn-danger zoomBtn"
-              style={{margin: 5}}
-            >
-              Delete
-            </button>
-            {this.props.addDltEdtBtn(this.props.index)}
-          </td>
-          <script />
-        </tr>
+            <td>
+              <button
+                id={this.props.index}
+                onClick={this.props.onDelete}
+                className="btn btn-danger zoomBtn"
+                style={{margin: 5}}
+              >
+                Delete
+              </button>
+              {this.props.addDltEdtBtn(this.props.index)}
+            </td>
+
+            <script />
+          </tr>
+        ) : (
+          // run this when view table called
+          <tr key={this.props.id}>
+            {this.props.storeData[this.props.index].map((row, index) => {
+              return <td key={String(this.props.index) + String(index)}>{this.inputField(index)}</td>;
+            })}
+          </tr>
+        )}
       </React.Fragment>
     );
   }

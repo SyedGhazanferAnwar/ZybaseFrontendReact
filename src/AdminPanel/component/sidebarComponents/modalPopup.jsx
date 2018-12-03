@@ -10,7 +10,7 @@ class ModalPopup extends Component {
   call() {
     return this.props.addNewColumnsHandler;
   }
-  resetForm() {}
+
   checked() {
     let t = this.props.storeData[0][this.props.setIndex].pk;
     console.log('t is here' + typeof t);
@@ -69,8 +69,8 @@ class ModalPopup extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+
               <form onSubmit={this.props.addHeaderHandler} method="post">
-                {console.log('divset')}
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
                   <label style={{color: 'white'}}>Enter Column Name</label>
@@ -143,7 +143,8 @@ class ModalPopup extends Component {
                     id={this.props.num}
                     style={{marginLeft: '5px'}}
                     type="checkbox"
-                    defaultChecked={parseInt(this.props.newColumnAttr.pk)}
+                    checked={parseInt(this.props.newColumnAttr.pk)}
+                    // defaultChecked={!this.props.newColumnAttr.pk === '' ? parseInt(this.props.newColumnAttr.pk) : 0}
                     onChange={this.props.onUpdateValueColumnAttr}
                   />
                 </div>

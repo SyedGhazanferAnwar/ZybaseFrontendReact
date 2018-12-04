@@ -88,7 +88,12 @@ class ComboBox extends Component {
         </div>
         {/* <hr className="rule" /> */}
 
-        <button type="button" className="btn btn-primary zoomBtn" onClick={this.props.comboBoxSelectedValue}>
+        <button
+          type="button"
+          className="btn btn-primary zoomBtn"
+          style={{paddingTop: 8, paddingRight: 9, paddingLeft: 9, paddingBottom: 8}}
+          onClick={this.props.comboBoxSelectedValue}
+        >
           Load Table
         </button>
       </React.Fragment>

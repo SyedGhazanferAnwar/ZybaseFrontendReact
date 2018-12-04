@@ -147,7 +147,7 @@ class ViewTable extends Component {
                           </th>
                         ))}
                       </tr>
-                      {this.fetchHandler()}
+                      {/* {this.fetchHandler()} */}
                       {/*%%%%%%%%%%%%%%%%%%%% End header DOM working %%%%%%%%%%%%%%*/}
 
                       {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}

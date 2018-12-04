@@ -10,8 +10,9 @@ import Auth from './Auth';
 import Dashboard from './AdminPanel/Admin';
 import CreateTableUI from './AdminPanel/CreateTableUI';
 import Terminal from './AdminPanel/component/terminal';
-
+import viewTableUI from './AdminPanel/viewTableUI';
 import comp1 from './AdminPanel/component/main';
+import ModifyTableUI from './AdminPanel/ModifyTableUI';
 class App extends Component {
   render() {
     return (
@@ -31,8 +32,10 @@ class App extends Component {
             <PrivateRoute path="/private-dashboard" component={PrivateDashboard} />
             <PrivateRoute path="/terminal" component={Terminal} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/view" component={viewTableUI} />
+            <PrivateRoute path="/modify" component={ModifyTableUI} />
+
             <Route path="/test" component={comp1} />
-            <Route path="/create" component={CreateTableUI} />
           </Switch>
         </div>
       </Router>

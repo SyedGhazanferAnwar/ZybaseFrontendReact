@@ -5,7 +5,7 @@ import Main from './component/main.jsx';
 import ModifyTable from './component/sidebarComponents/ModifyTable';
 import ViewTable from './component/sidebarComponents/viewTable.jsx';
 
-class CreateTableUI extends Component {
+class viewTableUI extends Component {
   constructor() {
     super();
     let ss = this.state.row;
@@ -27,7 +27,7 @@ class CreateTableUI extends Component {
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
           {/* <CreateTable /> */}
-          {/* <CreateTable /> */}
+          <ViewTable />
           {/* <ViewTable /> */}
           {/* <!-- END MAIN --> */}
           <div className="clearfix" />
@@ -43,4 +43,4 @@ class CreateTableUI extends Component {
   }
 }
 
-export default CreateTableUI;
+export default viewTableUI;

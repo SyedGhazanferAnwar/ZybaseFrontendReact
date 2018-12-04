@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import { Link, withRouter, Redirect } from "react-router-dom";
+import React, {Component} from 'react';
+import {Link, withRouter, Redirect} from 'react-router-dom';
 
 class SideMenu extends Component {
   state = {
-    cuurentComponent: ""
+    cuurentComponent: '',
   };
   componentDidMount() {
-    this.setState({ cuurentComponent: this.props.callingComponent });
+    this.setState({cuurentComponent: this.props.callingComponent});
   }
   getActiveClassName = type => {
-    console.log(type + "     " + this.state.cuurentComponent);
+    console.log(type + '     ' + this.state.cuurentComponent);
     if (type == this.state.cuurentComponent) {
-      return "active";
+      return 'active';
     }
-    if (type == "desk" && this.state.cuurentComponent != "desk") {
-      console.log("asdasdsa");
-      return "collapsed collaspse collapse";
+    if (type == 'desk' && this.state.cuurentComponent != 'desk') {
+      console.log('asdasdsa');
+      return 'collapsed collaspse collapse';
     }
-    return "";
+    return '';
   };
   render() {
     return (
@@ -27,11 +27,7 @@ class SideMenu extends Component {
             <nav>
               <ul className="nav">
                 <li>
-                  <Link
-                    name="dashboard"
-                    className={this.getActiveClassName("dashboard")}
-                    to="/dashboard"
-                  >
+                  <Link name="dashboard" className={this.getActiveClassName('dashboard')} to="/dashboard">
                     <i className="lnr lnr-home" /> <span>Dashboard</span>
                   </Link>
                 </li>
@@ -40,33 +36,26 @@ class SideMenu extends Component {
                     name="desk"
                     href="#subPages"
                     data-toggle="collapse"
-                    className={this.getActiveClassName("desk")}
+                    className={this.getActiveClassName('desk')}
                     aria-expanded="false"
                   >
                     <i className="lnr lnr-file-empty" />
-                    <span>Desk</span>{" "}
-                    <i className="icon-submenu lnr lnr-chevron-left" />
+                    <span>Desk</span> <i className="icon-submenu lnr lnr-chevron-left" />
                   </a>
-                  <div
-                    id="subPages"
-                    className={this.getActiveClassName("desk")}
-                  >
-                    <ul className="nav" style={{ background: "none" }}>
+                  <div id="subPages" className={this.getActiveClassName('desk')}>
+                    <ul className="nav" style={{background: 'none'}}>
                       <li>
-                        <Link
-                          className=""
-                          style={{ background: "#ffffff0d" }}
-                          to="/create"
-                        >
+                        <Link className="" style={{background: '#ffffff0d'}} to="/create">
                           Create Table
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="/create"
-                          className=""
-                          style={{ background: "#ffffff0d" }}
-                        >
+                        <Link to="/modify" className="" style={{background: '#ffffff0d'}}>
+                          Modify Table
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/view" className="" style={{background: '#ffffff0d'}}>
                           View Table
                         </Link>
                       </li>
@@ -74,29 +63,17 @@ class SideMenu extends Component {
                   </div>
                 </li>
                 <li>
-                  <Link
-                    name="analytics"
-                    to="/dashboard"
-                    className={this.getActiveClassName("analytics")}
-                  >
+                  <Link name="analytics" to="/dashboard" className={this.getActiveClassName('analytics')}>
                     <i className="lnr lnr-chart-bars" /> <span>Analytics</span>
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    name="settingpanel"
-                    to="/dashboard"
-                    className={this.getActiveClassName("settingpanel")}
-                  >
+                  <Link name="settingpanel" to="/dashboard" className={this.getActiveClassName('settingpanel')}>
                     <i className="lnr lnr-cog" /> <span> Settings Panel</span>
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    name="Terminal"
-                    to="/terminal"
-                    className={this.getActiveClassName("Terminal")}
-                  >
+                  <Link name="Terminal" to="/terminal" className={this.getActiveClassName('Terminal')}>
                     <i className="lnr lnr-code" /> <span> Terminal</span>
                   </Link>
                 </li>

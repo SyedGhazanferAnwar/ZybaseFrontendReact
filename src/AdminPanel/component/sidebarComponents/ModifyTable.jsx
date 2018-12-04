@@ -10,7 +10,7 @@ import {validate, ValidationIn} from 'simple-react-validator';
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
-class CreateTable extends Component {
+class ModifyTable extends Component {
   constructor(props) {
     super(props);
     // this.crossBtnClickHandler = this.crossBtnClickHandler.bind(this);
@@ -671,4 +671,4 @@ class CreateTable extends Component {
   }
 }
 
-export default CreateTable;
+export default ModifyTable;

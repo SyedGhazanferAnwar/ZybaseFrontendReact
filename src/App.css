@@ -366,27 +366,30 @@ th {
 }
 
 /*LAZY LOADER*/
-body {
+.preloader {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: 'proxima-nova-soft', sans-serif;
   -webkit-user-select: none;
+  height: 100%;
   overflow: hidden;
 }
-body .vertical-centered-box {
+.preloader .vertical-centered-box {
   position: absolute;
   width: 100%;
   height: 100%;
   text-align: center;
+  overflow: hidden !important;
 }
-body .vertical-centered-box:after {
+.preloader .vertical-centered-box:after {
   content: '';
   display: inline-block;
   height: 100%;
   vertical-align: middle;
   margin-right: -0.25em;
+  overflow: hidden !important;
 }
-body .vertical-centered-box .content {
+.preloader .vertical-centered-box .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;

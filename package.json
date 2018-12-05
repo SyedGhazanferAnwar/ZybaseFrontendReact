@@ -11,6 +11,7 @@
     "react-bootstrap-modal": "^4.2.0",
     "react-chartjs": "^1.2.0",
     "react-dom": "^16.6.3",
+    "react-helmet": "^5.2.0",
     "react-meta-tags": "^0.7.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",

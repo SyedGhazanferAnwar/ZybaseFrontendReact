@@ -616,7 +616,7 @@ class CreateTable extends Component {
                       {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
                       {this.state.storeData.map((yo, index) => (
                         <Rows
-                          show={this.props.show}
+                          show={this.state.show}
                           key={String(index)}
                           addDltEdtBtn={this.addDltEdtBtn.bind(this)}
                           onDelete={this.handleRowDelete.bind(this)}

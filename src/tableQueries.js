@@ -120,9 +120,14 @@ export default {
     return query;
   },
 
-  insertColumn(tableName, columnName, state, columnId) {
+  insertColumn(tableName, columnName, state, columnId, pkColumn) {
     //done
     var data = state.storeData;
+
+    if (data[0][columnId].pk == 1) {
+      pkColumn[pkColumn.length] = columnName;
+    }
+
     var query =
       "ALTER TABLE " +
       tableName +
@@ -134,18 +139,29 @@ export default {
       data[0][columnId].size +
       ")";
 
+    if (data[0][columnId].defaultValue.length > 0)
+      query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+
     //Provide 0 or 1 for constraints;
 
     if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
+
+    query = query + ";\n";
 
     // if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
     // if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
 
-    if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
-
-    if (data[0][columnId].defaultValue.length > 0)
-      query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+    if (data[0][columnId].pk == 1) {
+      query = query + "ALTER TABLE " + tableName + " \n";
+      query = query + "DROP PRIMARY KEY,";
+      query = query + "ADD PRIMARY KEY(Id, ";
+      for (var i = 0; i < pkColumn.length; i++) {
+        query = query + pkColumn[i];
+        if (i < pkColumn.length - 1) query = query + ",";
+        else query = query + ");";
+      }
+    }
 
     query = query + ";";
 
@@ -185,7 +201,7 @@ export default {
 
   alterColumn(tableName, columnName, state, columnId, pk, pkColumn) {
     var data = state.storeData;
-    console.log(pkColumn[0]);
+    // console.log(pkColumn[0]);
 
     var query =
       "ALTER TABLE " +
@@ -197,11 +213,11 @@ export default {
       " (" +
       data[0][columnId].size +
       ") ";
-      
+
     if (data[0][columnId].defaultValue.length > 0)
       query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
-      query = query + ";\n";
+    query = query + ";\n";
     //     ALTER TABLE `emp`
     // DROP PRIMARY KEY,
     //  ADD PRIMARY KEY(
@@ -222,29 +238,23 @@ export default {
     //   console.log("com  " + pkColumn[i]);
     // }
 
-    query = query + "ALTER TABLE " + tableName + " \n";
-
-    if (pk == 1){
+    if (pk == 1) {
+      query = query + "ALTER TABLE " + tableName + " \n";
       query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(";
-      for (var i = 0; i < pkColumn.length; i++){
+      query = query + "ADD PRIMARY KEY(Id, ";
+      for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
-        if (i < pkColumn.length - 1)
-          query = query + ",";
-        else
-          query = query + ");"
+        if (i < pkColumn.length - 1) query = query + ",";
+        else query = query + ");";
       }
-    }
-
-    else if (pk == -1) {
+    } else if (pk == -1) {
+      query = query + "ALTER TABLE " + tableName + " \n";
       query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(";
-      for (var i = 0; i < pkColumn.length; i++){
+      query = query + "ADD PRIMARY KEY(Id, ";
+      for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
-        if (i < pkColumn.length - 1)
-          query = query + ",";
-        else
-          query = query + ");"
+        if (i < pkColumn.length - 1) query = query + ",";
+        else query = query + ");";
       }
     }
 

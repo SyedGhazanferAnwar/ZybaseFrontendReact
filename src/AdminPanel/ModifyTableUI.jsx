@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import NavBar from './component/navBar.jsx';
 import SideMenu from './component/sideMenu.jsx';
 import Main from './component/main.jsx';
-import CreateTable from './component/sidebarComponents/ModifyTable';
+import ModifyTable from './component/sidebarComponents/ModifyTable.jsx';
 import ViewTable from './component/sidebarComponents/viewTable.jsx';
 
-class ModifyTable extends Component {
+class ModifyTableUI extends Component {
   constructor() {
     super();
     let ss = this.state.row;
@@ -26,7 +26,7 @@ class ModifyTable extends Component {
 
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
-          <CreateTable />
+          <ModifyTable />
           {/* <CreateTable /> */}
           {/* <ViewTable /> */}
           {/* <!-- END MAIN --> */}
@@ -43,4 +43,4 @@ class ModifyTable extends Component {
   }
 }
 
-export default ModifyTable;
+export default ModifyTableUI;

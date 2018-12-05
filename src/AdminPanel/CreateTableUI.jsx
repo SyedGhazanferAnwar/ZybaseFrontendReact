@@ -4,6 +4,8 @@ import SideMenu from './component/sideMenu.jsx';
 import Main from './component/main.jsx';
 import ModifyTable from './component/sidebarComponents/ModifyTable';
 import ViewTable from './component/sidebarComponents/viewTable.jsx';
+import CreateTable from './component/sidebarComponents/createTable.jsx';
+
 
 class CreateTableUI extends Component {
   constructor() {
@@ -26,7 +28,7 @@ class CreateTableUI extends Component {
 
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
-          {/* <CreateTable /> */}
+          <CreateTable />
           {/* <CreateTable /> */}
           {/* <ViewTable /> */}
           {/* <!-- END MAIN --> */}

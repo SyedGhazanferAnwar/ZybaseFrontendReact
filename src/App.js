@@ -41,6 +41,7 @@ class App extends Component {
             <PrivateRoute path="/dashboard" component={myHome} />
             <PrivateRoute path="/view" component={viewTableUI} />
             <PrivateRoute path="/modify" component={ModifyTableUI} />
+            <PrivateRoute path="/create" component={CreateTableUI} />
 
             <Route path="/test" component={comp1} />
           </Switch>

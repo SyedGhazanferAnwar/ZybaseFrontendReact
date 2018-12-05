@@ -10,7 +10,7 @@ import {validate, ValidationIn} from 'simple-react-validator';
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
-class CreateTable extends Component {
+class ModifyTable extends Component {
   constructor(props) {
     super(props);
     // this.crossBtnClickHandler = this.crossBtnClickHandler.bind(this);
@@ -331,7 +331,18 @@ class CreateTable extends Component {
     let icol = this.state.icol;
     icol++;
     this.setState({icol: icol});
-    console.log(Queries.insertColumn('XYZ', this.state.newHeader, this.state, this.state.icol));
+
+    let pkDecide = [],
+      k = 0;
+    for (let j = 0; j < this.state.icol; j++) {
+      if (this.state.storeData[0][j].pk === '1') {
+        pkDecide[k] = this.state.storeData[0][j].colName;
+        console.log('nafix desice');
+        console.log(pkDecide[k]);
+        k++;
+      }
+    }
+    console.log(Queries.insertColumn('XYZ', this.state.newHeader, this.state, this.state.icol, pkDecide));
   };
   onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
@@ -660,4 +671,4 @@ class CreateTable extends Component {
   }
 }
 
-export default CreateTable;
+export default ModifyTable;

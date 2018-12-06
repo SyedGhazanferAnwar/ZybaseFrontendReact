@@ -1,44 +1,16 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 
 class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav
-          className="navbar navbar-default navbar-fixed-top"
-          style={{ background: "none" }}
-        >
-          <div className="brand" style={{ background: "none" }}>
+        <nav className="navbar navbar-default navbar-fixed-top" style={{background: 'none'}}>
+          <div className="brand" style={{background: 'none'}}>
             <a href="">
-              <img
-                src="assets/img/logo-dark.png"
-                alt="Klorofil Logo"
-                className="img-responsive logo"
-              />
+              <img src="assets/img/logo-dark.png" alt="Klorofil Logo" className="img-responsive logo" />
             </a>
           </div>
-          <div className="container-fluid" style={{ background: "#00000080" }}>
-            <div className="navbar-btn">
-              <button type="button" className="btn-toggle-fullwidth">
-                <i className="lnr lnr-arrow-left-circle" />
-              </button>
-            </div>
-            <form className="navbar-form navbar-left">
-              <div className="input-group">
-                <input
-                  type="text"
-                  value=""
-                  className="form-control"
-                  placeholder="Search dashboard..."
-                  readOnly
-                />
-                <span className="input-group-btn">
-                  <button type="button" className="btn btn-primary">
-                    Go
-                  </button>
-                </span>
-              </div>
-            </form>
+          <div className="container-fluid" style={{background: '#00000080'}}>
             {/* <div className="navbar-btn navbar-btn-right">
               <a
                 className="btn btn-success update-pro"
@@ -51,14 +23,19 @@ class NavBar extends Component {
             </div> */}
             <div id="navbar-menu">
               <ul className="nav navbar-nav navbar-right">
-                <li className="dropdown">
-                  <a
-                    href="#"
-                    className="dropdown-toggle icon-menu"
-                    data-toggle="dropdown"
-                  >
-                    <i className="lnr lnr-alarm" />
-                    <span className="badge bg-danger">5</span>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <span> Home</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <span>Contact us</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <span> Home</span>
                   </a>
                   <ul className="dropdown-menu notifications">
                     <li>
@@ -98,14 +75,9 @@ class NavBar extends Component {
                     </li>
                   </ul>
                 </li>
-                <li className="dropdown">
-                  <a
-                    href="#"
-                    className="dropdown-toggle"
-                    data-toggle="dropdown"
-                  >
-                    <i className="lnr lnr-question-circle" /> <span>Help</span>{" "}
-                    <i className="icon-submenu lnr lnr-chevron-down" />
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <span> Home</span>
                   </a>
                   <ul className="dropdown-menu">
                     <li>
@@ -122,19 +94,11 @@ class NavBar extends Component {
                     </li>
                   </ul>
                 </li>
-                <li className="dropdown">
-                  <a
-                    href="#"
-                    className="dropdown-toggle"
-                    data-toggle="dropdown"
-                  >
-                    <img
-                      src="assets/img/user.png"
-                      className="img-circle"
-                      alt="Avatar"
-                    />{" "}
-                    <span>Samuel</span>{" "}
-                    <i className="icon-submenu lnr lnr-chevron-down" />
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <button style={{marginBottom: -9}} className="btn btn-primary">
+                      Login/Join
+                    </button>
                   </a>
                   <ul className="dropdown-menu">
                     <li>

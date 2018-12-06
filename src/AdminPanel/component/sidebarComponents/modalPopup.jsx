@@ -12,7 +12,7 @@ class ModalPopup extends Component {
   }
 
   checked() {
-    let t = this.props.storeData[0][this.props.setIndex].pk;
+    let t = this.props.headerWthProps[this.props.setIndex].pk;
     console.log('t is here' + typeof t);
     if (t === '1') {
       return (
@@ -152,7 +152,7 @@ class ModalPopup extends Component {
                   <button
                     type="reset"
                     className="btn btn-danger zoomBtn"
-                    style={{marginRight: '45%'}}
+                    style={{marginRight: '42%'}}
                     onClick={this.props.resetForm}
                     // data-dismiss="modal"
                   >
@@ -205,11 +205,10 @@ class ModalPopup extends Component {
                 <div className="modal-body">
                   {/* %%%%%%%%%%%%%%%%  column name  %%%%%%%%%%%%%%%% */}
                   <label style={{color: 'white'}}>Enter Column Name</label>
-                  {console.log('colerrie ' + this.props.setIndex)}
                   <input
                     style={{marginLeft: '2%'}}
                     className="cellInput"
-                    defaultValue={this.props.storeData[0][this.props.setIndex].colName}
+                    // defaultValue={this.props.storeData[0][this.props.setIndex].colName}
                     id="ColumnNameModify"
                     onChange={this.props.onUpdateHeader}
                     required
@@ -219,7 +218,11 @@ class ModalPopup extends Component {
                   {/* %%%%%%%%%%%%%%%%  Default Value %%%%%%%%%%%%%%%% */}
                   <label style={{color: 'white'}}>Enter Default-Value</label>
                   <input
-                    defaultValue={this.props.icol > 1 ? this.props.storeData[0][this.props.setIndex].defaultValue : ''}
+                    // defaultValue={
+                    //   this.props.icol > 1 && this.props.storeData != null
+                    //     ? this.props.storeData[0][this.props.setIndex].defaultValue
+                    //     : ''
+                    // }
                     type="text"
                     // defaultValue={this.props.storeData[this.props.setIndex]}
                     style={{marginLeft: '3%'}}
@@ -262,7 +265,7 @@ class ModalPopup extends Component {
                     id="length"
                     type="number"
                     min="0"
-                    defaultValue={this.props.icol > 1 ? this.props.storeData[0][this.props.setIndex].size : ''}
+                    // defaultValue={this.props.icol > 1 ? this.props.storeData[0][this.props.setIndex].size : ''}
                     onChange={this.props.onUpdateValueColumnAttr}
                     required
                     disabled={this.props.lengthDisableStatus}

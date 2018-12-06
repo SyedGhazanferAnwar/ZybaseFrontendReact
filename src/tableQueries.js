@@ -59,36 +59,43 @@
 // console.log(modifyRow("NewTable", 0, state));
 export default {
   createTable(state, tableName) {
-    var query = `CREATE TABLE ${tableName} (Id int (30) AUTO_INCREMENT PRIMARY KEY, ${
-      state.header[1]
-    } varchar (255);`;
+    var query = `CREATE TABLE ${tableName} (Id int (30) AUTO_INCREMENT PRIMARY KEY, ${state.header[1]} varchar (255);`;
 
     return query;
   },
 
   insertRows(state, tableName, rowNum) {
     var data = state.storeData;
-    // console.log(data[0][1]);
+    console.log('hhhhhhhhhhhhhhh');
+
+    console.log(state.header);
     var column = state.header;
     var j = rowNum;
+
+    if (column.length > 0) console.log('No column present');
+    //else if (column.size == 1) console.log('one colum present');
 
     //Inserting 2 rows
     var query = `INSERT INTO ${tableName} (`;
 
-    for (var i = 1; i < column.length - 1; i++) {
+    for (var i = 0; i < column.length - 1; i++) {
       if (i === column.length - 2) query = query + column[i];
-      else query = query + column[i] + ", ";
+      else query = query + column[i] + ', ';
     }
 
-    query = query + ") VALUES (";
+    query = query + ') VALUES (';
 
-    for (var i = 1; i < column.length - 1; i++) {
-      if (i === column.length - 2) query = query + "'" + data[j][i].value + "'";
-      else query = query + "'" + data[j][i].value + "', ";
-      //console.log(data[j][i]);
+    for (var i = 0; i < column.length - 1; i++) {
+      if (i === column.length - 2) {
+        // if (data[j][i] != null) query = query + "'" + data[j][i].value + "'";
+        query = query + 'null';
+      } else {
+        // if (data[j][i] != null) query = query + "'" + data[j][i].value + "', ";
+        query = query + 'null,';
+      }
     }
 
-    query = query + ");";
+    query = query + ');';
     return query;
   },
 
@@ -96,12 +103,7 @@ export default {
 
   deleteRow(tableName, rowNum, state) {
     //Row Id to delete
-    var query =
-      "DELETE FROM " +
-      tableName +
-      " WHERE id = " +
-      state.storeData[rowNum][0].id +
-      ";";
+    var query = 'DELETE FROM ' + tableName + ' WHERE id = ' + state.storeData[rowNum][0].id + ';';
 
     return query;
   },
@@ -111,12 +113,12 @@ export default {
     // Deleting the cName from header
     // state.header.splice(state.header.indexOf(cName), 1);
 
-    var query = "ALTER TABLE " + tableName + " DROP COLUMN " + cName + ";";
+    var query = 'ALTER TABLE ' + tableName + ' DROP COLUMN ' + cName + ';';
     return query;
   },
 
   dropTable(tableName) {
-    var query = "DROP TABLE " + tableName + ";";
+    var query = 'DROP TABLE ' + tableName + ';';
     return query;
   },
 
@@ -129,41 +131,40 @@ export default {
     }
 
     var query =
-      "ALTER TABLE " +
+      'ALTER TABLE ' +
       tableName +
-      " ADD " +
+      ' ADD ' +
       columnName +
-      " " +
+      ' ' +
       data[0][columnId].type +
-      " (" +
+      ' (' +
       data[0][columnId].size +
-      ")";
+      ')';
 
-    if (data[0][columnId].defaultValue.length > 0)
-      query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+    if (data[0][columnId].defaultValue.length > 0) query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
     //Provide 0 or 1 for constraints;
 
-    if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
+    if (data[0][columnId].notNull == 1) query = query + ' NOT NULL';
 
-    query = query + ";\n";
+    query = query + ';\n';
 
     // if (data[0][columnId].unique == 1) query = query + " UNIQUE";
 
     // if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
 
     if (data[0][columnId].pk == 1) {
-      query = query + "ALTER TABLE " + tableName + " \n";
-      query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(Id, ";
+      query = query + 'ALTER TABLE ' + tableName + ' \n';
+      query = query + 'DROP PRIMARY KEY,';
+      query = query + 'ADD PRIMARY KEY(Id, ';
       for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
-        if (i < pkColumn.length - 1) query = query + ",";
-        else query = query + ");";
+        if (i < pkColumn.length - 1) query = query + ',';
+        else query = query + ');';
       }
     }
 
-    query = query + ";";
+    query = query + ';';
 
     return query;
   },
@@ -204,20 +205,19 @@ export default {
     // console.log(pkColumn[0]);
 
     var query =
-      "ALTER TABLE " +
+      'ALTER TABLE ' +
       tableName +
-      " MODIFY COLUMN " +
+      ' MODIFY COLUMN ' +
       columnName +
-      " " +
+      ' ' +
       data[0][columnId].type +
-      " (" +
+      ' (' +
       data[0][columnId].size +
-      ") ";
+      ') ';
 
-    if (data[0][columnId].defaultValue.length > 0)
-      query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+    if (data[0][columnId].defaultValue.length > 0) query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
-    query = query + ";\n";
+    query = query + ';\n';
     //     ALTER TABLE `emp`
     // DROP PRIMARY KEY,
     //  ADD PRIMARY KEY(
@@ -239,22 +239,22 @@ export default {
     // }
 
     if (pk == 1) {
-      query = query + "ALTER TABLE " + tableName + " \n";
-      query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(Id, ";
+      query = query + 'ALTER TABLE ' + tableName + ' \n';
+      query = query + 'DROP PRIMARY KEY,';
+      query = query + 'ADD PRIMARY KEY(Id, ';
       for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
-        if (i < pkColumn.length - 1) query = query + ",";
-        else query = query + ");";
+        if (i < pkColumn.length - 1) query = query + ',';
+        else query = query + ');';
       }
     } else if (pk == -1) {
-      query = query + "ALTER TABLE " + tableName + " \n";
-      query = query + "DROP PRIMARY KEY,";
-      query = query + "ADD PRIMARY KEY(Id, ";
+      query = query + 'ALTER TABLE ' + tableName + ' \n';
+      query = query + 'DROP PRIMARY KEY,';
+      query = query + 'ADD PRIMARY KEY(Id, ';
       for (var i = 0; i < pkColumn.length; i++) {
         query = query + pkColumn[i];
-        if (i < pkColumn.length - 1) query = query + ",";
-        else query = query + ");";
+        if (i < pkColumn.length - 1) query = query + ',';
+        else query = query + ');';
       }
     }
 
@@ -267,16 +267,15 @@ export default {
     var column = state.header;
     var j = rowNum;
 
-    var query = "UPDATE " + tableName + " SET ";
+    var query = 'UPDATE ' + tableName + ' SET ';
 
     for (var i = 0; i < column.length - 1; i++) {
-      if (i === column.length - 2)
-        query = query + column[i] + " = " + "'" + data[j][i].value + "' ";
-      else query = query + column[i] + " = " + "'" + data[j][i].value + "', ";
+      if (i === column.length - 2) query = query + column[i] + ' = ' + "'" + data[j][i].value + "' ";
+      else query = query + column[i] + ' = ' + "'" + data[j][i].value + "', ";
     }
 
-    query = query + "WHERE " + "id = " + j + ";";
+    query = query + 'WHERE ' + 'id = ' + j + ';';
 
     return query;
-  }
+  },
 };

@@ -19,7 +19,8 @@
     "react-validation": "^3.0.7",
     "reactstrap": "^6.5.0",
     "simple-react-validator": "0.0.8",
-    "sweetalert-react": "^0.4.11"
+    "sweetalert-react": "^0.4.11",
+    "victory": "^31.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

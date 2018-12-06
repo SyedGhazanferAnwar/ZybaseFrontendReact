@@ -582,3 +582,24 @@ lesshat-selector {
 [not-existing] {
   zoom: 1;
 }
+hr.style-four {
+  height: 12px;
+  border: 0;
+  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+}
+.dabba{
+  margin-top: -30px;
+  margin-bottom: -10px;
+  color:rgb(233, 217, 217);
+  font-family:inherit;
+  font-size: 4em;
+  text-align: center;
+}
+.dough{
+  margin-left: 17%;
+  margin-top: -10px;
+}
+.mb{
+  margin-bottom: -10px;
+  color:rgba(177, 226, 64, 0.63)
+}

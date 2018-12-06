@@ -159,28 +159,33 @@ class ModifyTable extends Component {
   }
   handleRowDelete(evt) {
     const index = evt.target.id;
-    if (index === '0') {
-      return alert('cant delete first row');
-    }
-    let i = 0;
-    let dupRows = []; //
-    let storeData = [...this.state.storeData];
-    // rows.splice(index);
-    for (let k = 0; k < this.state.irow; k++) {
-      if (k !== parseInt(index)) {
-        console.log('asd');
-        dupRows[i] = storeData[k];
-        console.log(storeData[k]);
-        i++;
-      }
-      // console.log('index come her e  ' + k + '  d ' + index);
-    }
+    let tableQuery = Queries.deleteRow(this.state.tableName, parseInt(index), this.state);
+    console.log('sttttttt' + this.state.storeData[0][0].value);
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
+
+    // if (index === '0') {
+    //   return alert('cant delete first row');
+    // }
+    // let i = 0;
+    // let dupRows = []; //
+    // let storeData = [...this.state.storeData];
+    // // rows.splice(index);
+    // for (let k = 0; k < this.state.irow; k++) {
+    //   if (k !== parseInt(index)) {
+    //     console.log('asd');
+    //     dupRows[i] = storeData[k];
+    //     console.log(storeData[k]);
+    //     i++;
+    //   }
+    //   // console.log('index come her e  ' + k + '  d ' + index);
+    // }
     // console.log(dupRows);
-    let irow = this.state.irow;
-    irow--;
-    this.setState({storeData: dupRows});
-    this.setState({irow, irow});
-    console.log(Queries.deleteRow('tableName', parseInt(index), this.state));
+    // let irow = this.state.irow;
+    // irow--;
+    // this.setState({storeData: dupRows});
+    // this.setState({irow, irow});
+
+    // console.log();
 
     // this.setState();
 
@@ -554,18 +559,18 @@ class ModifyTable extends Component {
 
     this.setState({header: header});
     header2.push(action);
-    console.log('asdasd sssssss');
+    // console.log('asdasd sssssss');
 
-    console.log(this.state.header);
-    console.log('0000000000000000000000000000');
-    console.log(response.column);
+    // console.log(this.state.header);
+    // console.log('0000000000000000000000000000');
+    // console.log(response.column);
 
     for (let k = 0; k < response.data.length; k++) {
       storeData = [];
       let arr = response.data[k];
       colObject = Object.entries(arr);
-      console.log('yaalllllah' + colObject.length);
-      console.log(colObject);
+      // console.log('yaalllllah' + colObject.length);
+      // console.log(colObject);
       for (let j = 0; j < colObject.length; j++) {
         let defaultValue = colObject[j][1];
         let colName = colObject[j][0];

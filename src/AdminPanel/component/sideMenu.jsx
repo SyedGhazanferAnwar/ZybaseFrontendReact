@@ -68,7 +68,7 @@ class SideMenu extends Component {
                   </Link>
                 </li>
                 <li>
-                  <Link name="settingpanel" to="/dashboard" className={this.getActiveClassName('settingpanel')}>
+                  <Link name="settingpanel" to="/setting" className={this.getActiveClassName('settingpanel')}>
                     <i className="lnr lnr-cog" /> <span> Settings Panel</span>
                   </Link>
                 </li>

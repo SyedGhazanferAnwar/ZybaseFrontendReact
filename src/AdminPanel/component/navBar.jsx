@@ -1,23 +1,16 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 
 class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <nav
-          className="navbar navbar-default navbar-fixed-top"
-          style={{ background: "none" }}
-        >
-          <div className="brand" style={{ background: "none" }}>
+        <nav className="navbar navbar-default navbar-fixed-top" style={{background: 'none'}}>
+          <div className="brand" style={{background: 'none'}}>
             <a href="">
-              <img
-                src="assets/img/logo-dark.png"
-                alt="Klorofil Logo"
-                className="img-responsive logo"
-              />
+              <img src="assets/img/logo-dark.png" alt="Klorofil Logo" className="img-responsive logo" />
             </a>
           </div>
-          <div className="container-fluid" style={{ background: "#00000080" }}>
+          <div className="container-fluid" style={{background: '#00000080'}}>
             {/* <div className="navbar-btn navbar-btn-right">
               <a
                 className="btn btn-success update-pro"
@@ -29,30 +22,32 @@ class NavBar extends Component {
               </a>
             </div> */}
             <div id="navbar-menu">
-            <ul className="nav navbar-nav navbar-right">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
+              <ul className="nav navbar-nav navbar-right">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
                     <span> Home</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
                     <span>Contact us</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
                     <span> Home</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
                     <span> Home</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <button style={{marginBottom:-9}} className="btn btn-primary">Login/Join</button>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <button style={{marginBottom: -9}} className="btn btn-primary">
+                      Login/Join
+                    </button>
                   </a>
                 </li>
                 {/* <li>

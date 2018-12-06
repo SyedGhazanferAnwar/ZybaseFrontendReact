@@ -9,6 +9,7 @@ class ViewTable extends Component {
     icol: 0,
     irow: 0,
     header: ['Id  (auto)', 'Name'],
+    defaultComboTable: '',
     storeData: [
       [
         {
@@ -27,7 +28,7 @@ class ViewTable extends Component {
           id: '1',
           colName: '',
           pk: '0',
-          defaultValue: 'nafix',
+          defaultValue: 'NoTables',
           value: '',
           size: '',
           autoInc: '',
@@ -38,7 +39,7 @@ class ViewTable extends Component {
       ],
     ],
   };
-  componentDidMount() {}
+
   fetchDataInStoreData(response) {
     let header = [],
       storeData = [[]],
@@ -49,7 +50,8 @@ class ViewTable extends Component {
     for (i = 0; i < response.column.length; i++) {
       header[i] = response.column[i].name;
     }
-
+    this.setState({header: header});
+    console.log(header);
     let arr = response.data[0];
 
     let colObject = Object.entries(arr);
@@ -85,9 +87,8 @@ class ViewTable extends Component {
     this.setState({icol: colObject.length});
     this.setState({irow: response.data.length});
     this.setState({storeData: mainArr});
-    this.setState({header: header});
   }
-  fetchHandler() {
+  fetchHandler(selectedTable) {
     fetch('http://localhost:5000/getTable', {
       method: 'POST',
       credentials: 'include',
@@ -95,7 +96,7 @@ class ViewTable extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        tableName: 'users',
+        tableName: selectedTable,
       }),
     })
       .then(function(res) {
@@ -110,9 +111,17 @@ class ViewTable extends Component {
       });
     console.log('request sent');
   }
-  comboBoxSelectedValue() {
-    alert('The selected value is ' + $('#select-profession').val());
-  }
+
+  comboBoxValueHandler = evt => {
+    console.log(evt.target.value);
+
+    let selectedTable = evt.target.value;
+    let storeData = [];
+    let header = [];
+    this.setState({header: header});
+    this.setState({storeData: storeData});
+    this.fetchHandler(selectedTable);
+  };
   render() {
     return (
       <React.Fragment>
@@ -125,9 +134,15 @@ class ViewTable extends Component {
                 <div className="panel-heading">
                   <div className="panel-title">
                     <h3>
-                      Select Table <ComboBox comboBoxSelectedValue={this.comboBoxSelectedValue.bind(this)} />
+                      Select Table
+                      <ComboBox
+                        defaultComboTable={this.state.defaultComboTable}
+                        comboBoxValueHandler={this.comboBoxValueHandler}
+                        fetchHandler={this.fetchHandler.bind(this)}
+                      />
                     </h3>
                   </div>
+
                   {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
                 </div>
                 <div className="panel-body">
@@ -156,13 +171,6 @@ class ViewTable extends Component {
                       ))}
                     </tbody>
                   </table>
-                  {/* <button onClick={this.print.bind(this)}>print</button> */}
-                  {/* <button
-                    id="addBtn"
-                    onClick={() => this.addColHandler(this.state.columns)}
-                  >
-                    ADDColumns
-                  </button> */}
                 </div>
               </div>
             </div>

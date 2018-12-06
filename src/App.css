@@ -67,7 +67,7 @@ table {
   width: 20px;
 }
 body {
-  background: url("/images/blur-bg.jpg") repeat fixed;
+  background: url('/images/blur-bg.jpg') repeat fixed;
   background-size: cover;
 }
 ::-webkit-input-placeholder {
@@ -89,7 +89,7 @@ body {
 }
 
 .btn-ripple:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -134,9 +134,7 @@ th {
   transition: transform 0.2s; /* Animation */
 }
 .zoomBtn:hover {
-  transform: scale(
-    1.1
-  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 .terminal {
   border-radius: 8px;
@@ -164,7 +162,7 @@ th {
 }
 .input-prompt {
   font-size: 16px;
-  font-family: "Consolas";
+  font-family: 'Consolas';
   margin-top: -6px;
   display: inline;
   color: green;
@@ -192,7 +190,7 @@ th {
 .text {
   font-size: 16px;
   margin-top: 9px;
-  font-family: "Consolas";
+  font-family: 'Consolas';
 }
 .error {
   color: rgb(255, 55, 55);
@@ -230,8 +228,8 @@ th {
 }
 .sel::before {
   position: absolute;
-  content: "\f063";
-  font-family: "FontAwesome";
+  content: '\f063';
+  font-family: 'FontAwesome';
   font-size: 2em;
   color: #fff;
   right: 20px;
@@ -300,8 +298,8 @@ th {
   user-select: none;
 }
 .sel__box__options::after {
-  content: "\f00c";
-  font-family: "FontAwesome";
+  content: '\f00c';
+  font-family: 'FontAwesome';
   font-size: 0.5em;
   margin-left: 5px;
   display: none;
@@ -369,7 +367,7 @@ th {
 .preloader {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: "proxima-nova-soft", sans-serif;
+  font-family: 'proxima-nova-soft', sans-serif;
   -webkit-user-select: none;
   height: 100%;
   overflow: hidden;
@@ -382,7 +380,7 @@ th {
   overflow: hidden !important;
 }
 .preloader .vertical-centered-box:after {
-  content: "";
+  content: '';
   display: inline-block;
   height: 100%;
   vertical-align: middle;

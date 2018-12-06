@@ -25,7 +25,7 @@ class Rows extends Component {
           type={this.props.storeData[0][index].type !== 'STRING' ? 'number' : 'text'}
           // placeholder={this.props.storeData[0][index].value}
           // value={index === 0 ? this.props.index : ""}
-          defaultValue={index === 0 ? this.props.index : this.props.storeData[this.props.index][index].defaultValue}
+          defaultValue={index === 0 ? this.props.value : this.props.storeData[this.props.index][index].defaultValue}
           onClick={this.props.defaultEditable}
           className="cellInput"
           name={this.props.index}
@@ -46,7 +46,7 @@ class Rows extends Component {
           }
           defaultValue={
             index === 0
-              ? this.props.storeData[this.props.index][index].id
+              ? this.props.storeData[this.props.index][index].value
               : this.props.storeData[this.props.index][index].defaultValue
           }
           // type={this.props.storeData[0][index].type}

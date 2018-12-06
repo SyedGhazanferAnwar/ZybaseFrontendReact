@@ -1,101 +1,82 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 import Auth from '../../../Auth';
+import {Helmet} from 'react-helmet';
+
 class ComboBox extends Component {
   state = {
-    tableNames: ['nafix', 'database'],
+    tableNames: [],
+    selectName: 'Table Name',
   };
 
   componentDidMount() {
     // yaha table ke names fetch honge or tableNames me insert kerwana hai
     /* ===== Logic for creating fake Select Boxes ===== */
-    $('.sel').each(function() {
-      $(this)
-        .children('select')
-        .css('display', 'none');
 
-      var $current = $(this);
+    ///
+    fetch('http://localhost:5000/getTableName', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      // string 253   int 3   float 4
+      .then(response => {
+        // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
+        console.log('xxxddd');
+        console.log(response);
+        console.log(response[0].table_name);
+        let mtableNames = this.state.tableNames;
+        for (let j = 0; j < response.length; j++) {
+          mtableNames[j] = response[j].table_name;
+        }
+        this.setState({tableNames: mtableNames});
 
-      $(this)
-        .find('option')
-        .each(function(i) {
-          if (i == 0) {
-            $current.prepend(
-              $('<div>', {
-                class: $current.attr('class').replace(/sel/g, 'sel__box'),
-              })
-            );
-
-            var placeholder = $(this).text();
-            $current.prepend(
-              $('<span>', {
-                class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
-                text: placeholder,
-                'data-placeholder': placeholder,
-              })
-            );
-
-            return;
-          }
-
-          $current.children('div').append(
-            $('<span>', {
-              class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
-              text: $(this).text(),
-            })
-          );
-        });
-    });
-
-    // Toggling the `.active` state on the `.sel`.
-    $('.sel').click(function() {
-      $(this).toggleClass('active');
-    });
-
-    // Toggling the `.selected` state on the options.
-    $('.sel__box__options').click(function() {
-      var txt = $(this).text();
-      var index = $(this).index();
-
-      $(this)
-        .siblings('.sel__box__options')
-        .removeClass('selected');
-      $(this).addClass('selected');
-
-      var $currentSel = $(this).closest('.sel');
-      $currentSel.children('.sel__placeholder').text(txt);
-      $currentSel.children('select').prop('selectedIndex', index + 1);
-    });
+        this.props.fetchHandler(mtableNames[0]);
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
   }
   selectTable = evt => {
     console.log('table name is  ' + evt.target.value);
   };
+  selectHandler = evt => {
+    console.log('taeger   ' + evt.target.value);
+  };
   render() {
     return (
       <React.Fragment>
-        <div className="sel sel--black-panther">
-          <select name="select-profession" id="select-profession">
-            <option value="TableName" disabled>
-              TableName
-            </option>
-
+        <div className="custom-select">
+          <select
+            style={{marginLeft: '7.5%'}}
+            className="cellInput"
+            id="Data-type"
+            defaultValue={this.state.tableNames[0]}
+            onChange={this.props.comboBoxValueHandler}
+          >
             {this.state.tableNames.map((tableNames, index) => (
               <option key={index} value={tableNames}>
                 {tableNames}
               </option>
             ))}
           </select>
+          <br />
+          <br />
         </div>
-        {/* <hr className="rule" /> */}
 
-        <button
+        {/* <button
           type="button"
           className="btn btn-primary zoomBtn"
           style={{paddingTop: 8, paddingRight: 9, paddingLeft: 9, paddingBottom: 8}}
           onClick={this.props.comboBoxSelectedValue}
         >
           Load Table
-        </button>
+        </button> */}
       </React.Fragment>
     );
   }

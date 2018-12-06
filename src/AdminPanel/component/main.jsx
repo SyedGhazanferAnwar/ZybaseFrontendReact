@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-var DoughnutChart = require("react-chartjs").Doughnut;
+import React, {Component} from 'react';
+var DoughnutChart = require('react-chartjs').Doughnut;
 
 class Main extends Component {
   state = {
@@ -40,7 +40,7 @@ class Main extends Component {
     segmentShowStroke: false,
 
     //String - The colour of each segment stroke
-    segmentStrokeColor: "#fff",
+    segmentStrokeColor: '#fff',
 
     //Number - The width of each segment stroke
     segmentStrokeWidth: 1,
@@ -52,7 +52,7 @@ class Main extends Component {
     animationSteps: 100,
 
     //String - Animation easing effect
-    animationEasing: "easeOutBounce",
+    animationEasing: 'easeOutBounce',
 
     //Boolean - Whether we animate the rotation of the Doughnut
     animateRotate: true,
@@ -61,7 +61,7 @@ class Main extends Component {
     animateScale: false,
     //String - A legend template
     legendTemplate:
-      '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>'
+      '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>',
   };
   componentDidMount(){
     fetch("http://localhost:5000/analytics", {
@@ -185,9 +185,7 @@ class Main extends Component {
               <div className="panel panel-headline">
                 <div className="panel-heading">
                   <h3 className="panel-title">Weekly Overview</h3>
-                  <p className="panel-subtitle">
-                    Period: Oct 14, 2016 - Oct 21, 2016
-                  </p>
+                  <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>
                 </div>
                 <div className="panel-body">
                   <div className="row">
@@ -242,21 +240,21 @@ class Main extends Component {
                     </div>
                     <div className="col-md-3">
                       <div className="weekly-summary text-right">
-                        <span className="number">2,315</span>{" "}
+                        <span className="number">2,315</span>{' '}
                         <span className="percentage">
                           <i className="fa fa-caret-up text-success" /> 12%
                         </span>
                         <span className="info-label">Total Sales</span>
                       </div>
                       <div className="weekly-summary text-right">
-                        <span className="number">$5,758</span>{" "}
+                        <span className="number">$5,758</span>{' '}
                         <span className="percentage">
                           <i className="fa fa-caret-up text-success" /> 23%
                         </span>
                         <span className="info-label">Monthly Income</span>
                       </div>
                       <div className="weekly-summary text-right">
-                        <span className="number">$65,938</span>{" "}
+                        <span className="number">$65,938</span>{' '}
                         <span className="percentage">
                           <i className="fa fa-caret-down text-danger" /> 8%
                         </span>
@@ -302,9 +300,7 @@ class Main extends Component {
                             <td>$122</td>
                             <td>Oct 21, 2016</td>
                             <td>
-                              <span className="label label-success">
-                                COMPLETED
-                              </span>
+                              <span className="label label-success">COMPLETED</span>
                             </td>
                           </tr>
                           <tr>
@@ -315,9 +311,7 @@ class Main extends Component {
                             <td>$62</td>
                             <td>Oct 21, 2016</td>
                             <td>
-                              <span className="label label-warning">
-                                PENDING
-                              </span>
+                              <span className="label label-warning">PENDING</span>
                             </td>
                           </tr>
                           <tr>
@@ -339,9 +333,7 @@ class Main extends Component {
                             <td>$186</td>
                             <td>Oct 17, 2016</td>
                             <td>
-                              <span className="label label-success">
-                                SUCCESS
-                              </span>
+                              <span className="label label-success">SUCCESS</span>
                             </td>
                           </tr>
                           <tr>
@@ -352,9 +344,7 @@ class Main extends Component {
                             <td>$362</td>
                             <td>Oct 16, 2016</td>
                             <td>
-                              <span className="label label-success">
-                                SUCCESS
-                              </span>
+                              <span className="label label-success">SUCCESS</span>
                             </td>
                           </tr>
                         </tbody>
@@ -381,9 +371,7 @@ class Main extends Component {
                   {/* <!-- MULTI CHARTS --> */}
                   <div className="panel">
                     <div className="panel-heading">
-                      <h3 className="panel-title">
-                        Projection vs. Realization
-                      </h3>
+                      <h3 className="panel-title">Projection vs. Realization</h3>
                       <div className="right">
                         <button type="button" className="btn-toggle-collapse">
                           <i className="lnr lnr-chevron-up" />
@@ -425,15 +413,14 @@ class Main extends Component {
                           <p>
                             <span className="title">Restart Server</span>
                             <span className="short-description">
-                              Dynamically integrate client-centric technologies
-                              without cooperative resources.
+                              Dynamically integrate client-centric technologies without cooperative resources.
                             </span>
                             <span className="date">Oct 9, 2016</span>
                           </p>
                           <div className="controls">
                             <a href="#">
                               <i className="icon-software icon-software-pencil" />
-                            </a>{" "}
+                            </a>{' '}
                             <a href="#">
                               <i className="icon-arrows icon-arrows-circle-remove" />
                             </a>
@@ -445,19 +432,16 @@ class Main extends Component {
                             <span />
                           </label>
                           <p>
-                            <span className="title">
-                              Retest Upload Scenario
-                            </span>
+                            <span className="title">Retest Upload Scenario</span>
                             <span className="short-description">
-                              Compellingly implement clicks-and-mortar
-                              relationships without highly efficient metrics.
+                              Compellingly implement clicks-and-mortar relationships without highly efficient metrics.
                             </span>
                             <span className="date">Oct 23, 2016</span>
                           </p>
                           <div className="controls">
                             <a href="#">
                               <i className="icon-software icon-software-pencil" />
-                            </a>{" "}
+                            </a>{' '}
                             <a href="#">
                               <i className="icon-arrows icon-arrows-circle-remove" />
                             </a>
@@ -471,15 +455,14 @@ class Main extends Component {
                           <p>
                             <strong>Functional Spec Meeting</strong>
                             <span className="short-description">
-                              Monotonectally formulate client-focused core
-                              competencies after parallel web-readiness.
+                              Monotonectally formulate client-focused core competencies after parallel web-readiness.
                             </span>
                             <span className="date">Oct 11, 2016</span>
                           </p>
                           <div className="controls">
                             <a href="#">
                               <i className="icon-software icon-software-pencil" />
-                            </a>{" "}
+                            </a>{' '}
                             <a href="#">
                               <i className="icon-arrows icon-arrows-circle-remove" />
                             </a>
@@ -507,69 +490,42 @@ class Main extends Component {
                     <div className="panel-body">
                       <ul className="list-unstyled activity-list">
                         <li>
-                          <img
-                            src="assets/img/user1.png"
-                            alt="Avatar"
-                            className="img-circle pull-left avatar"
-                          />
+                          <img src="assets/img/user1.png" alt="Avatar" className="img-circle pull-left avatar" />
                           <p>
-                            <a href="#">Michael</a> has achieved 80% of his
-                            completed tasks{" "}
+                            <a href="#">Michael</a> has achieved 80% of his completed tasks{' '}
                             <span className="timestamp">20 minutes ago</span>
                           </p>
                         </li>
                         <li>
-                          <img
-                            src="assets/img/user2.png"
-                            alt="Avatar"
-                            className="img-circle pull-left avatar"
-                          />
+                          <img src="assets/img/user2.png" alt="Avatar" className="img-circle pull-left avatar" />
                           <p>
-                            <a href="#">Daniel</a> has been added as a team
-                            member to project <a href="#">System Update</a>{" "}
-                            <span className="timestamp">Yesterday</span>
+                            <a href="#">Daniel</a> has been added as a team member to project{' '}
+                            <a href="#">System Update</a> <span className="timestamp">Yesterday</span>
                           </p>
                         </li>
                         <li>
-                          <img
-                            src="assets/img/user3.png"
-                            alt="Avatar"
-                            className="img-circle pull-left avatar"
-                          />
+                          <img src="assets/img/user3.png" alt="Avatar" className="img-circle pull-left avatar" />
                           <p>
-                            <a href="#">Martha</a> created a new heatmap view{" "}
-                            <a href="#">Landing Page</a>{" "}
+                            <a href="#">Martha</a> created a new heatmap view <a href="#">Landing Page</a>{' '}
                             <span className="timestamp">2 days ago</span>
                           </p>
                         </li>
                         <li>
-                          <img
-                            src="assets/img/user4.png"
-                            alt="Avatar"
-                            className="img-circle pull-left avatar"
-                          />
+                          <img src="assets/img/user4.png" alt="Avatar" className="img-circle pull-left avatar" />
                           <p>
-                            <a href="#">Jane</a> has completed all of the tasks{" "}
+                            <a href="#">Jane</a> has completed all of the tasks{' '}
                             <span className="timestamp">2 days ago</span>
                           </p>
                         </li>
                         <li>
-                          <img
-                            src="assets/img/user5.png"
-                            alt="Avatar"
-                            className="img-circle pull-left avatar"
-                          />
+                          <img src="assets/img/user5.png" alt="Avatar" className="img-circle pull-left avatar" />
                           <p>
-                            <a href="#">Jason</a> started a discussion about{" "}
-                            <a href="#">Weekly Meeting</a>{" "}
+                            <a href="#">Jason</a> started a discussion about <a href="#">Weekly Meeting</a>{' '}
                             <span className="timestamp">3 days ago</span>
                           </p>
                         </li>
                       </ul>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-bottom center-block"
-                      >
+                      <button type="button" className="btn btn-primary btn-bottom center-block">
                         Load More
                       </button>
                     </div>
@@ -596,8 +552,7 @@ class Main extends Component {
                       <ul className="list-unstyled task-list">
                         <li>
                           <p>
-                            Updating Users Settings{" "}
-                            <span className="label-percent">23%</span>
+                            Updating Users Settings <span className="label-percent">23%</span>
                           </p>
                           <div className="progress progress-xs">
                             <div
@@ -614,8 +569,7 @@ class Main extends Component {
                         </li>
                         <li>
                           <p>
-                            Load &amp; Stress Test{" "}
-                            <span className="label-percent">80%</span>
+                            Load &amp; Stress Test <span className="label-percent">80%</span>
                           </p>
                           <div className="progress progress-xs">
                             <div
@@ -632,8 +586,7 @@ class Main extends Component {
                         </li>
                         <li>
                           <p>
-                            Data Duplication Check{" "}
-                            <span className="label-percent">100%</span>
+                            Data Duplication Check <span className="label-percent">100%</span>
                           </p>
                           <div className="progress progress-xs">
                             <div
@@ -650,8 +603,7 @@ class Main extends Component {
                         </li>
                         <li>
                           <p>
-                            Server Check{" "}
-                            <span className="label-percent">45%</span>
+                            Server Check <span className="label-percent">45%</span>
                           </p>
                           <div className="progress progress-xs">
                             <div
@@ -668,8 +620,7 @@ class Main extends Component {
                         </li>
                         <li>
                           <p>
-                            Mobile App Development{" "}
-                            <span className="label-percent">10%</span>
+                            Mobile App Development <span className="label-percent">10%</span>
                           </p>
                           <div className="progress progress-xs">
                             <div
@@ -724,11 +675,7 @@ class Main extends Component {
                       </div>
                     </div>
                     <div className="panel-body">
-                      <div
-                        id="system-load"
-                        className="easy-pie-chart"
-                        data-percent="70"
-                      >
+                      <div id="system-load" className="easy-pie-chart" data-percent="70">
                         <span className="percent">70</span>
                       </div>
                       <h4>CPU Load</h4>

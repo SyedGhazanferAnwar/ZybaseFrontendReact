@@ -27,6 +27,8 @@ class ModifyTable extends Component {
       unique: '',
       pk: '0',
     },
+    tableName: '',
+    offModalpopup: 'on',
     pkDecide: '',
     datatarget: '',
     lengthDisableStatus: 0,
@@ -35,7 +37,7 @@ class ModifyTable extends Component {
     editFlag: 0,
     editRowIndex: -9,
     headerEditedValue: '',
-    setIndex: 1,
+    setIndex: 0,
     num: 0,
     flag: 0,
     irow: 1,
@@ -45,38 +47,39 @@ class ModifyTable extends Component {
     checkBhund: 0,
     show: 'yes',
     // empty: [[{ id: "1", value: "2" }]],
-    storeData: [
-      [
-        {
-          id: '0',
-          colName: '',
-          pk: '',
-          defaultValue: '',
-          value: '',
-          size: '',
-          autoInc: '',
-          type: '',
-          notNull: '',
-          unique: '',
-        },
-        {
-          id: '1',
-          colName: '',
-          pk: '0',
-          defaultValue: '',
-          value: '',
-          size: '',
-          autoInc: '',
-          type: 'STRING',
-          notNull: '',
-          unique: '',
-        },
-      ],
+    storeData: [[]],
+    header: ['id ', 'Name', 'Action'],
+    header1: [
+      {id: '', colName: 'Id  (auto)', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
+      {id: '', colName: 'Action', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
     ],
-    header: ['Id  (auto)', 'Name', 'Action'],
     // columns: [],
     // row: [{ id: 1, value: 2 }]
   };
+  componentDidMount() {
+    this.setState({storeData: []});
+    fetch('http://localhost:5000/getTableName', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      // string 253   int 3   float 4
+      .then(response => {
+        // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
+        console.log('xxxddd');
+        // console.log(response);
+        console.log(response[0].table_name);
+        this.fetchHandler(response[0].table_name);
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
+  }
 
   saveEditInputHandler(evt) {
     let editFlag = this.state.editFlag;
@@ -246,14 +249,27 @@ class ModifyTable extends Component {
   };
   addHeaderHandler(evt) {
     evt.preventDefault();
-
     let num = this.state.num;
     num++;
+
     this.setState({num: num});
-    // evt.target.value = "";
+    let headerArr = [];
+    let header1 = [...this.state.header1]; // new header added with properties
+    headerArr.colName = this.state.header;
+    headerArr.id = num + '';
+    headerArr.colName = this.state.newHeader;
+    headerArr.pk = String(this.state.newColumnAttr.pk);
+    headerArr.defaultValue = this.state.newColumnAttr.defaultValue;
+    headerArr.value = this.state.newColumnAttr.value;
+    headerArr.size = this.state.newColumnAttr.size;
+    headerArr.type = this.state.newColumnAttr.type;
+
     let header = [...this.state.header];
     header[header.length] = header[header.length - 1];
-    header[header.length - 2] = this.state.newHeader;
+    header[header.length - 2] = headerArr;
+    header1[header1.length] = header1[header1.length - 1];
+    header1[header1.length - 2] = headerArr;
+    this.setState({header1: header1});
     this.setState({header: header});
     let newVal = this.state.newVal;
     // console.log(this.state.newColumnAttr);
@@ -265,48 +281,51 @@ class ModifyTable extends Component {
   printHeader() {}
   addRowHandler = rows => {
     //ADD ROW HANDLER
-    let reArr = this.state.storeData;
-    let reNew = [];
-    let reN = [];
-    // console.log("asdsa" + reArr);
-    for (let k = 0; k < this.state.icol; k++) {
-      if (k === 0) {
-        reN = {
-          id: this.state.irow + '',
-          colName: reArr[0][k].colName,
-          pk: reArr[0][k].pk,
-          defaultValue: reArr[0][k].defaultValue,
-          value: this.state.irow,
-          size: reArr[0][k].size,
-          autoInc: reArr[0][k].autoInc,
-          type: reArr[0][k].type,
-          notNull: reArr[0][k].notNull,
-          unique: reArr[0][k].unique,
-        };
-      } else {
-        reN = {
-          id: k + '',
-          colName: reArr[0][k].colName,
-          pk: reArr[0][k].pk,
-          defaultValue: reArr[0][k].defaultValue,
-          value: reArr[0][k].defaultValue,
-          size: reArr[0][k].size,
-          autoInc: reArr[0][k].autoInc,
-          type: reArr[0][k].type,
-          notNull: reArr[0][k].notNull,
-          unique: reArr[0][k].unique,
-        };
-      }
 
-      reNew.push(reN);
-    }
+    let tableQuery = Queries.insertRows(this.state, this.state.tableName, irow);
+    console.log(tableQuery);
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
+    // let reArr = this.state.storeData;
+    // let reNew = [];
+    // let reN = [];
+    // console.log("asdsa" + reArr);
+    // for (let k = 0; k < this.state.icol; k++) {
+    //   if (k === 0) {
+    //     reN = {
+    //       id: this.state.irow + '',
+    //       colName: reArr[0][k].colName,
+    //       pk: reArr[0][k].pk,
+    //       defaultValue: reArr[0][k].defaultValue,
+    //       value: this.state.irow,
+    //       size: reArr[0][k].size,
+    //       autoInc: reArr[0][k].autoInc,
+    //       type: reArr[0][k].type,
+    //       notNull: reArr[0][k].notNull,
+    //       unique: reArr[0][k].unique,
+    //     };
+    //   } else {
+    //     reN = {
+    //       id: k + '',
+    //       colName: reArr[0][k].colName,
+    //       pk: reArr[0][k].pk,
+    //       defaultValue: reArr[0][k].defaultValue,
+    //       value: reArr[0][k].defaultValue,
+    //       size: reArr[0][k].size,
+    //       autoInc: reArr[0][k].autoInc,
+    //       type: reArr[0][k].type,
+    //       notNull: reArr[0][k].notNull,
+    //       unique: reArr[0][k].unique,
+    //     };
+    //   }
+
+    //   reNew.push(reN);
+    // }
     // console.log("here =" + reArr[0][1].value);
-    reArr.push(reNew);
-    this.setState({storeData: reArr});
+    // reArr.push(reNew);
+    // this.setState({storeData: reArr});
     let irow = this.state.irow;
     irow++;
     this.setState({irow: irow});
-    console.log(Queries.insertRows(this.state, 'XYZ', irow - 1));
   };
   addColHandler = newVal => {
     // console.log(newVal);
@@ -386,6 +405,8 @@ class ModifyTable extends Component {
   resetForm() {
     let newColumnAttr = this.state.newColumnAttr;
     newColumnAttr.pk = '0';
+    newColumnAttr.size = 0;
+    newColumnAttr.colName = '';
     this.setState({newColumnAttr: newColumnAttr});
   }
   onUpdateHeader = evt => {
@@ -405,39 +426,42 @@ class ModifyTable extends Component {
     this.setState({setIndex: setIndex});
     let flag = 0;
     this.setState({flag: flag});
-    let l = 0;
-    let dupStoreData = [];
-    let array2 = this.state.storeData;
+    // let l = 0;
+    // let dupStoreData = [];
+    // let array2 = this.state.storeData;
 
-    let dupHeader = [];
-    let header = this.state.header;
-    for (let k = 0; k < header.length; k++) {
-      if (k !== index) {
-        dupHeader[l] = header[k];
-        l++;
-      }
-    }
-    for (let i = 0; i < this.state.irow; i++) {
-      dupStoreData[i] = [];
-      for (let j = 0; j < this.state.icol; j++) {
-        if (j !== index) {
-          dupStoreData[i].push(array2[i][j]);
-        }
-      }
-    }
+    // let dupHeader = [];
+    // let header = this.state.header;
+    // for (let k = 0; k < header.length; k++) {
+    //   if (k !== index) {
+    //     dupHeader[l] = header[k];
+    //     l++;
+    //   }
+    // }
+    // for (let i = 0; i < this.state.irow; i++) {
+    //   dupStoreData[i] = [];
+    //   for (let j = 0; j < this.state.icol; j++) {
+    //     if (j !== index) {
+    //       dupStoreData[i].push(array2[i][j]);
+    //     }
+    //   }
+    // }
     let icol = this.state.icol;
     icol--;
-    console.log(Queries.deleteColumn('tableName', this.state.header[index], this.state));
-
     this.setState({icol: icol});
-    this.setState({header: dupHeader});
-    this.setState({storeData: dupStoreData});
+    // console.log(Queries.deleteColumn('tableName', this.state.header[index], this.state));
+    let dltQuery = Queries.deleteColumn(this.state.tableName, this.state.header[index], this.state);
+    this.QueryExecuteHandler(dltQuery, this.state.tableName);
+
+    // this.setState({header: dupHeader});
+    // this.setState({storeData: dupStoreData});
     // console.log(dupStoreData);
 
     // console.log(array);
   };
   myfunc(evt) {
     this.state.newColumnAttr.pk = this.state.storeData[0][evt].pk;
+    this.state.newColumnAttr.value = this.state.storeData[0][evt].value;
     this.setState({newHeader: this.state.header[evt]});
     this.setState({setIndex: evt});
   }
@@ -480,57 +504,129 @@ class ModifyTable extends Component {
       mainArr = [],
       i = 0;
     let colDetails = {};
+    let header3 = [];
+
+    let headerArr = [];
+    let header2 = this.state.header1; // new header added with properties
+
+    let arr = response.data[0];
+    let colObject = Object.entries(arr);
+    let defaultValue = colObject[0][1];
+    // let colName = colObject[j][0];
+    console.log('asdasd here  sssssss');
+    console.log(response.column);
 
     for (i = 0; i < response.column.length; i++) {
       header[i] = response.column[i].name;
-    }
-    header[i] = 'Action';
-    let arr = response.data[0];
 
-    let colObject = Object.entries(arr);
+      for (let m = 0; m < response.primaryKey.length; m++) {
+        if (response.primaryKey[m] === response.column[i].name) {
+          headerArr.pk = '1';
+        } else {
+          headerArr.pk = '0';
+        }
+      }
+      if (response.column[i].type === 3) {
+        headerArr.type = 'Number';
+      }
+      if (response.column[i].type === 4) {
+        headerArr.type = 'Float';
+      }
+      if (response.column[i].type === 253) {
+        headerArr.type = 'STRING';
+      }
+      headerArr.id = String(i);
+      headerArr.colName = response.column[i].name;
+      headerArr.size = response.column[i].length;
+      // console.log('col name is   ' + response.column[i].name);
+      header3.push(headerArr);
+      console.log(headerArr);
+
+      headerArr = [];
+    }
+    // console.log(this.state.header1);
+    header[i] = 'Action';
+
+    let action = {colName: 'action', pk: '0', size: 0};
+    this.setState({header1: header3});
+
+    this.state.header1.push(action);
+
+    this.setState({header: header});
+    header2.push(action);
+    console.log('asdasd sssssss');
+
+    console.log(this.state.header);
+    console.log('0000000000000000000000000000');
+    console.log(response.column);
 
     for (let k = 0; k < response.data.length; k++) {
       storeData = [];
       let arr = response.data[k];
       colObject = Object.entries(arr);
+      console.log('yaalllllah' + colObject.length);
+      console.log(colObject);
       for (let j = 0; j < colObject.length; j++) {
         let defaultValue = colObject[j][1];
         let colName = colObject[j][0];
-
+        // if(colName===)
         colDetails.id = String(k + j);
         colDetails.value = defaultValue;
         colDetails.defaultValue = defaultValue;
         colDetails.colName = colName;
-        colDetails.size = response.column[k].length;
+        // console.log(response.column[k]);
 
+        colDetails.size = response.column[j].length;
         if (response.column[j].type === 3) {
           colDetails.type = 'Number';
+          headerArr.type = 'Number';
         }
         if (response.column[j].type === 4) {
           colDetails.type = 'Float';
+          headerArr.type = 'Float';
         }
         if (response.column[j].type === 253) {
           colDetails.type = 'STRING';
+          headerArr.type = 'STRING';
+        }
+
+        for (let m = 0; m < response.primaryKey.length; m++) {
+          if (response.primaryKey[m] === colName) {
+            colDetails.pk = '1';
+            headerArr.pk = '1';
+          } else {
+            colDetails.pk = '0';
+            headerArr.pk = '0';
+          }
         }
         storeData.push(colDetails);
         colDetails = {};
       }
       mainArr.push(storeData);
     }
+    console.log(this.state.storeData);
+    // empty the array
+    let storeData1 = [];
+    let header1 = [];
+
+    //set new array in array
     this.setState({icol: colObject.length});
     this.setState({irow: response.data.length});
     this.setState({storeData: mainArr});
-    this.setState({header: header});
+    console.log('storedata: ');
+    console.log(this.state.storeData);
   }
-  fetchHandler() {
-    fetch('http://localhost:5000/getTable', {
+  QueryExecuteHandler(tableQuery, tableName) {
+    console.log(tableQuery);
+    fetch('http://localhost:5000/tableQueryExecute', {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        tableName: 'users',
+        tableQuery: tableQuery,
+        tableName: tableName,
       }),
     })
       .then(function(res) {
@@ -538,6 +634,35 @@ class ModifyTable extends Component {
       })
       // string 253   int 3   float 4
       .then(response => {
+        console.log('here respoe');
+        console.log(response);
+        this.fetchDataInStoreData(response); // this funtion to print fetch data in table
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
+    console.log('request sent');
+  }
+
+  fetchHandler(selectedTable) {
+    this.setState({tableName: selectedTable});
+    fetch('http://localhost:5000/getTable', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tableName: selectedTable,
+      }),
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      // string 253   int 3   float 4
+      .then(response => {
+        console.log('here respoe');
+        console.log(response);
         this.fetchDataInStoreData(response); // this funtion to print fetch data in table
       })
       .catch(function(res) {
@@ -551,6 +676,19 @@ class ModifyTable extends Component {
     // *******************************{End Header working} ********************
   }
 
+  comboBoxValueHandler = evt => {
+    console.log('in modify table' + evt.target.value);
+
+    let selectedTable = evt.target.value;
+    let storeData = [];
+    let header = [];
+    this.setState({offModalpopup: 'off'});
+    this.setState({storeData: storeData});
+    this.setState({header: header});
+    this.fetchHandler(selectedTable);
+    this.setState({offModalpopup: 'on'});
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -563,7 +701,11 @@ class ModifyTable extends Component {
                 <div className="panel-heading">
                   <div className="panel-title">
                     <h3>
-                      Select Table <ComboBox />
+                      Select Table
+                      <ComboBox
+                        comboBoxValueHandler={this.comboBoxValueHandler.bind(this)}
+                        fetchHandler={this.fetchHandler.bind(this)}
+                      />
                     </h3>
                   </div>
                   {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
@@ -586,27 +728,31 @@ class ModifyTable extends Component {
                     Add Row
                   </button>
                   {/* <ComboBox /> */}
+                  {this.state.offModalpopup === 'on' ? (
+                    <ModalPopup
+                      headerWthProps={this.state.header1}
+                      resetForm={this.resetForm.bind(this)}
+                      modifyColumnHandler={this.modifyColumnHandler.bind(this)}
+                      setIndex={this.state.setIndex}
+                      storeData={this.state.storeData}
+                      newColumnAttr={this.state.newColumnAttr}
+                      num={this.state.num}
+                      flag={this.state.flag}
+                      icol={this.state.icol}
+                      header={this.state.header}
+                      newHeader={this.state.newHeader}
+                      onUpdateHeader={this.onUpdateHeader.bind(this)}
+                      newValue={this.state.newVal}
+                      onUpdateValueColumnAttr={this.onUpdateValueColumnAttr.bind(this)}
+                      addHeaderHandler={this.addHeaderHandler.bind(this)}
+                      lengthDisableStatus={this.state.lengthDisableStatus}
+                      // addColHandler={this.addColHandler}
+                    />
+                  ) : (
+                    ''
+                  )}
 
-                  <ModalPopup
-                    resetForm={this.resetForm.bind(this)}
-                    modifyColumnHandler={this.modifyColumnHandler.bind(this)}
-                    setIndex={this.state.setIndex}
-                    storeData={this.state.storeData}
-                    newColumnAttr={this.state.newColumnAttr}
-                    num={this.state.num}
-                    flag={this.state.flag}
-                    icol={this.state.icol}
-                    header={this.state.header}
-                    newHeader={this.state.newHeader}
-                    onUpdateHeader={this.onUpdateHeader.bind(this)}
-                    newValue={this.state.newVal}
-                    onUpdateValueColumnAttr={this.onUpdateValueColumnAttr.bind(this)}
-                    addHeaderHandler={this.addHeaderHandler.bind(this)}
-                    lengthDisableStatus={this.state.lengthDisableStatus}
-                    // addColHandler={this.addColHandler}
-                  />
-
-                  {this.state.flag === 1 ? <ModalPopup /> : ''}
+                  {/* {this.state.flag === 1 ? <ModalPopup /> : ''} */}
                   {/* table body */}
 
                   <table id="tableId">
@@ -625,6 +771,7 @@ class ModifyTable extends Component {
                       {/*%%%%%%%%%%%%%%%%%%%% End header DOM working %%%%%%%%%%%%%%*/}
 
                       {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
+
                       {this.state.storeData.map((yo, index) => (
                         <Rows
                           show={this.state.show}

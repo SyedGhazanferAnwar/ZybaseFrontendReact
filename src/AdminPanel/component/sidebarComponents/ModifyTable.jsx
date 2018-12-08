@@ -546,12 +546,7 @@ class ModifyTable extends Component {
     if (response.data[0] === undefined || response.data[0] === null) {
       // this.setState({storeData: []});
       console.log('table is empty');
-<<<<<<< HEAD
-      //return alert('table is empty');
-      return;
-=======
       // return alert(this.state.tableName + ' is empty');
->>>>>>> 6a55681c16afde848719d95d40b131531fffa59a
     }
     let arr = response.data[0];
 
@@ -735,9 +730,7 @@ class ModifyTable extends Component {
   dropTableHandler() {
     let dltQuery = Queries.dropTable(this.state.tableName);
     this.QueryExecuteHandler(dltQuery, this.state.tableName);
-    // this.fetchHandler('users');
-
-    // this.fetchHandler(this.state.tableName);
+    window.location.reload();
   }
 
   render() {

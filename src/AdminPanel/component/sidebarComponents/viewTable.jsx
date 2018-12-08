@@ -8,36 +8,37 @@ import $ from 'jquery';
 
 class ViewTable extends Component {
   state = {
+    header1: [],
     icol: 0,
     irow: 0,
-    header: ['Id  (auto)', 'Name'],
+    header: [],
     defaultComboTable: '',
     storeData: [
       [
-        {
-          id: '0',
-          colName: '',
-          pk: '',
-          defaultValue: '0',
-          value: '',
-          size: '',
-          autoInc: '',
-          type: '',
-          notNull: '',
-          unique: '',
-        },
-        {
-          id: '1',
-          colName: '',
-          pk: '0',
-          defaultValue: '',
-          value: '',
-          size: '',
-          autoInc: '',
-          type: 'STRING',
-          notNull: '',
-          unique: '',
-        },
+        // {
+        //   id: '0',
+        //   colName: '',
+        //   pk: '',
+        //   defaultValue: '0',
+        //   value: '',
+        //   size: '',
+        //   autoInc: '',
+        //   type: '',
+        //   notNull: '',
+        //   unique: '',
+        // },
+        // {
+        //   id: '1',
+        //   colName: '',
+        //   pk: '0',
+        //   defaultValue: '',
+        //   value: '',
+        //   size: '',
+        //   autoInc: '',
+        //   type: 'STRING',
+        //   notNull: '',
+        //   unique: '',
+        // },
       ],
     ],
   };
@@ -47,16 +48,61 @@ class ViewTable extends Component {
       storeData = [[]],
       mainArr = [],
       i = 0;
+    let j = 0;
     let colDetails = {};
+    let header3 = [];
+    // this.setState({header: []});
 
-    for (i = 0; i < response.column.length; i++) {
-      header[i] = response.column[i].name;
+    let headerArr = [];
+    let header2 = [...this.state.header1]; // new header added with properties
+    for (j = 0; j < response.column.length; j++) {
+      header[j] = response.column[j].name;
     }
+
     this.setState({header: header});
-    console.log(header);
+
+    //yaha exception lagegi ager rows na hue tw
+    if (response.data[0] === undefined || response.data[0] === null) {
+      // this.setState({storeData: []});
+      console.log('table is empty');
+      // return alert(this.state.tableName + ' is empty');
+    }
     let arr = response.data[0];
 
     let colObject = Object.entries(arr);
+    let defaultValue = colObject[0][1];
+    // let colName = colObject[j][0];
+    // console.log(response.column);
+
+    for (i = 0; i < response.column.length; i++) {
+      for (let m = 0; m < response.primaryKey.length; m++) {
+        if (response.primaryKey[m] === response.column[i].name) {
+          headerArr.pk = '1';
+        } else {
+          headerArr.pk = '0';
+        }
+      }
+      if (response.column[i].type === 3) {
+        headerArr.type = 'Number';
+      }
+      if (response.column[i].type === 4) {
+        headerArr.type = 'Float';
+      }
+      if (response.column[i].type === 253) {
+        headerArr.type = 'STRING';
+      }
+      headerArr.id = String(i);
+      headerArr.colName = response.column[i].name;
+      headerArr.size = response.column[i].length;
+      // console.log('col name is   ' + response.column[i].name);
+      header3.push(headerArr);
+      console.log('asdasd here  sssssssllllllllllllllllllll');
+
+      console.log(this.state.header1);
+
+      headerArr = [];
+    }
+    this.setState({header1: header3});
 
     for (let k = 0; k < response.data.length; k++) {
       storeData = [];
@@ -65,7 +111,6 @@ class ViewTable extends Component {
       for (let j = 0; j < colObject.length; j++) {
         let defaultValue = colObject[j][1];
         let colName = colObject[j][0];
-
         colDetails.id = String(k + j);
         colDetails.value = defaultValue;
         colDetails.defaultValue = defaultValue;
@@ -74,20 +119,38 @@ class ViewTable extends Component {
 
         if (response.column[j].type === 3) {
           colDetails.type = 'Number';
+          // headerArr.type = 'Number';
         }
         if (response.column[j].type === 4) {
           colDetails.type = 'Float';
+          // headerArr.type = 'Float';
         }
         if (response.column[j].type === 253) {
           colDetails.type = 'STRING';
+          // headerArr.type = 'STRING';
+        }
+
+        for (let m = 0; m < response.primaryKey.length; m++) {
+          if (response.primaryKey[m] === colName) {
+            colDetails.pk = '1';
+          } else {
+            colDetails.pk = '0';
+          }
         }
         storeData.push(colDetails);
         colDetails = {};
       }
       mainArr.push(storeData);
     }
+    console.log(this.state.storeData);
+    // empty the array
+    let storeData1 = [];
+    let header1 = [];
+
+    //set new array in array
     this.setState({icol: colObject.length});
     this.setState({irow: response.data.length});
+    this.setState({storeData: []});
     this.setState({storeData: mainArr});
   }
   fetchHandler(selectedTable) {
@@ -124,6 +187,19 @@ class ViewTable extends Component {
     this.setState({storeData: storeData});
     this.fetchHandler(selectedTable);
   };
+  inputField(index, header) {
+    if (this.state.header1[index] !== undefined) {
+      if (this.state.header1[index].pk === '1') {
+        return (
+          <div>
+            <i className="fa fa-key" style={{marginRight: '10px', color: 'yellow'}} />
+            {header}
+          </div>
+        );
+      }
+    }
+    return header;
+  }
   render() {
     return (
       <React.Fragment>
@@ -157,14 +233,9 @@ class ViewTable extends Component {
                       {/*%%%%%%%%%%%%%%%%%%%% header DOM working %%%%%%%%%%%%%%*/}
                       <tr className="header">
                         {this.state.header.map((header, index) => (
-                          <th key={index}>
-                            {/* {this.setState({ setIndex: index })} */}
-                            {header}
-                            {/* {this.setIndexHandler(index)} */}
-                          </th>
+                          <th key={index}>{this.inputField(index, header)}</th>
                         ))}
                       </tr>
-                      {/* {this.fetchHandler()} */}
                       {/*%%%%%%%%%%%%%%%%%%%% End header DOM working %%%%%%%%%%%%%%*/}
 
                       {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}

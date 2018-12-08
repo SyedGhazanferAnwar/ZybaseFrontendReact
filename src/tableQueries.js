@@ -156,7 +156,7 @@ export default {
     // if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
 
     if (data[0][columnId].pk == 1) {
-      query = query + 'ALTER TABLE ' + tableName + ' \n';
+      query = query + 'ALTER TABLE ' + tableName + ' ';
       query = query + 'DROP PRIMARY KEY,';
       query = query + 'ADD PRIMARY KEY(';
       for (var i = 0; i < pkColumn.length - 1; i++) {

@@ -7,6 +7,7 @@ import ComboBox from './comboBox.jsx';
 // import { connect } from "r";
 import validator from 'react-validation';
 import {validate, ValidationIn} from 'simple-react-validator';
+import {realpath} from 'fs';
 // import Columns from "./columns.jsx";
 // import { AvForm, AvField } from "availity-reactstrap-validation";
 
@@ -162,7 +163,7 @@ class ModifyTable extends Component {
   handleRowDelete(evt) {
     const index = evt.target.id;
     let tableQuery = Queries.deleteRow(this.state.tableName, this.state.storeData[index][0].value, this.state);
-    console.log(this.state.storeData[index][0].value);
+    // console.log(this.state.storeData[index][0].value);
     console.log('sadasdasdasdasdasdasd');
     this.QueryExecuteHandler(tableQuery, this.state.tableName);
     // this.setState({storeData: [[]]});
@@ -542,8 +543,13 @@ class ModifyTable extends Component {
     this.setState({header: header});
 
     //yaha exception lagegi ager rows na hue tw
-
+    if (response.data[0] === undefined || response.data[0] === null) {
+      this.setState({storeData: []});
+      console.log('table is empty');
+      return alert('table is empty');
+    }
     let arr = response.data[0];
+
     let colObject = Object.entries(arr);
     let defaultValue = colObject[0][1];
     // let colName = colObject[j][0];

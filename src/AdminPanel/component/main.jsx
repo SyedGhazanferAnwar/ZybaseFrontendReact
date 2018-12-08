@@ -84,8 +84,8 @@ class Main extends Component {
         this.setState({currentUsersCount: currentUsersCount});
 
         let queriesPerHour = this.state.queriesPerHour;
-        queriesPerHour[0].value = response.QueriesPerHour;
-        queriesPerHour[1].value = 200 - response.QueriesPerHour;
+        queriesPerHour[0].value = response.queriesPerHour;
+        queriesPerHour[1].value = 200 - response.queriesPerHour;
         this.setState({queriesPerHour: queriesPerHour});
       })
       .catch(function(res) {

@@ -208,7 +208,7 @@ class ModalPopup extends Component {
                   <input
                     style={{marginLeft: '2%'}}
                     className="cellInput"
-                    // defaultValue={this.props.storeData[0][this.props.setIndex].colName}
+                    defaultValue={this.props.newColumnAttr.colName}
                     id="ColumnNameModify"
                     onChange={this.props.onUpdateHeader}
                     required
@@ -218,13 +218,8 @@ class ModalPopup extends Component {
                   {/* %%%%%%%%%%%%%%%%  Default Value %%%%%%%%%%%%%%%% */}
                   <label style={{color: 'white'}}>Enter Default-Value</label>
                   <input
-                    // defaultValue={
-                    //   this.props.icol > 1 && this.props.storeData != null
-                    //     ? this.props.storeData[0][this.props.setIndex].defaultValue
-                    //     : ''
-                    // }
                     type="text"
-                    // defaultValue={this.props.storeData[this.props.setIndex]}
+                    defaultValue={this.props.newColumnAttr.defaultValue}
                     style={{marginLeft: '3%'}}
                     className="cellInput"
                     id="Default-Value"
@@ -232,6 +227,8 @@ class ModalPopup extends Component {
                   />
                   <br />
                   {/* %%%%%%%%%%%%%%%%  data type  %%%%%%%%%%%%%%%% */}
+                  {console.log('collen ' + this.props.newColumnAttr.defaultValue)}
+
                   <label style={{color: 'white'}}>Enter Data-type</label>
                   <select
                     style={{marginLeft: '7.5%'}}
@@ -258,14 +255,16 @@ class ModalPopup extends Component {
                   </select>
                   <br />
                   {/* %%%%%%%%%%%%%%%%  length  %%%%%%%%%%%%%%%% */}
+
                   <label style={{color: 'white'}}>Enter length</label>
+
                   <input
                     style={{marginLeft: '12%'}}
                     className="cellInput"
                     id="length"
                     type="number"
                     min="0"
-                    // defaultValue={this.props.icol > 1 ? this.props.storeData[0][this.props.setIndex].size : ''}
+                    value={this.props.newColumnAttr.size}
                     onChange={this.props.onUpdateValueColumnAttr}
                     required
                     disabled={this.props.lengthDisableStatus}
@@ -274,7 +273,7 @@ class ModalPopup extends Component {
                   {/* %%%%%%%%%%%%%%%%  pk  %%%%%%%%%%%%%%%% */}
 
                   <label style={{color: 'white'}}>Primary Key</label>
-                  {this.checked()}
+                  {/* {this.checked()} */}
                 </div>
                 <div className="modal-footer">
                   <button type="reset" className="btn btn-danger zoomBtn" style={{marginRight: '42%'}} id="resetBtn">
@@ -283,6 +282,7 @@ class ModalPopup extends Component {
                   <button
                     style={{marginRight: '8px'}}
                     type="button"
+                    onClick={this.props.resetForm}
                     className="btn btn-default zoomBtn"
                     data-dismiss="modal"
                   >

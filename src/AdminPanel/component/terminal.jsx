@@ -18,7 +18,8 @@ class Terminal extends Component {
     prompt: true,
     queries: [],
     qc: 0,
-    cqc: 0
+    cqc: 0,
+    tableFlag:false
   };
 
   // componentWillMount(){
@@ -105,6 +106,7 @@ class Terminal extends Component {
               this.setState({data:data})
               document.getElementById("prompt-input").value = "";
               this.setState({ prompt: true });
+              this.setState({tableFlag:true});
               console.log(this.state.table);
               return;
 

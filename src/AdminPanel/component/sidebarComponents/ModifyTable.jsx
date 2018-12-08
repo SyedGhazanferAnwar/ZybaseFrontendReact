@@ -49,7 +49,7 @@ class ModifyTable extends Component {
     show: 'yes',
     // empty: [[{ id: "1", value: "2" }]],
     storeData: [[]],
-    header: ['id ', 'Name', 'Action'],
+    header: [],
     header1: [
       {id: '', colName: 'Id  (auto)', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
       {id: '', colName: 'Action', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
@@ -525,13 +525,14 @@ class ModifyTable extends Component {
   makeInputFieldEditable(evt) {}
 
   fetchDataInStoreData(response) {
-    let header = [[]],
+    let header = [],
       storeData = [[]],
       mainArr = [],
       i = 0;
     let j = 0;
     let colDetails = {};
     let header3 = [];
+    // this.setState({header: []});
 
     let headerArr = [];
     let header2 = [...this.state.header1]; // new header added with properties
@@ -539,14 +540,13 @@ class ModifyTable extends Component {
       header[j] = response.column[j].name;
     }
     header[j] = 'Action';
-    //this.setState({header: []});
     this.setState({header: header});
 
     //yaha exception lagegi ager rows na hue tw
     if (response.data[0] === undefined || response.data[0] === null) {
-      this.setState({storeData: []});
+      // this.setState({storeData: []});
       console.log('table is empty');
-      return alert('table is empty');
+      // return alert(this.state.tableName + ' is empty');
     }
     let arr = response.data[0];
 
@@ -665,8 +665,6 @@ class ModifyTable extends Component {
       })
       // string 253   int 3   float 4
       .then(response => {
-        console.log('here respoe data ccolumns');
-        console.log(response);
         this.fetchDataInStoreData(response); // this funtion to print fetch data in table
       })
       .catch(function(res) {
@@ -706,7 +704,7 @@ class ModifyTable extends Component {
       if (this.state.header1[index].pk === '1') {
         return (
           <div>
-            <i class="fa fa-key" style={{marginRight: '10px', color: 'yellow'}} />
+            <i className="fa fa-key" style={{marginRight: '10px', color: 'yellow'}} />
             {header}
           </div>
         );
@@ -729,6 +727,13 @@ class ModifyTable extends Component {
     this.fetchHandler(selectedTable);
     this.setState({offModalpopup: 'on'});
   };
+  dropTableHandler() {
+    let dltQuery = Queries.dropTable(this.state.tableName);
+    this.QueryExecuteHandler(dltQuery, this.state.tableName);
+    // this.fetchHandler('users');
+
+    // this.fetchHandler(this.state.tableName);
+  }
 
   render() {
     return (
@@ -747,6 +752,13 @@ class ModifyTable extends Component {
                         comboBoxValueHandler={this.comboBoxValueHandler.bind(this)}
                         fetchHandler={this.fetchHandler.bind(this)}
                       />
+                      <button
+                        onClick={this.dropTableHandler.bind(this)}
+                        className="btn btn-primary zoomBtn"
+                        style={{padding: '10px'}}
+                      >
+                        Drop Table
+                      </button>
                     </h3>
                   </div>
                   {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}

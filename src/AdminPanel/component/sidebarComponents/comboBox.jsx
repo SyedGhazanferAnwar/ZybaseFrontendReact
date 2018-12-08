@@ -53,6 +53,7 @@ class ComboBox extends Component {
       <React.Fragment>
         <div className="custom-select">
           <br />
+          Select Table
           <select
             style={{marginLeft: '7.5%'}}
             className="cellInput"

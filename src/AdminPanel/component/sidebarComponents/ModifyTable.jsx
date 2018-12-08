@@ -74,7 +74,7 @@ class ModifyTable extends Component {
         // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
         console.log('xxxddd');
         // console.log(response);
-        console.log(response[0].table_name);
+        // console.log(response[0].table_name);
         this.fetchHandler(response[0].table_name);
       })
       .catch(function(res) {
@@ -577,9 +577,9 @@ class ModifyTable extends Component {
       headerArr.size = response.column[i].length;
       // console.log('col name is   ' + response.column[i].name);
       header3.push(headerArr);
-      console.log('asdasd here  sssssss');
+      console.log('asdasd here  sssssssllllllllllllllllllll');
 
-      console.log(header);
+      console.log(this.state.header1);
 
       headerArr = [];
     }
@@ -646,8 +646,6 @@ class ModifyTable extends Component {
     this.setState({irow: response.data.length});
     this.setState({storeData: []});
     this.setState({storeData: mainArr});
-    console.log('storedata: ');
-    console.log(this.state.storeData);
   }
   QueryExecuteHandler(tableQuery, tableName) {
     console.log(tableQuery);
@@ -667,7 +665,7 @@ class ModifyTable extends Component {
       })
       // string 253   int 3   float 4
       .then(response => {
-        console.log('here respoe');
+        console.log('here respoe data ccolumns');
         console.log(response);
         this.fetchDataInStoreData(response); // this funtion to print fetch data in table
       })
@@ -704,18 +702,16 @@ class ModifyTable extends Component {
     console.log('request sent');
   }
   inputField(index, header) {
-    console.log('yes here');
-    console.log(index + ' index header' + header);
-    // if (index < 1) {
-    //   console.log(index + '  as' + this.state.header1[index].pk);
-    //   if (this.state.header1[index].pk === '1') {
-    //     return (
-    //       <i class="fa fa-key" style="font-size:48px;color:red">
-    //         {header}
-    //       </i>
-    //     );
-    //   }
-    // }
+    if (this.state.header1[index] !== undefined) {
+      if (this.state.header1[index].pk === '1') {
+        return (
+          <div>
+            <i class="fa fa-key" style={{marginRight: '10px', color: 'yellow'}} />
+            {header}
+          </div>
+        );
+      }
+    }
     return header;
 
     // *******************************{End Header working} ********************

@@ -67,11 +67,11 @@ class SideMenu extends Component {
                     <i className="lnr lnr-chart-bars" /> <span>Analytics</span>
                   </Link>
                 </li> */}
-                {/* <li>
+                <li>
                   <Link name="settingpanel" to="/setting" className={this.getActiveClassName('settingpanel')}>
                     <i className="lnr lnr-cog" /> <span> Settings Panel</span>
                   </Link>
-                </li> */}
+                </li>
                 <li>
                   <Link name="Terminal" to="/terminal" className={this.getActiveClassName('Terminal')}>
                     <i className="lnr lnr-code" /> <span> Terminal</span>

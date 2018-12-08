@@ -6,32 +6,32 @@ class Main extends Component {
     currentUsersCount: [
       {
         value: 300,
-        color: "rgba(177, 226, 64, 0.4)",
-        highlight: "#FF5A5E",
-        label: "Red"
+        color: 'rgba(177, 226, 64, 0.4)',
+        highlight: '#FF5A5E',
+        label: 'Red',
       },
       {
         value: 50,
-        color: "#0E8174",
-        highlight: "#5AD3D1",
-        label: "Green"
-      }
+        color: '#0E8174',
+        highlight: '#5AD3D1',
+        label: 'Green',
+      },
     ],
     queriesPerHour: [
       {
         value: 300,
-        
-        color: "rgba(177, 226, 64, 0.4)",
-        highlight: "#FF5A5E",
-        label: "Red"
+
+        color: 'rgba(177, 226, 64, 0.4)',
+        highlight: '#FF5A5E',
+        label: 'Red',
       },
       {
         value: 50,
-        color: "#0E8174",
-        highlight: "#5AD3D1",
-        label: "Green"
-      }
-    ]
+        color: '#0E8174',
+        highlight: '#5AD3D1',
+        label: 'Green',
+      },
+    ],
   };
   queries = 44;
 
@@ -63,43 +63,37 @@ class Main extends Component {
     legendTemplate:
       '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>',
   };
-  componentDidMount(){
-    fetch("http://localhost:5000/analytics", {
-      method: "GET",
-      credentials: "include",
+  componentDidMount() {
+    fetch('http://localhost:5000/analytics', {
+      method: 'GET',
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      
     })
       .then(function(res) {
         return res.json();
       })
       .then(response => {
-        this.setState({tableCount:response.tableCount});
-        this.setState({userCount:response.userCount});
+        this.setState({tableCount: response.tableCount});
+        this.setState({userCount: response.userCount});
 
         let currentUsersCount = this.state.currentUsersCount;
-        currentUsersCount[0].value=response.currentUserCount;
-        currentUsersCount[1].value=60-response.currentUserCount;
-        this.setState({currentUsersCount:currentUsersCount});
+        currentUsersCount[0].value = response.currentUserCount;
+        currentUsersCount[1].value = 60 - response.currentUserCount;
+        this.setState({currentUsersCount: currentUsersCount});
 
         let queriesPerHour = this.state.queriesPerHour;
-        queriesPerHour[0].value=response.queriesPerHour;
-        queriesPerHour[1].value=200-response.queriesPerHour;
-        this.setState({queriesPerHour:queriesPerHour});
-
-
-
-        
-        
+        queriesPerHour[0].value = response.QueriesPerHour;
+        queriesPerHour[1].value = 200 - response.QueriesPerHour;
+        this.setState({queriesPerHour: queriesPerHour});
       })
       .catch(function(res) {
         console.log(res);
       });
-    console.log("request sent");
+    console.log('request sent');
   }
-  
+
   render() {
     return (
       <React.Fragment>
@@ -112,7 +106,7 @@ class Main extends Component {
                 <div className="col-md-4">
                   <div className="panel panel-headline">
                     <div className="panel-heading">
-                      <h3 className="panel-title" style={{ marginLeft: "10%" }}>
+                      <h3 className="panel-title" style={{marginLeft: '10%'}}>
                         Total Number of Tables
                       </h3>
                       <hr className="style-four" />
@@ -123,7 +117,7 @@ class Main extends Component {
                 <div className="col-md-4">
                   <div className="panel panel-headline">
                     <div className="panel-heading">
-                      <h3 className="panel-title" style={{ marginLeft: "10%" }}>
+                      <h3 className="panel-title" style={{marginLeft: '10%'}}>
                         Total Number of Users
                       </h3>
                       <hr className="style-four" />
@@ -134,7 +128,7 @@ class Main extends Component {
                 <div className="col-md-4">
                   <div className="panel panel-headline">
                     <div className="panel-heading">
-                      <h3 className="panel-title" style={{ marginLeft: "10%" }}>
+                      <h3 className="panel-title" style={{marginLeft: '10%'}}>
                         Total Number Of Queries
                       </h3>
                       <hr className="style-four" />
@@ -145,17 +139,14 @@ class Main extends Component {
                 <div className="col-md-6">
                   <div className="panel panel-headline">
                     <div className="panel-heading mb">
-                      <h3 className="panel-title" style={{ marginLeft: "35%" }}>
-                        Queries Per Hour / 100
+                      <h3 className="panel-title" style={{marginLeft: '35%'}}>
+                        Currently Connected Users / 60
                       </h3>
                       <hr className="style-four" />
                     </div>
                     <div className="panel-body">
                       <div className="dough">
-                        <DoughnutChart
-                          data={this.state.currentUsersCount}
-                          options={this.options}
-                        />
+                        <DoughnutChart data={this.state.currentUsersCount} options={this.options} />
                       </div>
                     </div>
                   </div>
@@ -163,17 +154,14 @@ class Main extends Component {
                 <div className="col-md-6">
                   <div className="panel panel-headline">
                     <div className="panel-heading mb">
-                      <h3 className="panel-title" style={{ marginLeft: "25%" }}>
-                        Currently Connected Users / 60
+                      <h3 className="panel-title" style={{marginLeft: '25%'}}>
+                        Queries Per Hour / 100
                       </h3>
                       <hr className="style-four" />
                     </div>
                     <div className="panel-body">
                       <div className="dough">
-                        <DoughnutChart
-                          data={this.state.queriesPerHour}
-                          options={this.options}
-                        />
+                        <DoughnutChart data={this.state.queriesPerHour} options={this.options} />
                       </div>
                     </div>
                   </div>

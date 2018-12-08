@@ -98,6 +98,17 @@ class Terminal extends Component {
             res = JSON.stringify(res.data.sqlMessage);
             response.push({ type: false, text: res, error: true });
           } else {
+            if(res.table==true){
+              this.setState({table:res.data});
+              let data= this.state.data;
+              data.push({type:false,text:"print table",error:false});
+              this.setState({data:data})
+              document.getElementById("prompt-input").value = "";
+              this.setState({ prompt: true });
+              console.log(this.state.table);
+              return;
+
+            }
             res = JSON.stringify(res);
             response.push({ type: false, text: res, error: false });
             this.setState({ data: response });

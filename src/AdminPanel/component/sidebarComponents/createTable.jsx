@@ -42,6 +42,7 @@ class CreateTable extends Component {
         // setTimeout(() => {
         // },1000);
         this.setState({redirect: true});
+        console.log('________________' + this.state.redirect);
         // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
       })
       .catch(function(res) {

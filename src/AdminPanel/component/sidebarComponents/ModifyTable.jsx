@@ -41,8 +41,8 @@ class ModifyTable extends Component {
     setIndex: 0,
     num: 0,
     flag: 0,
-    irow: 1,
-    icol: 2,
+    irow: 0,
+    icol: 0,
     newHeader: '',
     newVal: '',
     checkBhund: 0,
@@ -51,8 +51,8 @@ class ModifyTable extends Component {
     storeData: [[]],
     header: [],
     header1: [
-      {id: '', colName: 'Id  (auto)', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
-      {id: '', colName: 'Action', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
+      //   {id: '', colName: 'Id  (auto)', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
+      //   {id: '', colName: 'Action', defaultValue: '', size: 0, autoInc: '', type: 'STRING', pk: '0'},
     ],
     // columns: [],
     // row: [{ id: 1, value: 2 }]
@@ -164,8 +164,16 @@ class ModifyTable extends Component {
     const index = evt.target.id;
     let tableQuery = Queries.deleteRow(this.state.tableName, this.state.storeData[index][0].value, this.state);
     // console.log(this.state.storeData[index][0].value);
-    console.log('sadasdasdasdasdasdasd');
+    // console.log('sadasdasdasdasdasdasd');
     this.QueryExecuteHandler(tableQuery, this.state.tableName);
+    if (this.state.irow == 1) {
+      console.log('last row is here can see');
+
+      // and then
+
+      // window.location.reload();
+      // this.setState({irow: 1});
+    }
     // this.setState({storeData: [[]]});
     // if (index === '0') {
     //   return alert('cant delete first row');
@@ -201,24 +209,30 @@ class ModifyTable extends Component {
     // this.setState({newHeader: this.state.header[this.state.setIndex]});
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
-    console.log('new header is  ' + this.state.newHeader);
+    let headerWithProps = [...this.state.header1];
+    let pkPrevious = headerWithProps[this.state.setIndex].pk;
+
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({header: header});
-    let pkPrevious = storeData[0][this.state.setIndex].pk;
 
-    for (let i = 0; i < this.state.irow; i++) {
-      // storeData[i][
-      //   this.state.setIndex
-      // ].value = this.state.newColumnAttr.defaultValue;
+    headerWithProps[this.state.setIndex].pk = this.state.newColumnAttr.pk;
+    headerWithProps[this.state.setIndex].colName = this.state.newHeader;
+    headerWithProps[this.state.setIndex].size = this.state.newColumnAttr.size;
+    headerWithProps[this.state.setIndex].type = this.state.newColumnAttr.type;
+    headerWithProps[this.state.setIndex].value = this.state.newColumnAttr.defaultValue;
+    headerWithProps[this.state.setIndex].defaultValue = this.state.newColumnAttr.defaultValue;
 
-      console.log('previous  ' + pkPrevious + '  new ' + this.state.newColumnAttr.pk);
-      storeData[i][this.state.setIndex].pk = this.state.newColumnAttr.pk;
-      storeData[i][this.state.setIndex].colName = this.state.newHeader;
-      storeData[i][this.state.setIndex].size = this.state.newColumnAttr.size;
-      storeData[i][this.state.setIndex].type = this.state.newColumnAttr.type;
-      storeData[i][this.state.setIndex].value = this.state.newColumnAttr.defaultValue;
+    if (this.state.storeData[0] !== undefined) {
+      for (let i = 0; i < this.state.irow; i++) {
+        console.log('previous  ' + pkPrevious + '  new ' + this.state.newColumnAttr.pk);
+        storeData[i][this.state.setIndex].pk = this.state.newColumnAttr.pk;
+        storeData[i][this.state.setIndex].colName = this.state.newHeader;
+        storeData[i][this.state.setIndex].size = this.state.newColumnAttr.size;
+        storeData[i][this.state.setIndex].type = this.state.newColumnAttr.type;
+        storeData[i][this.state.setIndex].value = this.state.newColumnAttr.defaultValue;
 
-      storeData[i][this.state.setIndex].defaultValue = this.state.newColumnAttr.defaultValue;
+        storeData[i][this.state.setIndex].defaultValue = this.state.newColumnAttr.defaultValue;
+      }
     }
     let pkDecide = [],
       k = 0;
@@ -246,6 +260,10 @@ class ModifyTable extends Component {
 
     this.change(storeData);
     this.setState({setIndex: 0});
+    this.setState({header1: headerWithProps});
+    this.setState({storeData: storeData});
+    console.log('updated header print here');
+    console.log(this.state.header1);
 
     evt.target.reset();
     this.resetForm();
@@ -260,7 +278,6 @@ class ModifyTable extends Component {
     evt.preventDefault();
     let num = this.state.num;
     num++;
-
     this.setState({num: num});
     let headerArr = [];
     let header1 = [...this.state.header1]; // new header added with properties
@@ -343,11 +360,8 @@ class ModifyTable extends Component {
     this.setState({irow: irow});
   };
   addColHandler = newVal => {
-    // console.log(newVal);
-
     let reArr = this.state.storeData;
     for (let k = 0; k < this.state.irow; k++) {
-      // console.log("k " + k);
       let reNew = {
         id: k + '',
         colName: this.state.newHeader,
@@ -369,12 +383,10 @@ class ModifyTable extends Component {
 
     let pkDecide = [],
       k = 0;
-    console.log('header here');
     console.log(this.state.header1);
     for (let j = 0; j < this.state.icol; j++) {
       if (this.state.header1[j].pk === '1') {
         pkDecide[k] = this.state.storeData[0][j].colName;
-        console.log('nafix desice');
         console.log(pkDecide[k]);
         k++;
       }
@@ -429,10 +441,14 @@ class ModifyTable extends Component {
     this.setState({newColumnAttr: newColumnAttr});
   };
   resetForm() {
+    let empty = {};
     let newColumnAttr = this.state.newColumnAttr;
     newColumnAttr.pk = '0';
     newColumnAttr.size = 0;
     newColumnAttr.colName = '';
+    newColumnAttr.defaultValue = '';
+    newColumnAttr.type = 'STRING';
+    this.setState({newColumnAttr: empty});
     this.setState({newColumnAttr: newColumnAttr});
   }
   onUpdateHeader = evt => {
@@ -486,10 +502,27 @@ class ModifyTable extends Component {
     // console.log(array);
   };
   myfunc(evt) {
-    this.state.newColumnAttr.pk = this.state.storeData[0][evt].pk;
-    this.state.newColumnAttr.value = this.state.storeData[0][evt].value;
-    this.setState({newHeader: this.state.header[evt]});
+    let newColumnAttr = {
+      id: '',
+      defaultValue: '',
+      autoInc: '',
+      type: 'STRING',
+      notNull: '',
+      unique: '',
+      size: 0,
+      pk: '0',
+    };
+    if (this.state.header1[evt] !== undefined) {
+      newColumnAttr.colName = this.state.header1[evt].colName;
+      newColumnAttr.size = this.state.header1[evt].size;
+      newColumnAttr.defaultValue = this.state.header1[evt].defaultValue;
+    }
+    this.setState({newColumnAttr: newColumnAttr});
     this.setState({setIndex: evt});
+    // this.state.newColumnAttr.pk = this.state.header1[evt].pk;
+    // this.state.newColumnAttr.value = this.state.header1[evt].value;
+    this.setState({newHeader: this.state.header[evt]});
+    // this.setState({setIndex: 0});
   }
 
   crossEditBtnInHeader(header, index) {
@@ -511,7 +544,6 @@ class ModifyTable extends Component {
             key={index + 100}
             name={index}
             className="close crossBtn editBtn"
-            // onClick={this.editColumnOpen.bind(this)}
             onClick={() => this.myfunc(index)}
             data-toggle="modal"
             data-target="#modifyColumnModal"
@@ -522,7 +554,7 @@ class ModifyTable extends Component {
       );
     }
   }
-  makeInputFieldEditable(evt) {}
+  // makeInputFieldEditable(evt) {}
 
   fetchDataInStoreData(response) {
     let header = [],
@@ -532,30 +564,26 @@ class ModifyTable extends Component {
     let j = 0;
     let colDetails = {};
     let header3 = [];
+    let colObject;
+    let arr;
     // this.setState({header: []});
-
+    console.log('step1');
     let headerArr = [];
     let header2 = [...this.state.header1]; // new header added with properties
     for (j = 0; j < response.column.length; j++) {
       header[j] = response.column[j].name;
     }
+
     header[j] = 'Action';
     this.setState({header: header});
 
-    //yaha exception lagegi ager rows na hue tw
-    if (response.data[0] === undefined || response.data[0] === null) {
-      // this.setState({storeData: []});
-      console.log('table is empty');
-      //return alert('table is empty');
-      return;
+    if (response.data.isEmpty === false) {
+      alert('yes');
+      console.log(response.data);
+      console.log('here respine ');
+      arr = response.data[0];
+      colObject = Object.entries(arr);
     }
-    let arr = response.data[0];
-
-    let colObject = Object.entries(arr);
-    let defaultValue = colObject[0][1];
-    // let colName = colObject[j][0];
-    // console.log(response.column);
-
     for (i = 0; i < response.column.length; i++) {
       for (let m = 0; m < response.primaryKey.length; m++) {
         if (response.primaryKey[m] === response.column[i].name) {
@@ -564,6 +592,7 @@ class ModifyTable extends Component {
           headerArr.pk = '0';
         }
       }
+
       if (response.column[i].type === 3) {
         headerArr.type = 'Number';
       }
@@ -573,32 +602,32 @@ class ModifyTable extends Component {
       if (response.column[i].type === 253) {
         headerArr.type = 'STRING';
       }
+      if (response.data.isEmpty === false) {
+        headerArr.defaultValue = colObject[i][1];
+      }
       headerArr.id = String(i);
       headerArr.colName = response.column[i].name;
       headerArr.size = response.column[i].length;
       // console.log('col name is   ' + response.column[i].name);
       header3.push(headerArr);
-      console.log('asdasd here  sssssssllllllllllllllllllll');
-
-      console.log(this.state.header1);
 
       headerArr = [];
     }
-    // console.log(this.state.header1);
 
     let action = {colName: 'action', pk: '0', size: 0};
-
     this.setState({header1: header3});
-
     this.state.header1.push(action);
-
     header2.push(action);
-    // console.log('asdasd sssssss');
+    console.log(this.state.header1);
 
-    // console.log(this.state.header);
-    // console.log('0000000000000000000000000000');
-    // console.log(response.column);
+    if (response.data[0] === undefined || response.data[0] === null) {
+      // yaha alert lga sakte hai k table empty hai
+      this.setState({storeData: []});
+      this.setState({irow: 0});
+      return;
+    }
 
+    // let defaultValue = colObject[0][1];
     for (let k = 0; k < response.data.length; k++) {
       storeData = [];
       let arr = response.data[k];
@@ -649,7 +678,6 @@ class ModifyTable extends Component {
     this.setState({storeData: mainArr});
   }
   QueryExecuteHandler(tableQuery, tableName) {
-    console.log(tableQuery);
     fetch('http://localhost:5000/tableQueryExecute', {
       method: 'POST',
       credentials: 'include',
@@ -691,12 +719,12 @@ class ModifyTable extends Component {
       })
       // string 253   int 3   float 4
       .then(response => {
-        console.log('here respoe');
-        console.log(response);
+        // console.log('here respoe');
+        // console.log(response);
         this.fetchDataInStoreData(response); // this funtion to print fetch data in table
       })
       .catch(function(res) {
-        console.log(res);
+        // console.log(res);
       });
     console.log('request sent');
   }

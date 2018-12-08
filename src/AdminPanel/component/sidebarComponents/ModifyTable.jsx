@@ -546,7 +546,8 @@ class ModifyTable extends Component {
     if (response.data[0] === undefined || response.data[0] === null) {
       this.setState({storeData: []});
       console.log('table is empty');
-      return alert('table is empty');
+      //return alert('table is empty');
+      return;
     }
     let arr = response.data[0];
 

@@ -16,7 +16,7 @@ export default function asyncComponent(getComponent) {
             document.getElementById('mainbody').style.overflow = 'auto';
           });
         }
-      }, 1);
+      }, 500);
     }
     render() {
       const {Component} = this.state;

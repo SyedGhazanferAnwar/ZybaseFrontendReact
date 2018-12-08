@@ -59,7 +59,7 @@
 // console.log(modifyRow("NewTable", 0, state));
 export default {
   createTable(state, tableName) {
-    var query = `CREATE TABLE ${tableName} (Id int (30) AUTO_INCREMENT PRIMARY KEY, ${state.header[1]} varchar (255);`;
+    var query = `CREATE TABLE ${tableName} (Id int (30) AUTO_INCREMENT PRIMARY KEY, ${state.header[1]} varchar (255));`;
 
     return query;
   },
@@ -101,9 +101,9 @@ export default {
 
   //
 
-  deleteRow(tableName, rowNum, state) {
+  deleteRow(tableName, id, state) {
     //Row Id to delete
-    var query = 'DELETE FROM ' + tableName + ' WHERE id = ' + state.storeData[rowNum][0].id + ';';
+    var query = 'DELETE FROM ' + tableName + ' WHERE id = ' + id + ';';
 
     return query;
   },
@@ -124,22 +124,24 @@ export default {
 
   insertColumn(tableName, columnName, state, columnId, pkColumn) {
     //done
+    console.log('type   ' + typeof columnName);
+    var type;
     var data = state.storeData;
-
-    if (data[0][columnId].pk == 1) {
+    console.log('he has a');
+    console.log(data[0][columnId]);
+    if (data[0][columnId].pk == '1') {
       pkColumn[pkColumn.length] = columnName;
     }
 
-    var query =
-      'ALTER TABLE ' +
-      tableName +
-      ' ADD ' +
-      columnName +
-      ' ' +
-      data[0][columnId].type +
-      ' (' +
-      data[0][columnId].size +
-      ')';
+    if (data[0][columnId].type == 'STRING') {
+      type = 'VARCHAR';
+    } else if (data[0][columnId].type == 'FLOAT') {
+      type = 'FLOAT';
+    } else {
+      type = 'INT';
+    }
+
+    var query = 'ALTER TABLE ' + tableName + ' ADD ' + columnName + ' ' + type + ' (' + data[0][columnId].size + ')';
 
     if (data[0][columnId].defaultValue.length > 0) query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
 
@@ -156,15 +158,15 @@ export default {
     if (data[0][columnId].pk == 1) {
       query = query + 'ALTER TABLE ' + tableName + ' \n';
       query = query + 'DROP PRIMARY KEY,';
-      query = query + 'ADD PRIMARY KEY(Id, ';
-      for (var i = 0; i < pkColumn.length; i++) {
+      query = query + 'ADD PRIMARY KEY(';
+      for (var i = 0; i < pkColumn.length - 1; i++) {
         query = query + pkColumn[i];
-        if (i < pkColumn.length - 1) query = query + ',';
+        if (i < pkColumn.length - 2) query = query + ',';
         else query = query + ');';
       }
     }
 
-    query = query + ';';
+    // query = query + ';';
 
     return query;
   },
@@ -274,7 +276,7 @@ export default {
       else query = query + column[i] + ' = ' + "'" + data[j][i].value + "', ";
     }
 
-    query = query + 'WHERE ' + 'id = ' + j + ';';
+    query = query + 'WHERE ' + 'id = ' + data[rowNum][0].value + ';';
 
     return query;
   },

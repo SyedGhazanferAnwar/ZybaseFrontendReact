@@ -89,7 +89,9 @@ class ModifyTable extends Component {
     let inputisEditableFlag = this.state.inputisEditableFlag;
     inputisEditableFlag = 'true';
     this.setState({inputisEditableFlag: inputisEditableFlag});
-    console.log(Queries.modifyRow('ABC', this.state.editRowIndex, this.state)); //change abc to tablename
+    console.log(Queries.modifyRow(this.state.tableName, this.state.editRowIndex, this.state)); //change abc to tablename
+    var tableQuery = Queries.modifyRow(this.state.tableName, this.state.editRowIndex, this.state);
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
   }
   editRow(evt) {
     // console.log("evt " + evt.target.id);
@@ -159,10 +161,11 @@ class ModifyTable extends Component {
   }
   handleRowDelete(evt) {
     const index = evt.target.id;
-    let tableQuery = Queries.deleteRow(this.state.tableName, parseInt(index), this.state);
-    console.log('sttttttt' + this.state.storeData[0][0].value);
+    let tableQuery = Queries.deleteRow(this.state.tableName, this.state.storeData[index][0].value, this.state);
+    console.log(this.state.storeData[index][0].value);
+    console.log('sadasdasdasdasdasdasd');
     this.QueryExecuteHandler(tableQuery, this.state.tableName);
-
+    // this.setState({storeData: [[]]});
     // if (index === '0') {
     //   return alert('cant delete first row');
     // }
@@ -260,6 +263,8 @@ class ModifyTable extends Component {
     this.setState({num: num});
     let headerArr = [];
     let header1 = [...this.state.header1]; // new header added with properties
+    let lastIndex = {id: '', colName: 'Action', defaultValue: '', size: 0, autoInc: '', type: '', pk: '0'};
+
     headerArr.colName = this.state.header;
     headerArr.id = num + '';
     headerArr.colName = this.state.newHeader;
@@ -269,15 +274,19 @@ class ModifyTable extends Component {
     headerArr.size = this.state.newColumnAttr.size;
     headerArr.type = this.state.newColumnAttr.type;
 
+    header1 = header1.splice(0, this.state.header1.length - 1);
+    header1.push(headerArr);
+    header1.push(lastIndex);
+    console.log(header1);
+    // this.setState({header1: []});
+    this.setState({header1: header1});
     let header = [...this.state.header];
     header[header.length] = header[header.length - 1];
-    header[header.length - 2] = headerArr;
-    header1[header1.length] = header1[header1.length - 1];
-    header1[header1.length - 2] = headerArr;
-    this.setState({header1: header1});
+    header[header.length - 2] = this.state.newHeader;
+
     this.setState({header: header});
     let newVal = this.state.newVal;
-    // console.log(this.state.newColumnAttr);
+
     this.addColHandler(newVal);
     evt.target.reset();
     this.resetForm();
@@ -334,6 +343,7 @@ class ModifyTable extends Component {
   };
   addColHandler = newVal => {
     // console.log(newVal);
+
     let reArr = this.state.storeData;
     for (let k = 0; k < this.state.irow; k++) {
       // console.log("k " + k);
@@ -358,15 +368,25 @@ class ModifyTable extends Component {
 
     let pkDecide = [],
       k = 0;
+    console.log('header here');
+    console.log(this.state.header1);
     for (let j = 0; j < this.state.icol; j++) {
-      if (this.state.storeData[0][j].pk === '1') {
+      if (this.state.header1[j].pk === '1') {
         pkDecide[k] = this.state.storeData[0][j].colName;
         console.log('nafix desice');
         console.log(pkDecide[k]);
         k++;
       }
     }
-    console.log(Queries.insertColumn('XYZ', this.state.newHeader, this.state, this.state.icol, pkDecide));
+
+    let tableQuery = Queries.insertColumn(
+      this.state.tableName,
+      this.state.newHeader,
+      this.state,
+      this.state.icol,
+      pkDecide
+    );
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
   };
   onUpdateValueColumnAttr = evt => {
     let newColumnAttr = this.state.newColumnAttr;
@@ -504,26 +524,32 @@ class ModifyTable extends Component {
   makeInputFieldEditable(evt) {}
 
   fetchDataInStoreData(response) {
-    let header = [],
+    let header = [[]],
       storeData = [[]],
       mainArr = [],
       i = 0;
+    let j = 0;
     let colDetails = {};
     let header3 = [];
 
     let headerArr = [];
-    let header2 = this.state.header1; // new header added with properties
+    let header2 = [...this.state.header1]; // new header added with properties
+    for (j = 0; j < response.column.length; j++) {
+      header[j] = response.column[j].name;
+    }
+    header[j] = 'Action';
+    //this.setState({header: []});
+    this.setState({header: header});
+
+    //yaha exception lagegi ager rows na hue tw
 
     let arr = response.data[0];
     let colObject = Object.entries(arr);
     let defaultValue = colObject[0][1];
     // let colName = colObject[j][0];
-    console.log('asdasd here  sssssss');
-    console.log(response.column);
+    // console.log(response.column);
 
     for (i = 0; i < response.column.length; i++) {
-      header[i] = response.column[i].name;
-
       for (let m = 0; m < response.primaryKey.length; m++) {
         if (response.primaryKey[m] === response.column[i].name) {
           headerArr.pk = '1';
@@ -545,19 +571,20 @@ class ModifyTable extends Component {
       headerArr.size = response.column[i].length;
       // console.log('col name is   ' + response.column[i].name);
       header3.push(headerArr);
-      console.log(headerArr);
+      console.log('asdasd here  sssssss');
+
+      console.log(header);
 
       headerArr = [];
     }
     // console.log(this.state.header1);
-    header[i] = 'Action';
 
     let action = {colName: 'action', pk: '0', size: 0};
+
     this.setState({header1: header3});
 
     this.state.header1.push(action);
 
-    this.setState({header: header});
     header2.push(action);
     // console.log('asdasd sssssss');
 
@@ -569,39 +596,33 @@ class ModifyTable extends Component {
       storeData = [];
       let arr = response.data[k];
       colObject = Object.entries(arr);
-      // console.log('yaalllllah' + colObject.length);
-      // console.log(colObject);
       for (let j = 0; j < colObject.length; j++) {
         let defaultValue = colObject[j][1];
         let colName = colObject[j][0];
-        // if(colName===)
         colDetails.id = String(k + j);
         colDetails.value = defaultValue;
         colDetails.defaultValue = defaultValue;
         colDetails.colName = colName;
-        // console.log(response.column[k]);
-
         colDetails.size = response.column[j].length;
+
         if (response.column[j].type === 3) {
           colDetails.type = 'Number';
-          headerArr.type = 'Number';
+          // headerArr.type = 'Number';
         }
         if (response.column[j].type === 4) {
           colDetails.type = 'Float';
-          headerArr.type = 'Float';
+          // headerArr.type = 'Float';
         }
         if (response.column[j].type === 253) {
           colDetails.type = 'STRING';
-          headerArr.type = 'STRING';
+          // headerArr.type = 'STRING';
         }
 
         for (let m = 0; m < response.primaryKey.length; m++) {
           if (response.primaryKey[m] === colName) {
             colDetails.pk = '1';
-            headerArr.pk = '1';
           } else {
             colDetails.pk = '0';
-            headerArr.pk = '0';
           }
         }
         storeData.push(colDetails);
@@ -617,6 +638,7 @@ class ModifyTable extends Component {
     //set new array in array
     this.setState({icol: colObject.length});
     this.setState({irow: response.data.length});
+    this.setState({storeData: []});
     this.setState({storeData: mainArr});
     console.log('storedata: ');
     console.log(this.state.storeData);
@@ -676,6 +698,18 @@ class ModifyTable extends Component {
     console.log('request sent');
   }
   inputField(index, header) {
+    console.log('yes here');
+    console.log(index + ' index header' + header);
+    // if (index < 1) {
+    //   console.log(index + '  as' + this.state.header1[index].pk);
+    //   if (this.state.header1[index].pk === '1') {
+    //     return (
+    //       <i class="fa fa-key" style="font-size:48px;color:red">
+    //         {header}
+    //       </i>
+    //     );
+    //   }
+    // }
     return header;
 
     // *******************************{End Header working} ********************
@@ -706,7 +740,7 @@ class ModifyTable extends Component {
                 <div className="panel-heading">
                   <div className="panel-title">
                     <h3>
-                      Select Table
+                      Modify Table
                       <ComboBox
                         comboBoxValueHandler={this.comboBoxValueHandler.bind(this)}
                         fetchHandler={this.fetchHandler.bind(this)}
@@ -807,9 +841,6 @@ class ModifyTable extends Component {
                     onClick={this.addSubmitHandler.bind(this)}
                   >
                     Submit
-                  </button>
-                  <button className="btn btn-primary subBtn zoomBtn" id="subBtn" onClick={this.fetchHandler.bind(this)}>
-                    fetch
                   </button>
                 </div>
               </div>

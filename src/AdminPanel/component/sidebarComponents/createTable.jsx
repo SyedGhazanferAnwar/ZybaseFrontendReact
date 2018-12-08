@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Queries from '../../../tableQueries.js';
+import ModifyTable from './ModifyTable.jsx';
 
 class CreateTable extends Component {
   state = {
@@ -11,7 +12,37 @@ class CreateTable extends Component {
   };
   createTableQueryHandler() {
     console.log(Queries.createTable(this.state, this.state.tableName));
+    let tableQuery = Queries.createTable(this.state, this.state.tableName);
+    // ModifyTable.createTableQueryHandler(tableQuery, this.state.ta);
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
     this.setState({tableName: ''});
+  }
+  QueryExecuteHandler(tableQuery, tableName) {
+    console.log(tableQuery);
+    fetch('http://localhost:5000/tableQueryExecute', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tableQuery: tableQuery,
+        tableName: tableName,
+      }),
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      // string 253   int 3   float 4
+      .then(response => {
+        console.log('here respoe');
+        console.log(response);
+        // this.fetchDataInStoreData(response); // this funtion to print fetch data in table
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
+    console.log('request sent');
   }
   render() {
     return (
@@ -29,24 +60,24 @@ class CreateTable extends Component {
                   {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
                 </div>
                 <div className="panel-body">
-                  <label style={{color: 'white'}}>Enter Table Name</label>
-                  <input
-                    placeholder="Table Name"
-                    onChange={this.tableNameChangeHandler}
-                    type="text"
-                    value={this.state.tableName}
-                    className="cellInput"
-                    autoFocus
-                  />
-                  <br />
-                  <br />
-                  <button
-                    onClick={this.createTableQueryHandler.bind(this)}
-                    type="submit"
-                    className="btn btn-primary zoomBtn"
-                  >
-                    Create
-                  </button>
+                  <form onSubmit={this.createTableQueryHandler.bind(this)}>
+                    <label style={{color: 'white'}}>Enter Table Name</label>
+                    <input
+                      placeholder="Table Name"
+                      onChange={this.tableNameChangeHandler}
+                      type="text"
+                      value={this.state.tableName}
+                      className="cellInput"
+                      autoFocus
+                      required
+                    />
+
+                    <br />
+                    <br />
+                    <button type="submit" className="btn btn-primary zoomBtn">
+                      Create
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>

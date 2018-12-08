@@ -1,13 +1,33 @@
 import React, {Component} from 'react';
 
 class NavBar extends Component {
+  logout() {
+    fetch('http://localhost:5000/logout', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function(res) {
+        console.log(res);
+      });
+    console.log('request sent');
+  }
   render() {
     return (
       <React.Fragment>
         <nav className="navbar navbar-default navbar-fixed-top" style={{background: 'none'}}>
           <div className="brand" style={{background: 'none'}}>
             <a href="">
-              <img src="assets/img/logo-dark.png" alt="Klorofil Logo" className="img-responsive logo" />
+              {/* <img src="assets/img/logo-dark.png" alt="Klorofil Logo" className="img-responsive logo" /> */}
+              <h2 style={{marginBottom: -11}}>ZYBASE</h2>
             </a>
           </div>
           <div className="container-fluid" style={{background: '#00000080'}}>
@@ -96,8 +116,8 @@ class NavBar extends Component {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
-                    <button style={{marginBottom: -9}} className="btn btn-primary">
-                      Login/Join
+                    <button onClick={this.logout} style={{marginBottom: -9}} className="btn btn-primary">
+                      Logout
                     </button>
                   </a>
                   <ul className="dropdown-menu">

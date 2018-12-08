@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Rows from './Rows.jsx';
 import ComboBox from './comboBox.jsx';
 import Auth from '../../../Auth.js';
+import Queries from '../../../tableQueries.js';
+
 import $ from 'jquery';
 
 class ViewTable extends Component {
@@ -28,7 +30,7 @@ class ViewTable extends Component {
           id: '1',
           colName: '',
           pk: '0',
-          defaultValue: 'NoTables',
+          defaultValue: '',
           value: '',
           size: '',
           autoInc: '',
@@ -68,7 +70,7 @@ class ViewTable extends Component {
         colDetails.value = defaultValue;
         colDetails.defaultValue = defaultValue;
         colDetails.colName = colName;
-        colDetails.size = response.column[k].length;
+        colDetails.size = response.column[j].length;
 
         if (response.column[j].type === 3) {
           colDetails.type = 'Number';

@@ -168,7 +168,10 @@ class ModifyTable extends Component {
     this.QueryExecuteHandler(tableQuery, this.state.tableName);
     if (this.state.irow == 1) {
       console.log('last row is here can see');
-      window.location.reload();
+
+      // and then
+
+      // window.location.reload();
       // this.setState({irow: 1});
     }
     // this.setState({storeData: [[]]});
@@ -564,7 +567,7 @@ class ModifyTable extends Component {
     let colObject;
     let arr;
     // this.setState({header: []});
-
+    console.log('step1');
     let headerArr = [];
     let header2 = [...this.state.header1]; // new header added with properties
     for (j = 0; j < response.column.length; j++) {
@@ -619,6 +622,8 @@ class ModifyTable extends Component {
 
     if (response.data[0] === undefined || response.data[0] === null) {
       // yaha alert lga sakte hai k table empty hai
+      this.setState({storeData: []});
+      this.setState({irow: 0});
       return;
     }
 
@@ -673,7 +678,6 @@ class ModifyTable extends Component {
     this.setState({storeData: mainArr});
   }
   QueryExecuteHandler(tableQuery, tableName) {
-    console.log(tableQuery);
     fetch('http://localhost:5000/tableQueryExecute', {
       method: 'POST',
       credentials: 'include',

@@ -202,23 +202,23 @@ export default {
   //     return query;
   // },
 
-  alterColumn(tableName, columnName, state, columnId, pk, pkColumn) {
+  alterColumn(tableName, columnName, state, columnId, pk, pkColumn, colProps) {
     var data = state.storeData;
+    var type;
     // console.log(pkColumn[0]);
-
+    if (colProps[columnId].type == 'STRING') {
+      type = 'VARCHAR';
+    } else if (colProps[columnId].type == 'FLOAT') {
+      type = 'FLOAT';
+    } else {
+      type = 'INT';
+    }
     var query =
-      'ALTER TABLE ' +
-      tableName +
-      ' MODIFY COLUMN ' +
-      columnName +
-      ' ' +
-      data[0][columnId].type +
-      ' (' +
-      data[0][columnId].size +
-      ') ';
+      'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
 
-    if (data[0][columnId].defaultValue.length > 0) query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
-
+    if (colProps[columnId].defaultValue !== undefined) {
+      query = query + " DEFAULT '" + colProps[columnId].defaultValue + "'";
+    }
     query = query + ';\n';
     //     ALTER TABLE `emp`
     // DROP PRIMARY KEY,

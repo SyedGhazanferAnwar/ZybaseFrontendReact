@@ -163,54 +163,16 @@ class ModifyTable extends Component {
   handleRowDelete(evt) {
     const index = evt.target.id;
     let tableQuery = Queries.deleteRow(this.state.tableName, this.state.storeData[index][0].value, this.state);
-    // console.log(this.state.storeData[index][0].value);
-    // console.log('sadasdasdasdasdasdasd');
+
     this.QueryExecuteHandler(tableQuery, this.state.tableName);
-    if (this.state.irow == 1) {
-      console.log('last row is here can see');
-
-      // and then
-
-      // window.location.reload();
-      // this.setState({irow: 1});
-    }
-    // this.setState({storeData: [[]]});
-    // if (index === '0') {
-    //   return alert('cant delete first row');
-    // }
-    // let i = 0;
-    // let dupRows = []; //
-    // let storeData = [...this.state.storeData];
-    // // rows.splice(index);
-    // for (let k = 0; k < this.state.irow; k++) {
-    //   if (k !== parseInt(index)) {
-    //     console.log('asd');
-    //     dupRows[i] = storeData[k];
-    //     console.log(storeData[k]);
-    //     i++;
-    //   }
-    //   // console.log('index come her e  ' + k + '  d ' + index);
-    // }
-    // console.log(dupRows);
-    // let irow = this.state.irow;
-    // irow--;
-    // this.setState({storeData: dupRows});
-    // this.setState({irow, irow});
-
-    // console.log();
-
-    // this.setState();
-
-    // console.log(rows);
-    // console.log(rows);
   }
   modifyColumnHandler = evt => {
     evt.preventDefault();
-    // this.setState({newHeader: this.state.header[this.state.setIndex]});
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
     let headerWithProps = [...this.state.header1];
     let pkPrevious = headerWithProps[this.state.setIndex].pk;
+    let tableQuery;
 
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({header: header});
@@ -222,7 +184,7 @@ class ModifyTable extends Component {
     headerWithProps[this.state.setIndex].value = this.state.newColumnAttr.defaultValue;
     headerWithProps[this.state.setIndex].defaultValue = this.state.newColumnAttr.defaultValue;
 
-    if (this.state.storeData[0] !== undefined) {
+    if (storeData.isEmpty === false) {
       for (let i = 0; i < this.state.irow; i++) {
         console.log('previous  ' + pkPrevious + '  new ' + this.state.newColumnAttr.pk);
         storeData[i][this.state.setIndex].pk = this.state.newColumnAttr.pk;
@@ -230,34 +192,51 @@ class ModifyTable extends Component {
         storeData[i][this.state.setIndex].size = this.state.newColumnAttr.size;
         storeData[i][this.state.setIndex].type = this.state.newColumnAttr.type;
         storeData[i][this.state.setIndex].value = this.state.newColumnAttr.defaultValue;
-
         storeData[i][this.state.setIndex].defaultValue = this.state.newColumnAttr.defaultValue;
       }
     }
     let pkDecide = [],
       k = 0;
     for (let j = 0; j < this.state.icol; j++) {
-      if (this.state.storeData[0][j].pk === '1') {
+      if (headerWithProps[this.state.setIndex].pk === '1') {
         pkDecide[k] = this.state.storeData[0][j].colName;
         console.log('nafix desice');
         console.log(pkDecide[k]);
         k++;
       }
     }
-    if (pkPrevious === '1' && storeData[0][this.state.setIndex].pk === '0') {
-      console.log(
-        Queries.alterColumn('tableName', this.state.newHeader, this.state, this.state.setIndex, '-1', pkDecide)
+    if (pkPrevious === '1' && headerWithProps[this.state.setIndex].pk === '0') {
+      tableQuery = Queries.alterColumn(
+        'tableName',
+        this.state.newHeader,
+        this.state,
+        this.state.setIndex,
+        '-1',
+        pkDecide,
+        headerWithProps
       );
-    } else if (storeData[0][this.state.setIndex].pk === '1') {
-      console.log(
-        Queries.alterColumn('tableName', this.state.newHeader, this.state, this.state.setIndex, '1', pkDecide)
+    } else if (headerWithProps[this.state.setIndex].pk === '1') {
+      tableQuery = Queries.alterColumn(
+        'tableName',
+        this.state.newHeader,
+        this.state,
+        this.state.setIndex,
+        '1',
+        pkDecide,
+        headerWithProps
       );
     } else {
-      console.log(
-        Queries.alterColumn('tableName', this.state.newHeader, this.state, this.state.setIndex, '0', pkDecide)
+      tableQuery = Queries.alterColumn(
+        'tableName',
+        this.state.newHeader,
+        this.state,
+        this.state.setIndex,
+        '0',
+        pkDecide,
+        headerWithProps
       );
     }
-
+    console.log(tableQuery);
     this.change(storeData);
     this.setState({setIndex: 0});
     this.setState({header1: headerWithProps});

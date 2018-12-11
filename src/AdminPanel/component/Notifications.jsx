@@ -13,7 +13,6 @@ class Notifications extends Component {
     });
   };
   handleSend = () => {
-    console.error('llllllund');
     fetch('http://localhost:5000/sendNotification', {
       method: 'POST',
       credentials: 'include',

@@ -171,32 +171,31 @@ export default {
     return query;
   },
 
-    alterColumnName(tableName, oldCName, newCName, state, columnId) {
-      var data = state.storeData;
-      var query =
-        "ALTER TABLE " +
-        tableName +
-        " CHANGE " +
-        oldCName +
-        " " +
-        newCName +
-        " " +
-        data[0][columnId].type +
-        " (" +
-        data[0][columnId].size +
-        ")";
+  alterColumnName(tableName, oldCName, newCName, colProps, columnId) {
+    var query =
+      'ALTER TABLE ' +
+      tableName +
+      ' CHANGE ' +
+      oldCName +
+      ' ' +
+      newCName +
+      ' ' +
+      colProps[columnId].type +
+      ' (' +
+      colProps[columnId].size +
+      ')';
 
-      return query;
+    return query;
   },
 
-  alterColumn(tableName, oldColName, columnName, state, columnId, pk, pkColumn, colProps) { //toCompleteLater==OPTIMIZE
+  alterColumn(tableName, oldColName, columnName, state, columnId, pk, pkColumn, colProps) {
+    //toCompleteLater==OPTIMIZE
     var data = state.storeData;
     var type, query;
     // console.log(pkColumn[0]);
 
-    if (oldColName != columnName){
-      query = this.alterColumnName(tableName, oldColName, columnName, state, columnId);
-
+    if (oldColName != columnName) {
+      query = this.alterColumnName(tableName, oldColName, columnName, colProps, columnId);
     }
     if (colProps[columnId].type == 'STRING') {
       type = 'VARCHAR';
@@ -205,8 +204,9 @@ export default {
     } else {
       type = 'INT';
     }
-    
-    query+=  'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
+
+    query +=
+      'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
 
     if (colProps[columnId].defaultValue !== undefined) {
       query = query + " DEFAULT '" + colProps[columnId].defaultValue + "'";

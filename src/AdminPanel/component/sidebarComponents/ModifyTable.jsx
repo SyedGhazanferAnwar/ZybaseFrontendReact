@@ -168,6 +168,7 @@ class ModifyTable extends Component {
   }
   modifyColumnHandler = evt => {
     evt.preventDefault();
+    let oldColumnName;
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
     let headerWithProps = [...this.state.header1];
@@ -176,7 +177,7 @@ class ModifyTable extends Component {
 
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({header: header});
-
+    oldColumnName = headerWithProps[this.state.setIndex].colName;
     headerWithProps[this.state.setIndex].pk = this.state.newColumnAttr.pk;
     headerWithProps[this.state.setIndex].colName = this.state.newHeader;
     headerWithProps[this.state.setIndex].size = this.state.newColumnAttr.size;
@@ -207,7 +208,8 @@ class ModifyTable extends Component {
     }
     if (pkPrevious === '1' && headerWithProps[this.state.setIndex].pk === '0') {
       tableQuery = Queries.alterColumn(
-        'tableName',
+        this.state.tableName,
+        oldColumnName,
         this.state.newHeader,
         this.state,
         this.state.setIndex,
@@ -217,7 +219,8 @@ class ModifyTable extends Component {
       );
     } else if (headerWithProps[this.state.setIndex].pk === '1') {
       tableQuery = Queries.alterColumn(
-        'tableName',
+        this.state.tableName,
+        oldColumnName,
         this.state.newHeader,
         this.state,
         this.state.setIndex,
@@ -227,7 +230,8 @@ class ModifyTable extends Component {
       );
     } else {
       tableQuery = Queries.alterColumn(
-        'tableName',
+        this.state.tableName,
+        oldColumnName,
         this.state.newHeader,
         this.state,
         this.state.setIndex,

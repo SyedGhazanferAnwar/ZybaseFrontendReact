@@ -20,6 +20,7 @@ class Terminal extends Component {
     qc: 0,
     cqc: 0,
     tableFlag: false,
+    table: [[]],
   };
 
   // componentWillMount(){

@@ -17,7 +17,7 @@ class SettingsPanelUI extends Component {
           {/* <!-- LEFT SIDEBAR --> */}
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
-          <SideMenu callingComponent="settingspanel" />
+          <SideMenu callingComponent="settingsPanel" />
 
           {/* <CreateTable /> */}
             <SettingsPanel/>

@@ -122,32 +122,33 @@ export default {
     return query;
   },
 
-  insertColumn(tableName, columnName, state, columnId, pkColumn) {
+  insertColumn(tableName, columnName, header1, columnId, pkColumn) {
     //done
     console.log('type   ' + typeof columnName);
     var type;
-    var data = state.storeData;
+    // var data = state.storeData;
     console.log('he has a');
-    console.log(data[0][columnId]);
-    if (data[0][columnId].pk == '1') {
+    console.log(header1[columnId]);
+    if (header1[columnId].pk == '1') {
       pkColumn[pkColumn.length] = columnName;
     }
 
-    if (data[0][columnId].type == 'STRING') {
+    if (header1[columnId].type == 'STRING') {
       type = 'VARCHAR';
-    } else if (data[0][columnId].type == 'FLOAT') {
+    } else if (header1[columnId].type == 'FLOAT') {
       type = 'FLOAT';
     } else {
       type = 'INT';
     }
 
-    var query = 'ALTER TABLE ' + tableName + ' ADD ' + columnName + ' ' + type + ' (' + data[0][columnId].size + ')';
+    var query = 'ALTER TABLE ' + tableName + ' ADD ' + columnName + ' ' + type + ' (' + header1[columnId].size + ')';
 
-    if (data[0][columnId].defaultValue.length > 0) query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
+    if (header1[columnId].defaultValue !== undefined)
+      query = query + " DEFAULT '" + header1[columnId].defaultValue + "'";
 
     //Provide 0 or 1 for constraints;
 
-    if (data[0][columnId].notNull == 1) query = query + ' NOT NULL';
+    if (header1[columnId].notNull == 1) query = query + ' NOT NULL';
 
     query = query + ';\n';
 
@@ -155,7 +156,7 @@ export default {
 
     // if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
 
-    if (data[0][columnId].pk == 1) {
+    if (header1[columnId].pk == 1) {
       query = query + 'ALTER TABLE ' + tableName + ' ';
       query = query + 'DROP PRIMARY KEY,';
       query = query + 'ADD PRIMARY KEY(';
@@ -167,7 +168,7 @@ export default {
     }
 
     // query = query + ';';
-
+    console.log('querrrrrrr  ' + query);
     return query;
   },
 
@@ -213,12 +214,12 @@ export default {
       type = 'INT';
     }
 
-    query =
-      'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
+    // query =
+    //   'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
 
-    if (colProps[columnId].defaultValue !== undefined) {
-      query = query + " DEFAULT '" + colProps[columnId].defaultValue + "'";
-    }
+    // if (colProps[columnId].defaultValue !== undefined) {
+    //   query = query + " DEFAULT '" + colProps[columnId].defaultValue + "'";
+    // }
     query = query + ';\n';
     //     ALTER TABLE `emp`
     // DROP PRIMARY KEY,

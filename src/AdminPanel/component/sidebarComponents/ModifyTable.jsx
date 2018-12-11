@@ -377,7 +377,7 @@ class ModifyTable extends Component {
     let tableQuery = Queries.insertColumn(
       this.state.tableName,
       this.state.newHeader,
-      this.state,
+      this.state.header1,
       this.state.icol,
       pkDecide
     );

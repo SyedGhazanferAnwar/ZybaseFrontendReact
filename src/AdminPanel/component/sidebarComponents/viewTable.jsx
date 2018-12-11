@@ -13,6 +13,7 @@ class ViewTable extends Component {
     irow: 0,
     header: [],
     defaultComboTable: '',
+    showTerminalTable: 'no',
     storeData: [
       [
         // {
@@ -42,7 +43,11 @@ class ViewTable extends Component {
       ],
     ],
   };
-
+  componentDidMount() {
+    if (this.props.showTerminalTable === 'yes') {
+      this.fetchDataInStoreData(this.props.tableData);
+    }
+  }
   fetchDataInStoreData(response) {
     let header = [],
       storeData = [[]],
@@ -200,56 +205,67 @@ class ViewTable extends Component {
     }
     return header;
   }
+  printTable() {
+    return (
+      <table id="tableId">
+        <tbody>
+          {/*%%%%%%%%%%%%%%%%%%%% header DOM working %%%%%%%%%%%%%%*/}
+          <tr className="header">
+            {this.state.header.map((header, index) => (
+              <th key={index}>{this.inputField(index, header)}</th>
+            ))}
+          </tr>
+          {/*%%%%%%%%%%%%%%%%%%%% End header DOM working %%%%%%%%%%%%%%*/}
+
+          {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
+          {this.state.storeData.map((yo, index) => (
+            <Rows key={String(index)} index={index} id={String(index)} storeData={this.state.storeData} />
+          ))}
+        </tbody>
+      </table>
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
-        <div className="main">
-          {/* <!-- MAIN CONTENT --> */}
-          <div className="main-content">
-            <div className="container-fluid">
-              {/* {/* <!-- OVERVIEW --> */}
-              <div className="panel panel-headline">
-                <div className="panel-heading">
-                  <div className="panel-title">
-                    <h3>
-                      Select Table
-                      <ComboBox
-                        defaultComboTable={this.state.defaultComboTable}
-                        comboBoxValueHandler={this.comboBoxValueHandler}
-                        fetchHandler={this.fetchHandler.bind(this)}
-                      />
-                    </h3>
+        {this.props.showTerminalTable === 'no' ? (
+          <div className="main">
+            {/* <!-- MAIN CONTENT --> */}
+            <div className="main-content">
+              <div className="container-fluid">
+                {/* {/* <!-- OVERVIEW --> */}
+                <div className="panel panel-headline">
+                  <div className="panel-heading">
+                    <div className="panel-title">
+                      <h3>
+                        Select Table
+                        <ComboBox
+                          defaultComboTable={this.state.defaultComboTable}
+                          comboBoxValueHandler={this.comboBoxValueHandler}
+                          fetchHandler={this.fetchHandler.bind(this)}
+                        />
+                      </h3>
+
+                      {/* <div>{this.fetchDataInStoreData(this.props.tableData)}</div> */}
+                    </div>
+
+                    {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
                   </div>
+                  <div className="panel-body">
+                    {/* <ComboBox /> */}
 
-                  {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
-                </div>
-                <div className="panel-body">
-                  {/* <ComboBox /> */}
-
-                  {/* table body */}
-
-                  <table id="tableId">
-                    <tbody>
-                      {/*%%%%%%%%%%%%%%%%%%%% header DOM working %%%%%%%%%%%%%%*/}
-                      <tr className="header">
-                        {this.state.header.map((header, index) => (
-                          <th key={index}>{this.inputField(index, header)}</th>
-                        ))}
-                      </tr>
-                      {/*%%%%%%%%%%%%%%%%%%%% End header DOM working %%%%%%%%%%%%%%*/}
-
-                      {/*%%%%%%%%%%%%%%%%%%%% Table Rows/columns DOM working %%%%%%%%%%%%%%*/}
-                      {this.state.storeData.map((yo, index) => (
-                        <Rows key={String(index)} index={index} id={String(index)} storeData={this.state.storeData} />
-                      ))}
-                    </tbody>
-                  </table>
+                    {/* table body */}
+                    {this.printTable()}
+                  </div>
                 </div>
               </div>
             </div>
+            {/* <!-- END MAIN CONTENT --> */}
           </div>
-          {/* <!-- END MAIN CONTENT --> */}
-        </div>
+        ) : (
+          <div>{this.printTable()}</div>
+        )}
       </React.Fragment>
     );
   }

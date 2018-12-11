@@ -368,7 +368,7 @@ class ModifyTable extends Component {
     console.log(this.state.header1);
     for (let j = 0; j < this.state.icol; j++) {
       if (this.state.header1[j].pk === '1') {
-        pkDecide[k] = this.state.storeData[0][j].colName;
+        pkDecide[k] = this.state.header1[j].pk;
         console.log(pkDecide[k]);
         k++;
       }

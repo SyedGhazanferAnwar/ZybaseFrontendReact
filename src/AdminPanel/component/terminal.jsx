@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NavBar from './navBar.jsx';
 import SideMenu from './sideMenu.jsx';
+import ViewTable from './sidebarComponents/viewTable.jsx';
 
 class Terminal extends Component {
   // state = {
@@ -10,7 +11,9 @@ class Terminal extends Component {
   // };
 
   state = {
+    showTerminalTable: 'no',
     width: 700,
+    tableData: [],
     data: [],
     inputWidth: 2,
     connnection: false,
@@ -56,10 +59,10 @@ class Terminal extends Component {
     this.scrollToBottom();
   }
   keyPress(e) {
-    this.setState({ width: this.state.inputWidth });
-    this.setState({ inputWidth: this.state.inputWidth + 1 });
-    if (e.key === "Enter") {  
-      this.setState({ cqc: 0 });
+    this.setState({width: this.state.inputWidth});
+    this.setState({inputWidth: this.state.inputWidth + 1});
+    if (e.key === 'Enter') {
+      this.setState({cqc: 0});
       let queries = this.state.queries;
       console.error(queries);
       queries.push(e.target.value);
@@ -74,6 +77,9 @@ class Terminal extends Component {
       this.setState({data: request});
       //this.setState({ requestCount: this.state.requestCount + 1 });
       this.setState({prompt: false});
+      console.error('errrrrrrrrrrrrrrrrrrrrrror');
+      this.setState({showTerminalTable: 'no'});
+
       fetch('http://localhost:5000/terminal', {
         method: 'POST',
         credentials: 'include',
@@ -99,19 +105,16 @@ class Terminal extends Component {
             res = JSON.stringify(res.data.sqlMessage);
             response.push({type: false, text: res, error: true});
           } else {
-            if(res.table==true){
-              this.setState({table:res.data});
-              this.setState({column:res.column})
-              this.setState({uniqueKey:res.uniqueKey})
-              this.setState({primaryKey:res.primaryKey});
-              console.log(res);
-              let data= this.state.data;
-              data.push({type:false,text:"print table",error:false});
-              this.setState({data:data})
-              document.getElementById("prompt-input").value = "";
-              this.setState({ prompt: true });
-              this.setState({tableFlag:true});
-              
+            if (res.table == true) {
+              this.setState({tableData: res});
+              let data = this.state.data;
+              data.push({type: false, text: 'print table', error: false});
+              this.setState({data: data});
+              document.getElementById('prompt-input').value = '';
+              this.setState({prompt: true});
+              this.setState({tableFlag: true});
+              this.setState({showTerminalTable: 'yes'});
+
               return;
             }
             res = JSON.stringify(res);
@@ -237,6 +240,15 @@ class Terminal extends Component {
               />
             </div>
           </div>
+          {/* table print here */}
+          <div>
+            {this.state.tableFlag === true && this.state.showTerminalTable === 'yes' ? (
+              <ViewTable tableData={this.state.tableData} showTerminalTable={this.state.showTerminalTable} />
+            ) : (
+              ''
+            )}
+          </div>
+          {/* table end here */}
           {/* <!-- END MAIN --> */}
 
           <div className="clearfix" />

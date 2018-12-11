@@ -12,6 +12,7 @@ class viewTableUI extends Component {
   }
   state = {
     row: ['row', 'row2'],
+    showTerminalTable: 'no',
   };
 
   render() {
@@ -27,7 +28,7 @@ class viewTableUI extends Component {
           {/* <!-- END LEFT SIDEBAR --> */}
           {/* <!-- MAIN --> */}
           {/* <CreateTable /> */}
-          <ViewTable />
+          <ViewTable showTerminalTable={this.state.showTerminalTable} />
           {/* <ViewTable /> */}
           {/* <!-- END MAIN --> */}
           <div className="clearfix" />

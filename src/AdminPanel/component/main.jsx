@@ -75,6 +75,8 @@ class Main extends Component {
         return res.json();
       })
       .then(response => {
+        this.setState({apikey:response.api_key});
+        this.setState({productkey:response.product_id});
         this.setState({tableCount: response.tableCount});
         this.setState({userCount: response.userCount});
 
@@ -103,6 +105,22 @@ class Main extends Component {
             <div className="container-fluid">
               {/* custom kaam */}
               <div className="row">
+              <div className="col-md-6">
+              <div className="panel panel-headline login-form">
+                    <div className="panel-heading">
+                      <h3 className="panel-title" style={{ marginLeft: "31%" }}>Product  Key
+                      </h3><hr className="style-four"/>
+                      <h4 col-md-offset-2 style={{marginLeft:"25%"}}>{this.state.productkey}</h4>
+                      </div></div></div>
+
+
+                      <div className="col-md-6">
+              <div className="panel panel-headline login-form">
+                    <div className="panel-heading">
+                      <h3 className="panel-title" style={{ marginLeft: "40%" }}>API Key
+                      </h3><hr className="style-four"/>
+                      <h4 col-md-offset-2 style={{marginLeft:"32%"}}>{this.state.apikey}</h4></div></div></div>
+                      
                 <div className="col-md-4">
                   <div className="panel panel-headline">
                     <div className="panel-heading">

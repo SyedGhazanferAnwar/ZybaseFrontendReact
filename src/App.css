@@ -601,3 +601,12 @@ hr.style-four {
   margin-bottom: -10px;
   color:rgba(177, 226, 64, 0.63)
 }
+.login-form{
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-bottom: 20px;
+
+}
+.up{
+  width: 300px;
+}

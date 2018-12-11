@@ -172,6 +172,14 @@ export default {
   },
 
   alterColumnName(tableName, oldCName, newCName, colProps, columnId) {
+    var type;
+    if (colProps[columnId].type == 'STRING') {
+      type = 'VARCHAR';
+    } else if (colProps[columnId].type == 'FLOAT') {
+      type = 'FLOAT';
+    } else {
+      type = 'INT';
+    }
     var query =
       'ALTER TABLE ' +
       tableName +
@@ -180,10 +188,10 @@ export default {
       ' ' +
       newCName +
       ' ' +
-      colProps[columnId].type +
+      type +
       ' (' +
       colProps[columnId].size +
-      ')';
+      ');';
 
     return query;
   },
@@ -205,7 +213,7 @@ export default {
       type = 'INT';
     }
 
-    query +=
+    query =
       'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
 
     if (colProps[columnId].defaultValue !== undefined) {

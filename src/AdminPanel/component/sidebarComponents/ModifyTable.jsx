@@ -587,6 +587,7 @@ class ModifyTable extends Component {
       if (response.data.isEmpty === false) {
         headerArr.defaultValue = colObject[i][1];
       }
+
       headerArr.id = String(i);
       headerArr.colName = response.column[i].name;
       headerArr.size = response.column[i].length;
@@ -610,12 +611,14 @@ class ModifyTable extends Component {
     }
 
     // let defaultValue = colObject[0][1];
+    // console.log(response);
     for (let k = 0; k < response.data.length; k++) {
       storeData = [];
       let arr = response.data[k];
       colObject = Object.entries(arr);
       for (let j = 0; j < colObject.length; j++) {
         let defaultValue = colObject[j][1];
+        // console.log('default value: ' + defaultValue);
         let colName = colObject[j][0];
         colDetails.id = String(k + j);
         colDetails.value = defaultValue;

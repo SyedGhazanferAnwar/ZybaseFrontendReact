@@ -31,8 +31,13 @@ class ComboBox extends Component {
         console.log(response);
         console.log(response[0].table_name);
         let mtableNames = this.state.tableNames;
+        let itr = 0;
         for (let j = 0; j < response.length; j++) {
-          mtableNames[j] = response[j].table_name;
+          if (response[j].table_name !== 'users') {
+            mtableNames[itr] = response[j].table_name;
+            itr++;
+          }
+          continue;
         }
         this.setState({tableNames: mtableNames});
 

@@ -171,41 +171,8 @@ export default {
     return query;
   },
 
-  //   alterColumnName(tableName, oldCName, newCName, state, columnId) {
-  //     var data = state.storeData;
-  //     var query =
-  //       "ALTER TABLE " +
-  //       tableName +
-  //       " CHANGE " +
-  //       oldCName +
-  //       " " +
-  //       newCName +
-  //       " " +
-  //       data[0][columnId].type +
-  //       " (" +
-  //       data[0][columnId].size +
-  //       ")";
-
-  //     if (data[0][columnId].notNull == 1) query = query + " NOT NULL";
-
-  //     if (data[0][columnId].unique == 1) query = query + " UNIQUE";
-
-  //     if (data[0][columnId].autoInc == 1) query = query + " AUTO_INCREMENT";
-
-  //     if (data[0][columnId].pk == 1) query = query + " PRIMARY KEY";
-
-  //     if (data[0][columnId].defaultValue.length > 0)
-  //       query = query + " DEFAULT '" + data[0][columnId].defaultValue + "'";
-
-  //     query = query + ";";
-
-  //     return query;
-  // },
-
-  alterColumn(tableName, columnName, state, columnId, pk, pkColumn, colProps) {
-    var data = state.storeData;
+  alterColumnName(tableName, oldCName, newCName, colProps, columnId) {
     var type;
-    // console.log(pkColumn[0]);
     if (colProps[columnId].type == 'STRING') {
       type = 'VARCHAR';
     } else if (colProps[columnId].type == 'FLOAT') {
@@ -214,6 +181,39 @@ export default {
       type = 'INT';
     }
     var query =
+      'ALTER TABLE ' +
+      tableName +
+      ' CHANGE ' +
+      oldCName +
+      ' ' +
+      newCName +
+      ' ' +
+      type +
+      ' (' +
+      colProps[columnId].size +
+      ');';
+
+    return query;
+  },
+
+  alterColumn(tableName, oldColName, columnName, state, columnId, pk, pkColumn, colProps) {
+    //toCompleteLater==OPTIMIZE
+    var data = state.storeData;
+    var type, query;
+    // console.log(pkColumn[0]);
+
+    if (oldColName != columnName) {
+      query = this.alterColumnName(tableName, oldColName, columnName, colProps, columnId);
+    }
+    if (colProps[columnId].type == 'STRING') {
+      type = 'VARCHAR';
+    } else if (colProps[columnId].type == 'FLOAT') {
+      type = 'FLOAT';
+    } else {
+      type = 'INT';
+    }
+
+    query =
       'ALTER TABLE ' + tableName + ' MODIFY COLUMN ' + columnName + ' ' + type + ' (' + colProps[columnId].size + ') ';
 
     if (colProps[columnId].defaultValue !== undefined) {

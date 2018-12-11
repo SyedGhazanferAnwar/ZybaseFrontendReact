@@ -178,7 +178,7 @@ class ViewTable extends Component {
   }
 
   comboBoxValueHandler = evt => {
-    console.log(evt.target.value);
+    // console.log(evt.target.value);
 
     let selectedTable = evt.target.value;
     let storeData = [];

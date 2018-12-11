@@ -168,6 +168,7 @@ class ModifyTable extends Component {
   }
   modifyColumnHandler = evt => {
     evt.preventDefault();
+    let oldColumnName;
     let storeData = [...this.state.storeData];
     let header = [...this.state.header];
     let headerWithProps = [...this.state.header1];
@@ -176,7 +177,7 @@ class ModifyTable extends Component {
 
     header[this.state.setIndex] = this.state.newHeader;
     this.setState({header: header});
-
+    oldColumnName = headerWithProps[this.state.setIndex].colName;
     headerWithProps[this.state.setIndex].pk = this.state.newColumnAttr.pk;
     headerWithProps[this.state.setIndex].colName = this.state.newHeader;
     headerWithProps[this.state.setIndex].size = this.state.newColumnAttr.size;
@@ -207,7 +208,8 @@ class ModifyTable extends Component {
     }
     if (pkPrevious === '1' && headerWithProps[this.state.setIndex].pk === '0') {
       tableQuery = Queries.alterColumn(
-        'tableName',
+        this.state.tableName,
+        oldColumnName,
         this.state.newHeader,
         this.state,
         this.state.setIndex,
@@ -217,7 +219,8 @@ class ModifyTable extends Component {
       );
     } else if (headerWithProps[this.state.setIndex].pk === '1') {
       tableQuery = Queries.alterColumn(
-        'tableName',
+        this.state.tableName,
+        oldColumnName,
         this.state.newHeader,
         this.state,
         this.state.setIndex,
@@ -227,7 +230,8 @@ class ModifyTable extends Component {
       );
     } else {
       tableQuery = Queries.alterColumn(
-        'tableName',
+        this.state.tableName,
+        oldColumnName,
         this.state.newHeader,
         this.state,
         this.state.setIndex,
@@ -236,13 +240,12 @@ class ModifyTable extends Component {
         headerWithProps
       );
     }
-    console.log(tableQuery);
-    this.change(storeData);
     this.setState({setIndex: 0});
     this.setState({header1: headerWithProps});
-    this.setState({storeData: storeData});
-    console.log('updated header print here');
-    console.log(this.state.header1);
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
+    console.log(tableQuery);
+    // this.change(storeData);
+    // this.setState({storeData: storeData});
 
     evt.target.reset();
     this.resetForm();
@@ -584,6 +587,7 @@ class ModifyTable extends Component {
       if (response.data.isEmpty === false) {
         headerArr.defaultValue = colObject[i][1];
       }
+
       headerArr.id = String(i);
       headerArr.colName = response.column[i].name;
       headerArr.size = response.column[i].length;
@@ -607,12 +611,14 @@ class ModifyTable extends Component {
     }
 
     // let defaultValue = colObject[0][1];
+    // console.log(response);
     for (let k = 0; k < response.data.length; k++) {
       storeData = [];
       let arr = response.data[k];
       colObject = Object.entries(arr);
       for (let j = 0; j < colObject.length; j++) {
         let defaultValue = colObject[j][1];
+        // console.log('default value: ' + defaultValue);
         let colName = colObject[j][0];
         colDetails.id = String(k + j);
         colDetails.value = defaultValue;

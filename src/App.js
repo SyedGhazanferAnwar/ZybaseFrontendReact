@@ -15,6 +15,7 @@ import comp1 from './AdminPanel/component/main';
 import ModifyTableUI from './AdminPanel/ModifyTableUI';
 import asyncComponent from './components/AsyncComponent';
 import SettingsPanelUI from './AdminPanel/settingsPanelUI';
+import Notifications from './AdminPanel/component/Notifications';
 const myHome = asyncComponent(() => import('./AdminPanel/Admin').then(module => module.default));
 
 // const Maps = asyncComponent(() => import('./Maps/Maps').then(module => module.default));
@@ -43,6 +44,7 @@ class App extends Component {
             <PrivateRoute path="/modify" component={ModifyTableUI} />
             <PrivateRoute path="/create" component={CreateTableUI} />
             <PrivateRoute path="/setting" component={SettingsPanelUI} />
+            <PrivateRoute path="/notifications" component={Notifications}/>
 
             <Route path="/test" component={comp1} />
           </Switch>

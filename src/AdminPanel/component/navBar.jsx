@@ -45,23 +45,28 @@ class NavBar extends Component {
             <div id="navbar-menu">
               <ul className="nav navbar-nav navbar-right">
                 <li className="nav-item">
+                  <Link to={'/'}>
+                    <a className="nav-link" href="#">
+                      <span> Home</span>
+                    </a>
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <a className="nav-link" href="#">
-                    <span> Home</span>
+                    <Link to={'/'}>
+                      <a className="nav-link" href="#">
+                        <span> Contact Us</span>
+                      </a>
+                    </Link>
                   </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#">
-                    <span>Contact us</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <span> Home</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <span> Home</span>
+                    <Link to={'/'}>
+                      <a className="nav-link" href="#">
+                        <span> Pricing</span>
+                      </a>
+                    </Link>
                   </a>
                 </li>
                 <li className="nav-item">

@@ -9,6 +9,9 @@ class Admin extends Component {
     super();
     let ss = this.state.row;
   }
+  componentDidMount() {
+    document.getElementById('mainbody').style.overflow = 'auto';
+  }
   state = {
     row: ['row', 'row2'],
   };
@@ -31,9 +34,9 @@ class Admin extends Component {
           <footer>
             <div className="container-fluid">
               <p className="copyright">
-                &copy; 2017{' '}
-                <a href="https://www.themeineed.com" target="_blank">
-                  Theme I Need
+                &copy; 2018{' '}
+                <a href="#" target="_blank">
+                  Zybase
                 </a>
                 . All Rights Reserved.
               </p>

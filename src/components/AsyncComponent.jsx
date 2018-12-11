@@ -5,7 +5,7 @@ export default function asyncComponent(getComponent) {
     static Component = null;
     state = {Component: AsyncComponent.Component};
 
-    componentWillMount() {
+    componentDidMount() {
       document.getElementById('mainbody').style.overflow = 'hidden';
       console.log(document.getElementById('mainbody'));
       setTimeout(() => {
@@ -13,10 +13,10 @@ export default function asyncComponent(getComponent) {
           getComponent().then(Component => {
             AsyncComponent.Component = Component;
             this.setState({Component});
-            document.getElementById('mainbody').style.overflow = 'auto';
           });
         }
-      }, 500);
+        document.getElementById('mainbody').style.overflow = 'auto';
+      }, 2000);
     }
     render() {
       const {Component} = this.state;

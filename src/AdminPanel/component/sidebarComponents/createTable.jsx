@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import Queries from '../../../tableQueries.js';
 import ModifyTable from './ModifyTable.jsx';
 import {Link, withRouter, Redirect, BrowserHistory} from 'react-router-dom';
+// import SweetAlert from './sweetAlert';
+// import SweetAlert from 'sweetalert-react';
+import $ from 'jquery';
+import ModalPopup from './modalPopup.jsx';
 
 class CreateTable extends Component {
   state = {
@@ -13,11 +17,16 @@ class CreateTable extends Component {
     this.setState({tableName: evt.target.value});
   };
   createTableQueryHandler() {
-    console.log(Queries.createTable(this.state, this.state.tableName));
-    let tableQuery = Queries.createTable(this.state, this.state.tableName);
-    // ModifyTable.createTableQueryHandler(tableQuery, this.state.ta);
-    this.QueryExecuteHandler(tableQuery, this.state.tableName);
-    this.setState({tableName: ''});
+    if (this.state.tableName === '') {
+      // document.getElementById('myCheck').click();
+      return alert('fill out the field');
+    } else {
+      console.log(Queries.createTable(this.state, this.state.tableName));
+      let tableQuery = Queries.createTable(this.state, this.state.tableName);
+      // ModifyTable.createTableQueryHandler(tableQuery, this.state.ta);
+      this.QueryExecuteHandler(tableQuery, this.state.tableName);
+      this.setState({tableName: ''});
+    }
   }
   QueryExecuteHandler(tableQuery, tableName) {
     console.log(tableQuery);
@@ -67,7 +76,7 @@ class CreateTable extends Component {
                   {/* <p className="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p> */}
                 </div>
                 <div className="panel-body">
-                  {/* <form onSubmit={this.createTableQueryHandler.bind(this)}> */}
+                  {/* <form  onSubmit={this.createTableQueryHandler.bind(this)}> */}
                   <label style={{color: 'white'}}>Enter Table Name</label>
                   <input
                     placeholder="Table Name"
@@ -88,6 +97,7 @@ class CreateTable extends Component {
                   >
                     Create
                   </button>
+
                   {/* </form> */}
                 </div>
               </div>

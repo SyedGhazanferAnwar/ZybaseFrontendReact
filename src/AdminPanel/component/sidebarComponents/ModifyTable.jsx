@@ -236,13 +236,12 @@ class ModifyTable extends Component {
         headerWithProps
       );
     }
-    console.log(tableQuery);
-    this.change(storeData);
     this.setState({setIndex: 0});
     this.setState({header1: headerWithProps});
-    this.setState({storeData: storeData});
-    console.log('updated header print here');
-    console.log(this.state.header1);
+    this.QueryExecuteHandler(tableQuery, this.state.tableName);
+    console.log(tableQuery);
+    // this.change(storeData);
+    // this.setState({storeData: storeData});
 
     evt.target.reset();
     this.resetForm();

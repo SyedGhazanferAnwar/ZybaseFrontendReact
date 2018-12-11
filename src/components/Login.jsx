@@ -189,18 +189,18 @@ class Login extends Component {
                   </span>
                 </div>
                 <div className="container-login100-form-btn">
-                  <button type="button" className="login100-form-btn" onClick={this.handleLogin}>
+                  <button type="button" className="login100-form-btn btn-primary zoomBtn" onClick={this.handleLogin}>
                     Login
                   </button>
                 </div>
                 <div className="text-center p-t-12">
                   <span className="txt1custom">Forgot </span>
-                  <a className="txt2custom" href="#">
+                  <a className="txt2custom" style={{color: ' #209e91'}} href="#">
                     Username / Password?
                   </a>
                 </div>
                 <div className="text-center p-t-124">
-                  <Link className="txt2custom" to="/register">
+                  <Link style={{color: ' #209e91'}} className="txt2custom" to="/register">
                     Create your Account
                     <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true" />
                   </Link>

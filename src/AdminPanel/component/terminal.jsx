@@ -58,6 +58,7 @@ class Terminal extends Component {
     this.setState({ width: this.state.inputWidth });
     this.setState({ inputWidth: this.state.inputWidth + 1 });
     if (e.key === "Enter") {
+      
       this.setState({ cqc: 0 });
       let queries = this.state.queries;
       console.error(queries);
@@ -101,13 +102,17 @@ class Terminal extends Component {
           } else {
             if(res.table==true){
               this.setState({table:res.data});
+              this.setState({column:res.column})
+              this.setState({uniqueKey:res.uniqueKey})
+              this.setState({primaryKey:res.primaryKey});
+              console.log(res);
               let data= this.state.data;
               data.push({type:false,text:"print table",error:false});
               this.setState({data:data})
               document.getElementById("prompt-input").value = "";
               this.setState({ prompt: true });
               this.setState({tableFlag:true});
-              console.log(this.state.table);
+              
               return;
 
             }

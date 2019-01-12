@@ -239,15 +239,16 @@ class Terminal extends Component {
                 }}
               />
             </div>
-          </div>
-          {/* table print here */}
-          <div>
+            <div style={{marginTop:"300px",marginLeft:"100px"}}>
             {this.state.tableFlag === true && this.state.showTerminalTable === 'yes' ? (
               <ViewTable tableData={this.state.tableData} showTerminalTable={this.state.showTerminalTable} />
             ) : (
               ''
             )}
           </div>
+          </div>
+          {/* table print here */}
+          
           {/* table end here */}
           {/* <!-- END MAIN --> */}
 
